@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>08-批处理架构设计</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>论文模板 08 · 批处理架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>出现频率中等</strong>，
+但因多数考生缺乏真实批处理经验，竞争压力小，<strong>是稳妥的备选题</strong>。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（批处理整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统中批处理（离线处理）部分的设计，
+包括作业调度、容错重跑、性能优化等方面。</p>
+</blockquote>
+<p><strong>变体 B（数据导入导出）</strong></p>
+<blockquote>
+<p>请论述你如何设计系统的数据导入/导出功能，如何保证大批量数据处理的正确性与效率。</p>
+</blockquote>
+<p><strong>变体 C（作业可靠性）</strong></p>
+<blockquote>
+<p>请论述你如何保障定时作业的可靠性，如何处理作业失败与幂等性问题。</p>
+<p><strong>判断</strong>：BASE HOME 在三个变体上都有真实素材——
+10 个 Spring Batch Job、双数据源读写分离、幂等控制、
+专用重试服务、Prometheus 监控、CSV 生成与 S3 上传。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台中批处理架构的设计与实现。
+该平台的批处理承担成本文件生成、自动邮件生成与发送、外部预约数据导入、
+主数据联动、ToDo 状态更新等核心离线业务，共 10 个 Spring Batch 作业。
+本人担任架构师，负责批处理架构设计、作业可靠性保障与性能优化。
+针对【批量作业与在线业务争抢数据库资源】、【消息推送重复发送风险】、
+【作业失败后的可恢复性】三大挑战，
+本文从【读写分离双数据源】、【幂等与专用重试】、
+【参数化可重跑设计】三个维度进行设计：
+为批处理配置独立的读写数据源并按包路径隔离 Mapper，
+以幂等时间窗与独立重试服务杜绝重复推送，
+将基准日期等关键参数显式参数化以保证结果可复现。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与批处理业务（约 400 字）</h3>
+<p><strong>批处理论文开头要列清「有哪些作业」</strong>，体现真实经历。</p>
+<blockquote>
+<p>BASE HOME 的批处理承载日终与定时的离线业务，
+基于 Spring Batch 3.5.7 实现，共 10 个作业：</p>
+<table>
+<thead>
+<tr>
+<th>作业</th>
+<th>业务含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ActivityCostFileCreateJob</code></td>
+<td>活动原价成本文件生成</td>
+</tr>
+<tr>
+<td><code>AirCostFileCreateJob</code></td>
+<td>机票成本文件生成</td>
+</tr>
+<tr>
+<td><code>HotelCostFileCreateJob</code></td>
+<td>酒店成本文件生成</td>
+</tr>
+<tr>
+<td><code>AutomaticEmailCreateJob</code></td>
+<td>自动邮件生成</td>
+</tr>
+<tr>
+<td><code>MailSendJob</code></td>
+<td>邮件发送</td>
+</tr>
+<tr>
+<td><code>ExternalReservationImportJob</code></td>
+<td>外部预约数据导入</td>
+</tr>
+<tr>
+<td><code>ImportMdmJob</code></td>
+<td>集团 MDM 主数据联动</td>
+</tr>
+<tr>
+<td><code>GenericQueryExecutionJob</code></td>
+<td>通用查询执行（元数据驱动）</td>
+</tr>
+<tr>
+<td><code>TodoStatusUpdateJob</code></td>
+<td>MyPage ToDo 状态更新</td>
+</tr>
+<tr>
+<td><code>NoopJob</code></td>
+<td>测试用空作业</td>
+</tr>
+</tbody>
+</table>
+<p>这些作业的业务特征差异很大：成本文件生成是<strong>计算密集型</strong>（需汇总大量费用明细），
+邮件发送是<strong>IO 密集型</strong>（依赖外部网关），数据导入则是<strong>混合型</strong>。
+批处理模块设置为 <code>web-application-type: none</code>，不占用 Web 端口，
+与在线业务在进程级完全隔离。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：资源隔离——读写分离双数据源</strong></p>
+<blockquote>
+<p>批处理最大的架构风险不是作业本身失败，而是<strong>批量作业拖垮在线业务</strong>。
+成本文件生成需要扫描大量费用明细，外部预约导入需要回写大量记录，
+若与在线接口共享数据库连接池，夜间批次高峰会直接推高在线接口延迟。</p>
+<p>我的方案是配置<strong>双数据源</strong>：
+- <code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）—— 只读账号，承担大量查询
+- <code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>）—— 写账号，承担结果回写</p>
+<p>通过<strong>包路径隔离 Mapper</strong>（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+使读写走不同数据源，物理层面互不干扰。
+配合的优化还包括：
+- 事务隔离级别设为 <code>TRANSACTION_READ_COMMITTED</code>，
+  避免长事务期间持有大量间隙锁影响在线写入
+- <code>mybatis.defaultFetchSize = 200</code> 控制批量游标，
+  防止一次性载入海量结果集导致 JVM 内存溢出——
+  这是批处理最典型的故障模式</p>
+<p><strong>权衡说明</strong>：双数据源增加了配置复杂度，
+且跨数据源无法使用单一事务（需业务上避免跨源事务），
+但换来的在线业务稳定性收益远大于此成本。</p>
+</blockquote>
+<p><strong>第二层：作业组织与复用</strong></p>
+<blockquote>
+<p>10 个作业统一继承 <code>job/base/ManagedBaseJob</code> 基类，
+把作业的公共能力（参数解析、日志、异常处理）收敛到基类，
+各作业只关注自身业务逻辑。
+业务逻辑下沉到 <code>service/</code> 层的对应服务
+（<code>MailSendService</code>、<code>ImportMdmService</code>、<code>FileCreateService</code> 等），
+使作业类只承担编排职责，业务逻辑可被测试与复用。
+作业参数通过枚举统一定义（<code>JobParameterKey</code>）：
+<code>acquisitionRange</code>（取得范围）、<code>executionBaseDate</code>（执行基准日）、
+<code>todoDistinction</code>、<code>emailType</code>、<code>importTargetType</code>。</p>
+</blockquote>
+<p><strong>第三层：作业的可靠性设计</strong></p>
+<blockquote>
+<ul>
+<li><strong>幂等控制</strong>：<code>app.batch.idempotency-duration-minutes = 10</code>
+  提供时间窗去重，防止重复执行造成重复推送</li>
+<li><strong>专用重试服务</strong>：<code>MailSendRetryService</code> 独立承担邮件重试，
+  与业务解耦，重试策略可独立调整</li>
+<li><strong>事务粒度控制</strong>：<code>service/transaction/*TransactionalService</code>
+  把事务边界限制在必要范围，避免大事务回滚造成连带重放</li>
+<li><strong>可观测性</strong>：通过 <strong>Prometheus PushGateway</strong> 上报作业指标
+  （<code>shutdown-operation: post</code> 确保短生命周期进程在退出前完成指标推送），
+  使定时作业的运行状态可被监控系统采集与告警</li>
+</ul>
+</blockquote>
+<p><strong>第四层：元数据驱动的通用查询</strong></p>
+<blockquote>
+<p><code>GenericQueryExecutionJob</code> 配合 <code>MGenericQuery*</code> 系列表，
+把查询逻辑外置为元数据配置，新增一类查询只需配置数据而无需改代码。
+这一设计显著提升了批处理的<strong>可修改性</strong>——
+业务侧新增报表类查询不再需要开发排期。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：CSV 文件生成与上传</strong></p>
+<blockquote>
+<p>三类成本文件（ACT/AIR/HTL）使用 <strong>SuperCSV 注解库</strong>实现，
+通过注解将实体字段直接映射为 CSV 列，
+导出列定义集中在实体上（<code>ActivityCostDownloadCsv</code>、
+<code>AirCostDownloadCsv</code>、<code>HotelCostDownloadCsv</code>），
+配合 <code>CsvDownloader</code> 接口与 <code>FileUploadService</code> 落 S3。
+<strong>设计价值</strong>：新增导出列时只需修改实体注解，
+不会波及导出逻辑代码——这是「限制变更影响范围」的可修改性战术。</p>
+</blockquote>
+<p><strong>要素二：外部数据导入</strong></p>
+<blockquote>
+<p>外部预约数据导入（<code>ExternalReservationImportJob</code>）
+通过 <code>RecvImportType</code> 枚举区分导入类型，
+经 <code>ExternalReservationImportService</code> 处理入库。
+集团主数据联动（<code>ImportMdmJob</code>）通过 <code>api/mdm/</code> 封装的
+认证与查询参数访问 MDM API，本地落为 26 张 <code>M*</code> 主数据表。</p>
+</blockquote>
+<p><strong>要素三：消息通知联动</strong></p>
+<blockquote>
+<p>批处理完成后需推送通知，通过 <code>SnsService</code> 发布到 SNS 主题
+（<code>app.services.aws.sns</code>），由下游 Lambda 消费。
+这种「批处理产出 → SNS → Lambda 消费」的模式，
+把批处理与通知渠道解耦：新增通知渠道无需修改批处理代码。</p>
+</blockquote>
+<p><strong>要素四：作业参数的显式化</strong></p>
+<blockquote>
+<p>我把 <code>executionBaseDate</code>（执行基准日）、<code>acquisitionRange</code>（取得范围）
+等关键参数定义在 <code>JobParameterKey</code> 枚举中并显式传入，
+而非在代码中直接取系统当前时间。
+这一设计带来两个收益：
+① <strong>可重跑</strong>——补数时指定历史日期即可重新生成，结果与当日运行一致；
+② <strong>可测试</strong>——测试可固定参数，使结果可预期。
+这对跨国系统尤其重要：服务日本本部（源库 JST）而容器运行于 UTC，
+若依赖系统时钟取「今天」，跨时区下极易取到错误的日期边界。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>批处理主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑦ 批量推送的幂等与重试</td>
+<td>主题核心</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「资源隔离」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑧ 跨国多时区一致性</td>
+<td><strong>本主题的杀手级素材</strong>，直接对应「作业正确性」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据同步</td>
+<td>对应「数据导入」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑧ 多时区，批处理视角）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：系统服务日本本部，源数据库运行于 JST，
+而批处理容器环境为 UTC。这个差异在「取当天数据生成成本文件」
+这类作业上会直接造成错误——容器认为的「今天」
+在 JST 下可能还是「昨天」，反之亦然。
+后果是成本文件漏当天的数据或重复包含前一天的数据，
+而这类错误不会抛出异常，只会静默地产生错误结果。</p>
+<p><strong>方案</strong>：我的处理分两处。
+第一处是<strong>存储口径统一</strong>：数据库中的时间统一以 UTC 存储，
+展示与业务判断时按 JST 转换，转换动作集中到 <code>FormatUtils</code> 工具类，
+禁止业务代码中散落直接取当前时间的调用。
+第二处是<strong>批处理参数化</strong>：把 <code>executionBaseDate</code> 作为 JobParameter
+显式传入而不依赖系统时钟，使作业的日期边界由调用方决定。
+这带来的额外收益是<strong>可重放性</strong>——指定同一基准日重跑，
+结果与当日运行完全一致，补数场景可靠。</p>
+<p><strong>效果</strong>：🔶 时区相关缺陷数量下降情况；作业结果可复现。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前 10 个批处理作业已稳定运行【🔶 时长】，
+成本文件与邮件在【🔶 时限】内稳定完成，未发生重复推送事故。
+不足之处：
+一是幂等控制基于时间窗，理论上在窗口边界仍有极小概率的重复；
+二是作业间的依赖关系（如邮件生成必须先于邮件发送）目前依靠调度时序保障，
+尚未引入显式的依赖编排。
+后续计划引入基于持久化状态位的幂等机制与作业依赖编排。
+通过本项目我认识到，批处理架构的关键不在于&quot;批&quot;的效率，
+而在于&quot;失败之后能不能干净地重来&quot;——
+幂等与可重跑，比处理速度更重要。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>框架</td>
+<td>Spring Batch 3.5.7（Spring Boot 3.5.7）</td>
+</tr>
+<tr>
+<td>作业数量</td>
+<td>10 个（含 1 个测试用 <code>NoopJob</code>）</td>
+</tr>
+<tr>
+<td>作业基类</td>
+<td><code>job/base/ManagedBaseJob</code></td>
+</tr>
+<tr>
+<td>成本文件作业</td>
+<td><code>ActivityCostFileCreateJob</code> / <code>AirCostFileCreateJob</code> / <code>HotelCostFileCreateJob</code></td>
+</tr>
+<tr>
+<td>邮件作业</td>
+<td><code>AutomaticEmailCreateJob</code>（生成）/ <code>MailSendJob</code>（发送）</td>
+</tr>
+<tr>
+<td>导入作业</td>
+<td><code>ExternalReservationImportJob</code> / <code>ImportMdmJob</code></td>
+</tr>
+<tr>
+<td>通用查询</td>
+<td><code>GenericQueryExecutionJob</code> + <code>MGenericQuery*</code> 元数据表</td>
+</tr>
+<tr>
+<td>ToDo 作业</td>
+<td><code>TodoStatusUpdateJob</code></td>
+</tr>
+<tr>
+<td>读写分离</td>
+<td><code>ReaderDataSourceConfig</code> / <code>WriterDataSourceConfig</code>（<code>@Primary</code>）</td>
+</tr>
+<tr>
+<td>Mapper 隔离</td>
+<td><code>repository/reader/</code> 与 <code>repository/writer/</code></td>
+</tr>
+<tr>
+<td>事务隔离</td>
+<td><code>TRANSACTION_READ_COMMITTED</code>（Hikari 配置）</td>
+</tr>
+<tr>
+<td>批量游标</td>
+<td><code>mybatis.defaultFetchSize = 200</code></td>
+</tr>
+<tr>
+<td>幂等</td>
+<td><code>app.batch.idempotency-duration-minutes = 10</code></td>
+</tr>
+<tr>
+<td>重试服务</td>
+<td><code>service/retry/MailSendRetryService</code></td>
+</tr>
+<tr>
+<td>事务服务</td>
+<td><code>service/transaction/*TransactionalService</code></td>
+</tr>
+<tr>
+<td>作业参数</td>
+<td><code>JobParameterKey</code>：<code>acquisitionRange</code> / <code>executionBaseDate</code> / <code>todoDistinction</code> / <code>emailType</code> / <code>importTargetType</code></td>
+</tr>
+<tr>
+<td>命令类型</td>
+<td><code>CommandType</code>：DELETE / INSERT / UPDATE / DDL / NOT_FOUND</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>SuperCSV 注解库；<code>CsvDownloader</code> 接口；<code>FileUploadService</code> 上传 S3</td>
+</tr>
+<tr>
+<td>输出类型</td>
+<td><code>CostFile</code>（ACT/AIR/HTL）、<code>EmailType</code>、<code>SenderName</code>、<code>SubjectHeader</code></td>
+</tr>
+<tr>
+<td>消息推送</td>
+<td><code>SnsService</code> → SNS 主题；<code>MailSendService</code></td>
+</tr>
+<tr>
+<td>监控</td>
+<td>Prometheus PushGateway（<code>shutdown-operation: post</code>）</td>
+</tr>
+<tr>
+<td>运行模式</td>
+<td><code>spring.main.web-application-type: none</code>（无 Web 容器）</td>
+</tr>
+<tr>
+<td>邮件发送配置</td>
+<td><code>sender = log</code>（测试用日志代替实际发送）、<code>sleep-after-send = 0</code></td>
+</tr>
+<tr>
+<td>主数据联动</td>
+<td><code>api/mdm/</code>（认证 + 查询参数），<code>MdmContent</code> 枚举</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>TestContainers + MySQL 镜像；<code>NoopJob</code> / <code>NoopService</code> 便于集成测试</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑦ 批量推送的幂等与重试</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— <strong>本主题的差异化杀手素材</strong></li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 资源隔离</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐ —— 数据导入</li>
+<li><strong>② protobuf 版本冲突</strong> ⭐⭐ —— 依赖治理（可放"构建可靠性"）</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只讲「用了 Spring Batch」</td>
+<td>无深度</td>
+<td>写清作业划分、参数化、幂等、重试、监控</td>
+</tr>
+<tr>
+<td>不提幂等</td>
+<td>关键失分</td>
+<td>批处理论文<strong>必写幂等</strong>，这是可靠性核心</td>
+</tr>
+<tr>
+<td>不提作业失败处理</td>
+<td>漏考点</td>
+<td>写「失败可观测（Prometheus）+ 可重跑（参数化）」</td>
+</tr>
+<tr>
+<td>只说「性能优化用了多线程」</td>
+<td>高风险</td>
+<td>本项目未见分区（Partitioning）并行证据，不要编造</td>
+</tr>
+<tr>
+<td>编造 Quartz/XXL-Job</td>
+<td>高风险</td>
+<td>本项目未见独立调度框架，不要写；调度方式如实描述即可</td>
+</tr>
+<tr>
+<td>忽略与在线业务的隔离</td>
+<td>漏考点</td>
+<td>读写分离是本项目真实亮点，务必写</td>
+</tr>
+<tr>
+<td>忘记写业务含义</td>
+<td>显得空洞</td>
+<td>每个作业都要说明它支撑什么业务（成本文件、邮件、ToDo…）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>技术真实性提醒</strong>：
+本项目<strong>未见</strong> Spring Batch 的分区（Partitioning）或多线程 Step 的证据，
+也<strong>未见</strong> XXL-Job / Quartz 等外部调度框架。
+论文中不要编造「我们使用了分片并行处理」。
+真实的性能手段是：<strong>读写分离、游标控制、事务隔离级别、
+元数据驱动查询</strong>——这四点已经足够撑起「性能优化」这一段。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>03-数据架构与混合存储.md</code> · <code>04-高并发与高可用架构.md</code> · <code>02-云原生与FaaS架构.md</code></em></p>
+</body>
+</html>

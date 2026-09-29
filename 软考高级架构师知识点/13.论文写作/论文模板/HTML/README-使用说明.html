@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>README-使用说明</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>软考「系统架构设计师」论文模板集 · 使用说明</h1>
+<blockquote>
+<p>基于 <strong>H.I.S. BASE HOME 项目</strong>（日本旅游业务系统）真实架构定制。
+目标：把你自己做过的项目，改造成能套多种题目的论文素材。</p>
+</blockquote>
+<hr />
+<h2>一、目录结构</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>主题</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>00-项目素材库.md</code></td>
+<td><strong>项目真实素材、难点库、通用段落</strong></td>
+<td>⭐⭐⭐ 必读</td>
+</tr>
+<tr>
+<td><code>01-微服务架构设计.md</code></td>
+<td>微服务拆分、服务治理</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>02-云原生与FaaS架构.md</code></td>
+<td>AWS Lambda、Serverless、容器化</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>03-数据架构与混合存储.md</code></td>
+<td>MySQL + DynamoDB + S3、读写分离</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>04-高并发与高可用架构.md</code></td>
+<td>缓存、集群、削峰、容错</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>05-系统安全架构.md</code></td>
+<td>Spring Security、OAuth2、多语言契约</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><code>06-系统集成与gRPC.md</code></td>
+<td>proto 三语言契约、异构集成</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>07-架构评估与质量属性.md</code></td>
+<td>ATAM、质量属性场景、权衡点</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>08-批处理架构设计.md</code></td>
+<td>Spring Batch、幂等、重试</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><code>09-架构演化与遗留系统改造.md</code></td>
+<td>架构风格、渐进演进、重构</td>
+<td>⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>只求通过：主攻 <strong>01 / 02 / 03 / 04 / 07</strong>，覆盖近五年约 70% 题面。
+求高分：再补 <strong>06 / 09</strong>，这两类题目竞争小、容易出彩。</p>
+</blockquote>
+<h3>与 <code>完整论文/</code> 的区别（重要）</h3>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>性质</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>论文模板/</code>（本目录）</td>
+<td><strong>写作指导</strong>：真题问法、摘要模板、五段框架、填充点、踩坑提醒</td>
+<td>学「怎么写」，自己动手写</td>
+</tr>
+<tr>
+<td><code>论文模板/完整论文/</code></td>
+<td><strong>成品范文</strong>：9 篇可直接背诵的完整论文（试题 + 摘要 + 正文约 2800 字）</td>
+<td>背「写好的」，考前突击</td>
+</tr>
+</tbody>
+</table>
+<p><code>完整论文/</code> 下每篇均按软考「合格论文」格式撰写，结构为：
+标题 → 数字提醒 → 试题（含三问）→ 摘要 → 正文（五个小标题）→ 写作提示（含待替换数字清单）。</p>
+<blockquote>
+<p>⚠️ 范文中的量化数字<strong>全部是示例值</strong>，源码中并不存在，背诵前必须替换为你项目的真实数据。
+每篇末尾的「待替换数字清单」已逐项列出需要核对的位置。</p>
+</blockquote>
+<h3>三种文件形式（内容完全相同，按场景选用）</h3>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>形式</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>论文模板/</code>（根目录）</td>
+<td>Markdown 源文件</td>
+<td>修改内容、被 AI 工具读取</td>
+</tr>
+<tr>
+<td><code>论文模板/PDF/</code></td>
+<td><strong>12 个 PDF</strong></td>
+<td><strong>打印、精读</strong>（含 1 个 64 页全本，带封面）</td>
+</tr>
+<tr>
+<td><code>论文模板/HTML/</code></td>
+<td>网页文件</td>
+<td>浏览器打开，<strong>搜索关键词</strong>更方便</td>
+</tr>
+<tr>
+<td><code>论文模板/_tools/</code></td>
+<td>转换脚本</td>
+<td>改完 md 后一键重新生成</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>推荐用法</strong>：平时用 PDF 或 HTML 阅读；需要改内容时改 <code>.md</code>，
+然后重新生成——<strong>不要直接编辑 PDF</strong>。</p>
+</blockquote>
+<h3>重新生成方法（修改 md 之后）</h3>
+<pre><code class="language-bash">cd &quot;E:\BaiduNetdiskDownload\软考高级架构师知识点\13.论文写作\论文模板\_tools&quot;
+
+python md2pdf.py          # 全量重新生成（PDF + HTML + 全本）
+python md2pdf.py 01       # 只重新生成文件名含 &quot;01&quot; 的
+python check_pdfs.py      # 检查 PDF 页数与字体是否正常
+python fix_md_lists.py --dry   # 检查 md 列表格式（改了内容后建议跑一次）
+</code></pre>
+<blockquote>
+<p>依赖：Python 3 + <code>markdown</code> 库 + Microsoft Edge（已确认本机全部具备）。</p>
+</blockquote>
+<hr />
+<h2>二、使用方法（三步）</h2>
+<h3>第一步：读素材库，定「项目口径」</h3>
+<p>打开 <code>00-项目素材库.md</code>，重点看：</p>
+<ol>
+<li><strong>第一节「项目概况」</strong> —— 论文第一段直接改写</li>
+<li><strong>第四节「难点素材库」</strong>（10 个难点）—— 这是论文的弹药</li>
+<li><strong>第七节「必须补充的数字清单」</strong> —— 🔶 标记处全部填上你的真实数据</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>最关键的一步</strong>：先把数字清单填完再写论文。
+没有数字的论文，阅卷老师 30 秒就能看出是模板套的。</p>
+</blockquote>
+<h3>第二步：按题目选模板</h3>
+<p>每个主题模板的结构固定为六节：</p>
+<pre><code>一、真题常见问法        ← 对照你的考卷，判断属于哪一种
+二、摘要模板            ← 直接改写，替换【】里的内容
+三、正文五段框架        ← 每段都有字数分配和写作要点
+四、本项目填充点        ← 真实模块/类名/配置，直接抄
+五、可用难点素材        ← 从素材库挑 2～3 个填进去
+六、踩坑提醒            ← 这一类题目的特有陷阱
+</code></pre>
+<h3>第三步：换壳不换骨</h3>
+<p>考场策略：<strong>底稿结构不动，按题目要求置换论述重心</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>题目要求</th>
+<th>置换动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「论述你如何进行微服务拆分」</td>
+<td>重心放「四、填充点」的模块划分理由</td>
+</tr>
+<tr>
+<td>「论述微服务架构的服务治理」</td>
+<td>重心放「五、难点素材」的契约一致性 + 版本治理</td>
+</tr>
+<tr>
+<td>「论述微服务架构的挑战」</td>
+<td>重心放「架构演化」——v1/v2 SDK 并存、渐进演进</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、备考节奏建议</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时长</th>
+<th>任务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 素材准备</td>
+<td>2 天</td>
+<td>填完 <code>00</code> 的数字清单；把 10 个难点用<strong>自己的话</strong>复述一遍</td>
+</tr>
+<tr>
+<td>② 精写底稿</td>
+<td>3 天</td>
+<td>选 <code>01-微服务</code> 写一篇完整的 2800 字，<strong>手写</strong>（考场是手写！）</td>
+</tr>
+<tr>
+<td>③ 横向铺开</td>
+<td>4 天</td>
+<td>用同一套素材，改写出 <code>03</code> <code>04</code> <code>07</code> 三篇</td>
+</tr>
+<tr>
+<td>④ 限时训练</td>
+<td>3 天</td>
+<td>每天 1 篇，严格 120 分钟，控制在 2500～3000 字</td>
+</tr>
+<tr>
+<td>⑤ 补漏</td>
+<td>2 天</td>
+<td>挑 <code>02</code> <code>06</code> 各写一篇，确保 4 选 1 时手里有牌可打</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>手写训练不可省</strong>。很多人机打 3000 字只要 40 分钟，
+手写却要 100 分钟，考场上直接写不完。</p>
+</blockquote>
+<hr />
+<h2>四、阅卷评分要点（据历年考情）</h2>
+<table>
+<thead>
+<tr>
+<th>评分维度</th>
+<th>权重</th>
+<th>关键动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切题</td>
+<td>高</td>
+<td>摘要和正文小标题必须呼应题目要求</td>
+</tr>
+<tr>
+<td>项目真实性</td>
+<td>高</td>
+<td>具体业务域、具体技术栈、具体数字</td>
+</tr>
+<tr>
+<td>架构决策能力</td>
+<td>高</td>
+<td>写出「为什么选 A 不选 B」的权衡</td>
+</tr>
+<tr>
+<td>结构完整</td>
+<td>中</td>
+<td>摘要 + 背景 + 设计 + 实现 + 难点 + 总结</td>
+</tr>
+<tr>
+<td>字数</td>
+<td>中</td>
+<td>2500～3000 字</td>
+</tr>
+<tr>
+<td>卷面</td>
+<td>中</td>
+<td>分段清晰，小标题明确，不涂改</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、三条写作心法</h2>
+<ol>
+<li>
+<p><strong>写决策，不写名词</strong>
+   ❌「系统采用了微服务架构，使用了 Docker 和 Kubernetes」
+   ✅「考虑到预约、消息、批处理的伸缩特征差异巨大（预约是突发流量、批处理是定时峰值、
+   消息是持续低频），我把它们拆分为独立部署单元，使批处理的资源峰值不再影响在线预约接口」</p>
+</li>
+<li>
+<p><strong>写权衡，不写完美</strong>
+   ❌「我们选择了最优方案」
+   ✅「该方案牺牲了跨表事务一致性，换来弹性伸缩能力；考虑到旅游预约场景下
+   跨域事务极少，这个交换是可接受的」</p>
+</li>
+<li>
+<p><strong>写演化，不写一步到位</strong>
+   ❌「系统一开始就是现在这个架构」
+   ✅「初期采用单体部署，随着【业务变化】，暴露出【问题】，
+   我们在【阶段】进行了【拆分/重构】，其中【难点】通过【手段】解决」</p>
+</li>
+</ol>
+<hr />
+<h2>六、关于真实性的提醒</h2>
+<p>本模板集基于 <code>F:\his-base-home</code> 源码调研生成，其中的：</p>
+<ul>
+<li>✅ <strong>模块划分、类名、配置项、版本号</strong> —— 均来自真实文件，可放心使用</li>
+<li>🔶 <strong>性能数字、业务量、成本</strong> —— 项目源码中<strong>不存在</strong>，模板已全部标注，
+  <strong>必须由你填入真实数据，不要照抄</strong></li>
+</ul>
+<p>配置文件中包含真实的凭证类配置项，写作时<strong>只能写配置项名称与作用</strong>，
+不得出现任何 Client Secret、Access Key、密码、Issuer 的实际值。</p>
+<hr />
+<h2>七、应急方案（考场上 4 题都不熟时）</h2>
+<ol>
+<li>先排除<strong>题目要求最具体、最窄</strong>的那道（越窄越难写）</li>
+<li>在剩下 3 题里找<strong>能塞进你素材库难点最多</strong>的那道</li>
+<li>按该主题模板的「三、正文五段框架」搭骨架（10 分钟）</li>
+<li>从素材库挑 2 个最贴合的难点填进去</li>
+<li>宁可写「中等深度 + 完整结构」，不要写「局部很深 + 结构残缺」</li>
+</ol>
+<blockquote>
+<p>论文是<strong>及格性考试</strong>，45 分即可。结构完整、切题、有数字、有本人角色，
+基本就能过。不要在考场上追求写出完美范文。</p>
+</blockquote>
+<hr />
+<p><em>祝顺利通过。</em></p>
+</body>
+</html>

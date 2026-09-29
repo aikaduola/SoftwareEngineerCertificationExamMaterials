@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>00-范文索引</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>完整论文范文集 · 索引与使用说明</h1>
+<blockquote>
+<p>本目录包含 <strong>9 篇可直接背诵的完整论文</strong>，全部按软考「系统架构设计师」合格论文的格式撰写：
+标题 → 数字提醒 → 试题（含三问）→ 摘要 → 正文（五个小标题）→ 写作提示。</p>
+<p>全部范文均基于 <strong>H.I.S. BASE HOME 项目</strong>（日本旅游业务系统）的真实架构撰写。</p>
+</blockquote>
+<hr />
+<h2>一、范文清单</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>论题</th>
+<th>正文核心难点素材</th>
+<th>加粗亮点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>01-论微服务架构的设计与应用.md</code></td>
+<td>微服务架构的设计与应用</td>
+<td>proto 三语言契约、依赖版本冲突、跨存储最终一致性</td>
+<td>三个拆分维度（伸缩特征/访问协议/数据边界）</td>
+</tr>
+<tr>
+<td><code>02-论云原生架构的设计与实现.md</code></td>
+<td>云原生架构的设计与实现</td>
+<td>事件驱动解耦、按业务域划分函数粒度、配置与凭证治理</td>
+<td>主动写出云原生的<strong>代价</strong></td>
+</tr>
+<tr>
+<td><code>03-论数据架构的设计与应用.md</code></td>
+<td>数据架构的设计与应用</td>
+<td>四类数据分类、DynamoDB 单表多实体、读写分离、多时区</td>
+<td>四类数据分类法、单表多实体建模</td>
+</tr>
+<tr>
+<td><code>04-论高可用架构的设计与实现.md</code></td>
+<td>高可用架构的设计与实现</td>
+<td>资源隔离、幂等重试、状态外置</td>
+<td>「最大威胁来自内部资源争抢」</td>
+</tr>
+<tr>
+<td><code>05-论信息系统安全架构的设计.md</code></td>
+<td>信息系统安全架构的设计</td>
+<td>默认拒绝的授权重构、临时凭证、会话安全</td>
+<td>数据三级分类、「默认拒绝」决策</td>
+</tr>
+<tr>
+<td><code>06-论系统集成方法及其应用.md</code></td>
+<td>系统集成方法及其应用</td>
+<td>proto 五层契约、三语言产物生成、异步集成幂等</td>
+<td>「依赖版本也是一种隐式契约」</td>
+</tr>
+<tr>
+<td><code>07-论软件架构评估方法及其应用.md</code></td>
+<td>软件架构评估方法及其应用</td>
+<td>ATAM 五阶段、效用树、六要素场景、敏感点/权衡点/风险点</td>
+<td>4 个权衡点全部来自项目真实决策</td>
+</tr>
+<tr>
+<td><code>08-论批处理系统的设计与实现.md</code></td>
+<td>批处理系统的设计与实现</td>
+<td>资源隔离四措施、参数化基准日、指标主动推送</td>
+<td>「批处理的差异在可观测性模型」</td>
+</tr>
+<tr>
+<td><code>09-论软件架构的演化与维护.md</code></td>
+<td>软件架构的演化与维护</td>
+<td>契约先行、渐进替换、防腐层、隐式契约显式化</td>
+<td>「能退回比能修好更重要」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备考优先级建议</strong></p>
+<ul>
+<li>只求通过（45 分）：精背 <strong>01、03、04、07</strong>，这四类的题面覆盖率最高</li>
+<li>求高分：再补 <strong>06、09</strong>，这两类题目竞争者少、容易出彩</li>
+<li>保险起见：<strong>02、05、08</strong> 至少各读两遍，记住摘要与三个难点名称</li>
+</ul>
+<hr />
+<h2>二、九篇共用的一套数字（重要）</h2>
+<p>9 篇范文共用同一套项目口径，<strong>保证互相引用时不矛盾</strong>。替换时请对照本表统一修改，
+不要只改其中一篇——阅卷老师若发现同一项目在不同论文中数字冲突，会质疑真实性。</p>
+<h3>2.1 已从项目源码核实（可直接使用）</h3>
+<table>
+<thead>
+<tr>
+<th>项目口径</th>
+<th>真实值</th>
+<th>出现于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关系型数据库表数</td>
+<td>79 张（主数据表 26 张 <code>m_</code> 前缀 + 业务表 53 张 <code>t_</code> 前缀）</td>
+<td>01、03</td>
+</tr>
+<tr>
+<td>云数据库表数</td>
+<td>5 张</td>
+<td>01、03</td>
+</tr>
+<tr>
+<td>远程调用接口数</td>
+<td>17 个（单一服务对外提供）</td>
+<td>01、06</td>
+</tr>
+<tr>
+<td>契约文件数</td>
+<td>89 个 proto（服务定义 1 + 请求 17 + 响应 17 + 枚举 12 + 可复用消息 42）</td>
+<td>01、06</td>
+</tr>
+<tr>
+<td>无服务器函数数</td>
+<td>14 个（6 个队列触发 + 5 个数据流触发 + 3 个定时触发）</td>
+<td>02、04、07</td>
+</tr>
+<tr>
+<td>批处理作业数</td>
+<td>10 个</td>
+<td>08</td>
+</tr>
+<tr>
+<td>批量游标 / 扫描上限</td>
+<td>200 条 / 10000</td>
+<td>03、04、08</td>
+</tr>
+<tr>
+<td>在线侧游标</td>
+<td>1000 条</td>
+<td>08</td>
+</tr>
+<tr>
+<td>重试策略</td>
+<td>最大尝试 4 次、间隔 1 秒</td>
+<td>02、04、06、08</td>
+</tr>
+<tr>
+<td>会话超时</td>
+<td>28800 秒（8 小时，stage / qa / production）</td>
+<td>04、05</td>
+</tr>
+<tr>
+<td>指标推送间隔</td>
+<td>5 秒（Prometheus PushGateway，关闭动作 post）</td>
+<td>04、08</td>
+</tr>
+<tr>
+<td>错误码数量</td>
+<td>API 侧 77 个（以消息编号统一定义）</td>
+<td>06</td>
+</tr>
+<tr>
+<td>调度链路</td>
+<td>EventBridge Scheduler（cron，Asia/Tokyo）→ Step Functions → AWS Batch（ECS Fargate）</td>
+<td>08</td>
+</tr>
+<tr>
+<td>遗留 SDK 范围</td>
+<td>对象存储 / 安全令牌服务两项</td>
+<td>09</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 项目中不存在，必须由你替换</h3>
+<table>
+<thead>
+<tr>
+<th>项目口径</th>
+<th>示例值</th>
+<th>出现于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目启动 / 上线时间</td>
+<td>2024 年 3 月 / 2025 年 1 月</td>
+<td>全部 9 篇</td>
+</tr>
+<tr>
+<td>营业门店数</td>
+<td>300 余家</td>
+<td>全部 9 篇</td>
+</tr>
+<tr>
+<td>业务人员数</td>
+<td>约 5000 名</td>
+<td>全部 9 篇</td>
+</tr>
+<tr>
+<td>注册旅行者数</td>
+<td>800 万名</td>
+<td>01</td>
+</tr>
+<tr>
+<td>日均预约量</td>
+<td>约 3 万笔</td>
+<td>01、02、04、06、07、08、09</td>
+</tr>
+<tr>
+<td>日均消息与通知量</td>
+<td>约 12 万条</td>
+<td>01、02、04、07、08</td>
+</tr>
+<tr>
+<td>年可用率</td>
+<td>99.95%</td>
+<td>01、02、04、07、09</td>
+</tr>
+<tr>
+<td>写入主链路响应时间</td>
+<td>约 1.8 秒 → 420 毫秒</td>
+<td>01、02、07</td>
+</tr>
+<tr>
+<td>批量作业耗时下降</td>
+<td>约 30%</td>
+<td>03、04、07、08</td>
+</tr>
+<tr>
+<td>平峰期计算成本下降</td>
+<td>约 35%</td>
+<td>02、07</td>
+</tr>
+<tr>
+<td>接口一致性缺陷下降</td>
+<td>约 85%</td>
+<td>01、09</td>
+</tr>
+<tr>
+<td>消息重复发送率</td>
+<td>0.3% → 0.01%</td>
+<td>02、04、06</td>
+</tr>
+<tr>
+<td>稳定运行时长</td>
+<td>约 8 个月</td>
+<td>全部 9 篇</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 2.2 全部为<strong>示例值</strong>——门店数、用户数、预约量这类业务规模指标，
+在项目资料中<strong>尚未确定</strong>（性能测试设计书对应单元格标注为「数値の検討」，即数值待定），
+因此无法从源码查证，必须由你替换。
+每篇范文末尾另有该篇专属的「待替换数字清单」，两处需保持一致。</p>
+</blockquote>
+<h3>2.3 项目中真实存在的性能指标（可放心引用）</h3>
+<p>业务规模数字虽未确定，但<strong>性能指标是真实存在的</strong>，且来自正式的测试设计书与实测日志。
+用它们替换范文中的性能数字，比编造更有说服力，也经得起追问。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>真实值</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全事务 90 分位响应时间</td>
+<td>5 秒以内</td>
+<td>综合测试（性能）シナリオ一覧</td>
+</tr>
+<tr>
+<td>部分场景响应时间</td>
+<td>场景 1・3：2 秒；场景 2・4：1 秒（90% 以上达标）</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>批处理作业时长</td>
+<td>5 小时以内（实测 <strong>4 小时 47 分</strong>）</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>批处理吞吐量</td>
+<td>10 tps（实测达成）</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>批量处理记录数</td>
+<td>单批 <strong>2 万件超</strong></td>
+<td>批处理实测日志</td>
+</tr>
+<tr>
+<td>单次批量作业实测耗时</td>
+<td>111504 毫秒（约 <strong>1 分 51 秒</strong>）</td>
+<td><code>base-home-batch</code> StopWatch 日志</td>
+</tr>
+<tr>
+<td>门店维度响应时间样例</td>
+<td>1527 毫秒（90 百分位，店舗番号 B40）</td>
+<td>性能测试结果</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>出处：<code>design-book\BASE_HOME\10_仕様書\30_試験\510_性能\総合テスト（性能）シナリオ一覧・シナリオ明細_BASE-HOME.xlsx</code></p>
+<p><strong>替换建议</strong>：把范文中的"改造后响应时间 320 毫秒"改为与本项目口径一致的
+<strong>"90 分位响应时间控制在 5 秒以内"</strong>；把"批量作业耗时下降约 30%"改为
+<strong>"批处理作业在 4 小时 47 分内完成，满足 5 小时以内的目标，吞吐量达到 10 tps"</strong>。
+这两组数字有测试报告支撑，是九篇范文中<strong>最经得起追问的量化素材</strong>。</p>
+</blockquote>
+<hr />
+<h2>三、使用方式</h2>
+<h3>方式一：直接背诵（推荐）</h3>
+<ol>
+<li>从本目录的 <code>PDF/</code> 中打印你选定的 3～4 篇</li>
+<li>先背<strong>摘要</strong>（约 330 字）——摘要决定阅卷老师的第一印象</li>
+<li>再背<strong>正文的五个小标题</strong>——这是文章的骨架，考场上先写骨架再填内容</li>
+<li>最后背每篇结尾的「可复用要点」——这是该题型的得分关键句</li>
+</ol>
+<h3>方式二：改造后背诵</h3>
+<p>每篇末尾的「写作提示」列出了：</p>
+<ul>
+<li><strong>待替换数字清单</strong> —— 把示例值换成你的真实数据</li>
+<li><strong>可复用要点</strong> —— 提示哪些句子是"通用高分句"，可跨题目迁移</li>
+<li><strong>本文字数</strong> —— 核对是否在 2500～3000 字区间</li>
+</ul>
+<h3>方式三：考场应急组合</h3>
+<p>若考题的问法不在上述 9 篇之内，按下列方式组合：</p>
+<table>
+<thead>
+<tr>
+<th>考题关键词</th>
+<th>主用范文</th>
+<th>可插入的段落</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性能 / 响应时间</td>
+<td>04 高可用</td>
+<td>03 的读写分离、02 的事件驱动解耦</td>
+</tr>
+<tr>
+<td>可维护性 / 可扩展性</td>
+<td>09 演化</td>
+<td>01 的契约单一来源、06 的统一版本管理</td>
+</tr>
+<tr>
+<td>可靠性 / 容错</td>
+<td>04 高可用</td>
+<td>08 的幂等与重跑、02 的部分失败处理</td>
+</tr>
+<tr>
+<td>数据处理 / 存储选型</td>
+<td>03 数据架构</td>
+<td>08 的游标限制与扫描边界</td>
+</tr>
+<tr>
+<td>分布式 / 跨系统协作</td>
+<td>06 系统集成</td>
+<td>01 的契约生成链路、02 的配置治理</td>
+</tr>
+<tr>
+<td>技术选型 / 方案对比</td>
+<td>07 架构评估</td>
+<td>03 的选型依据、02 的容器与函数取舍</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>四、必须守住的写作红线</h2>
+<h3>4.1 项目中并不存在，<strong>不要编造</strong></h3>
+<ul>
+<li>Kubernetes / Istio / 服务网格 / 服务注册中心（Eureka / Nacos / Consul）</li>
+<li>熔断器、限流组件（Sentinel / Hystrix / Resilience4j）</li>
+<li>分库分表、ShardingSphere、读写分离<strong>中间件</strong>
+  （<strong>注</strong>：项目有读写数据源隔离，但那是代码层的数据源分离，不是数据库中间件，二者不可混为一谈）</li>
+<li>多活 / 异地多活 / 双活数据中心</li>
+<li>Redis 作为业务缓存
+  （<strong>注</strong>：项目中 ElastiCache Serverless（Valkey）<strong>仅用于会话存储</strong>，不承载业务缓存，范文已按此口径表述）</li>
+<li>堡垒机、入侵检测、国密算法、等级保护认证</li>
+</ul>
+<h3>4.2 项目中真实存在，<strong>可放心引用</strong></h3>
+<p>以下技术均已在本项目落地，若考题涉及相关领域可以直接写，不必担心被追问：</p>
+<table>
+<thead>
+<tr>
+<th>领域</th>
+<th>真实技术</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>计算</td>
+<td>ECS Fargate、AWS Batch、Lambda、EventBridge Scheduler、Step Functions</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>Aurora MySQL、DynamoDB（含 Stream）、S3</td>
+</tr>
+<tr>
+<td>消息</td>
+<td>SQS（FIFO）、SNS</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>AWS WAFv2、Cognito（OIDC）、STS 临时凭证、Systems Manager Parameter Store</td>
+</tr>
+<tr>
+<td>会话</td>
+<td>ElastiCache Serverless（Valkey）</td>
+</tr>
+<tr>
+<td>框架</td>
+<td>Java 21、Spring Boot 3.5.7、Spring Batch、MyBatis、gRPC / Protobuf、Spring Retry</td>
+</tr>
+<tr>
+<td>构建</td>
+<td>Gradle 8.14.3、统一版本管理插件</td>
+</tr>
+<tr>
+<td>可观测</td>
+<td>Prometheus PushGateway、结构化日志、链路追踪</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>TestContainers、LocalStack、Pytest</td>
+</tr>
+<tr>
+<td>基础设施</td>
+<td>CloudFormation（基础设施即代码）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>WAF 的说明</strong>：早期版本的本表曾把 WAF 列为"不可编造"，这是<strong>错误的</strong>——
+项目确实通过 CloudFormation 定义了 AWS WAFv2。已更正。</p>
+<p>阅卷老师中不乏一线架构师。编造自己没用过的技术，一旦被追问细节就会露馅；
+而"主动写出方案的不足与未采用的方案"，反而是有架构判断力的表现。
+这一点在 04、05 两篇的结尾段有示范。</p>
+</blockquote>
+<hr />
+<p><em>范文内容随项目架构变化需要更新时，修改对应的 <code>.md</code> 文件后，在 <code>_tools/</code> 目录运行 <code>python md2pdf.py</code> 重新生成即可。</em></p>
+</body>
+</html>

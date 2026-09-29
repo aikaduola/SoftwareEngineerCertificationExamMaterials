@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>00-项目素材库</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>BASE HOME 项目素材库（论文写作的事实来源）</h1>
+<blockquote>
+<p><strong>本文件是所有主题模板的底座。</strong> 其余 01～09 号模板都从这里取素材。
+写作顺序建议：先读本文件 → 选定项目口径 → 再打开对应主题模板填充。</p>
+</blockquote>
+<hr />
+<h2>⚠️ 先读这一节：素材可信度说明</h2>
+<p>论文最忌讳编造。本素材库严格区分两类内容：</p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>真实</strong></td>
+<td>来自项目源码/配置，可直接写进论文</td>
+<td>放心使用</td>
+</tr>
+<tr>
+<td>🔶 <strong>待你补充</strong></td>
+<td>项目里没有的数据（尤其是性能指标）</td>
+<td><strong>必须由你填入真实或合理数字，禁止直接照抄</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>重点提醒</strong>：项目源码中<strong>不存在</strong> QPS、响应时间、并发用户数、数据量等性能数据。
+论文要求「具体数字」，这部分<strong>只能由你结合真实上线情况填写</strong>。
+本文件在需要数字的地方一律标注 🔶，不要编造后当成事实。</p>
+</blockquote>
+<p><strong>脱敏要求</strong>：论文中只能写「配置项名称 + 作用」，不得出现任何真实的
+OAuth2 Client Secret、AWS Access Key、Cognito Issuer、数据库密码等值。</p>
+<hr />
+<h2>一、项目概况（论文第一段直接用）</h2>
+<p><strong>项目名称</strong>：BASE HOME（ベースホーム）</p>
+<p><strong>所属企业</strong>：H.I.S.（エイチ・アイ・エス）——日本大型旅行社集团</p>
+<p><strong>业务定位</strong>：面向旅行者（旅行者）与营业本部（営業本部）的<strong>旅游业务流程支撑平台</strong>，
+覆盖预约管理（予約管理）、客户消息（顧客メッセージ）、通知发送（通知配信）、
+文件管理（ファイル管理）与主数据联动。</p>
+<h3>核心业务域（真实 Controller/Service 归类）</h3>
+<table>
+<thead>
+<tr>
+<th>业务域</th>
+<th>日文原文</th>
+<th>承载模块</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预约管理</td>
+<td>予約管理</td>
+<td>web（预约搜索/管理/全局搜索）+ service（Travel 系列 RPC）</td>
+</tr>
+<tr>
+<td>客户消息</td>
+<td>顧客メッセージ</td>
+<td>web（20+ 消息控制器）+ service（Message RPC 8 个）</td>
+</tr>
+<tr>
+<td>员工消息</td>
+<td>社員メッセージ</td>
+<td>web</td>
+</tr>
+<tr>
+<td>通知发送</td>
+<td>通知配信</td>
+<td>batch（邮件/SNS）+ faas（Wallet 通知、MyPage 通知）</td>
+</tr>
+<tr>
+<td>文件管理</td>
+<td>ファイル管理</td>
+<td>web（S3 下载）+ service（上传/列表 RPC）</td>
+</tr>
+<tr>
+<td>亲权同意书</td>
+<td>親権同意書</td>
+<td>service（Parental 系列）+ faas</td>
+</tr>
+<tr>
+<td>主数据管理</td>
+<td>マスタ管理</td>
+<td>batch（MDM 联动）+ common（26 张 M 表）</td>
+</tr>
+<tr>
+<td>ToDo 管理</td>
+<td>ToDo 管理</td>
+<td>batch + faas + web</td>
+</tr>
+<tr>
+<td>成本文件</td>
+<td>コストファイル</td>
+<td>batch（ACT/AIR/HTL 三类成本文件生成）+ web（下载）</td>
+</tr>
+</tbody>
+</table>
+<h3>项目规模（✅ 真实）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gradle 模块数</td>
+<td>8 个（web / service / batch / common / spec / faas / versions / environment）</td>
+</tr>
+<tr>
+<td>独立 Git 仓库</td>
+<td>各 Java 模块独立仓库，无顶层聚合</td>
+</tr>
+<tr>
+<td>gRPC RPC 方法</td>
+<td>17 个（<code>BaseHomeService</code>），服务端 18 个实现类</td>
+</tr>
+<tr>
+<td>protobuf 文件</td>
+<td>约 90 个（enums 13 + request 17 + response 17 + type 约 42）</td>
+</tr>
+<tr>
+<td>MyBatis 实体</td>
+<td>79 个（26 张 <code>M*</code> 主数据表 + 53 张 <code>T*</code> 业务表）</td>
+</tr>
+<tr>
+<td>MyBatis Mapper</td>
+<td>54 个</td>
+</tr>
+<tr>
+<td>AWS Lambda 函数</td>
+<td>14 个（Python 3.13）</td>
+</tr>
+<tr>
+<td>DynamoDB 表</td>
+<td>5 张（travel / document / parental / sequence / message_thread）</td>
+</tr>
+<tr>
+<td>Spring Batch Job</td>
+<td>10 个（含 1 个测试用 NoopJob）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>二、模块清单（架构图的骨架，✅ 真实）</h2>
+<pre><code>                        ┌─────────────────────────────────┐
+   浏览器 / MyPage  ──► │      base-home-web (8080)       │
+   外部系统 / Wallet    │  Thymeleaf MVC + REST /api/v1   │
+                        └───────┬──────────────┬──────────┘
+                                │              │
+                     gRPC 调用  │              │ MyBatis
+                                ▼              ▼
+              ┌──────────────────────┐   ┌──────────────┐
+              │ base-home-service    │   │  Aurora      │
+              │  (gRPC :6565)        │   │  MySQL       │
+              │  DynamoDB + S3       │   └──────┬───────┘
+              └──────────┬───────────┘          │
+                         │                      │
+                  ┌──────▼───────┐              │
+                  │  DynamoDB    │              │
+                  │  (5 表)      │              │
+                  └──────┬───────┘              │
+                         │ DynamoDB Stream      │
+                         ▼                      │
+              ┌──────────────────────┐          │
+              │ base-home-faas       │──────────┘
+              │ 14 × Lambda (Py3.13) │  写入/更新
+              │ SQS / Stream 触发     │
+              └──────────────────────┘
+                         ▲
+                         │ SNS / 定时
+              ┌──────────┴───────────┐
+              │ base-home-batch      │
+              │ Spring Batch 3.5.7   │
+              │ 双数据源 reader/writer│
+              └──────────────────────┘
+
+  基座：base-home-common（实体/常量/消息/CSV）
+        base-home-spec  （proto → Java/Go/PHP + OpenAPI 文档）
+        base-home-versions（Gradle 统一版本管理插件）
+</code></pre>
+<h3>各模块要点（写作时按主题取用）</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>技术要点</th>
+<th>可支撑的论文主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>base-home-web</strong></td>
+<td>Spring Boot MVC + Thymeleaf、Spring Security + OAuth2/OIDC、Redis Cluster Session、MyBatis、SpringDoc <code>/api-docs</code></td>
+<td>安全架构、高可用、系统集成</td>
+</tr>
+<tr>
+<td><strong>base-home-service</strong></td>
+<td>gRPC 服务端（<code>@GRpcService</code>）、DynamoDB Enhanced Client、S3、STS AssumeRole、重试</td>
+<td>微服务、数据架构、集成、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-batch</strong></td>
+<td>Spring Batch、<strong>双数据源读写分离</strong>、SNS、MDM 联动、Prometheus PushGateway、幂等控制</td>
+<td>批处理、数据架构、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-common</strong></td>
+<td>统一消息体系（<code>EABH00001</code> 类消息 ID）、SuperCSV、79 实体、自动生成的双语 properties</td>
+<td>数据架构、复用</td>
+</tr>
+<tr>
+<td><strong>base-home-spec</strong></td>
+<td>90 个 proto、<strong>一份契约生成 Java/Go/PHP 三语言</strong>、OpenAPI + MkDocs</td>
+<td>系统集成、架构复用、微服务</td>
+</tr>
+<tr>
+<td><strong>base-home-faas</strong></td>
+<td>14 个 Lambda、Powertools、SQS / DynamoDB Stream 触发、SSM Parameter Store、pytest + moto</td>
+<td>云原生、FaaS、数据架构、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-versions</strong></td>
+<td>Gradle 插件统一版本 + <code>resolutionStrategy force</code></td>
+<td>架构可维护性、构建治理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、技术栈版本（✅ 真实，可直接引用）</h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td><strong>3.5.7</strong></td>
+</tr>
+<tr>
+<td>Spring Batch</td>
+<td><strong>3.5.7</strong></td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td>8.10（wrapper）/ 8.14.3（CI）</td>
+</tr>
+<tr>
+<td>MyBatis</td>
+<td>3.0.5（强制覆盖 Spring Boot 托管版本）</td>
+</tr>
+<tr>
+<td>gRPC (io.grpc)</td>
+<td><strong>1.70.0</strong></td>
+</tr>
+<tr>
+<td>protobuf</td>
+<td><code>[3,4)</code> 区间，实际 3.25.x</td>
+</tr>
+<tr>
+<td>proto-google-common-protos</td>
+<td><strong>2.63.2</strong>（强制降级，见难点素材 ②）</td>
+</tr>
+<tr>
+<td>Redis 客户端</td>
+<td>Jedis（Redis Cluster 6 节点）</td>
+</tr>
+<tr>
+<td>AWS SDK</td>
+<td><strong>v1 + v2 并存</strong>（见难点素材 ③）</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.13</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>1.20</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>grpc ^1.42.0 / protobuf ^3.19 || ^4.26</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>TestContainers + LocalStack + H2 + embedded-redis + pytest/moto</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>四、难点素材库（论文「难点与解决」段的核心弹药）</h2>
+<blockquote>
+<p>每个难点都已标注<strong>可套用的主题</strong>。考场上优先选与你题目最贴合的 2～3 个。</p>
+</blockquote>
+<h3>① 一份 proto 契约驱动三语言客户端</h3>
+<ul>
+<li><strong>问题</strong>：系统需同时为 Java（内部服务）、Go（周边平台）、PHP（既有遗留系统）提供 API。
+  若各自维护接口定义，字段口径必然漂移，联调成本高，回归风险大。</li>
+<li><strong>方案</strong>：在 <code>base-home-spec</code> 中以 protobuf 作为<strong>唯一契约源</strong>，
+  通过 <code>build.sh</code> 编排 <code>build-java → build-go → build-php → generate-all</code>，
+  分别用 <code>protoc-gen-grpc-java</code>、<code>protoc --go_out/--go-grpc_out/--grpc-gateway_out</code>、
+  <code>--php_out + grpc_php_plugin</code> 生成三语言产物并独立发布（Maven / Go module / Composer）。
+  同时用 <code>--openapiv2_out</code> 产出 <code>base_home_api.swagger.json</code>，经 MkDocs 发布为在线文档。</li>
+<li><strong>可量化效果</strong>：一份契约、<strong>17 个 RPC</strong> 三端一致；接口变更由构建流水线统一验证，
+  消除了人工同步定义；<code>base-home-spec</code> 产出的 90 个 proto 文件全部纳入版本管理。
+  🔶 建议补充：改造前后接口联调耗时对比、字段不一致缺陷数下降比例。</li>
+<li><strong>可套用主题</strong>：系统集成、微服务、架构复用、架构演化</li>
+</ul>
+<h3>② protobuf 依赖版本冲突导致服务启动失败</h3>
+<ul>
+<li><strong>问题</strong>：<code>proto-google-common-protos</code> 升到 <code>2.64.0-rc1</code> 后，gRPC 服务启动报错，
+  且因版本区间声明为 <code>[3,4)</code>、<code>grpcVersion = latest.release</code>，故障在构建期不显现，
+  只在运行时暴露，属于典型的<strong>依赖漂移引发的架构风险</strong>。</li>
+<li><strong>方案</strong>：在 <code>base-home-versions</code> 的统一版本源中，
+  通过 <code>resolutionStrategy { force ... }</code> 将 <code>proto-google-common-protos</code> 锁定到 <strong>2.63.2</strong>，
+  并同步锁定 MyBatis 3.0.5 等关键组件，把「隐式版本」变成「显式契约」。</li>
+<li><strong>可量化效果</strong>：启动失败问题消除；构建可复现（同一 commit 任意机器产物一致）。
+  🔶 建议补充：锁定前每月因依赖漂移导致的构建/启动故障次数。</li>
+<li><strong>可套用主题</strong>：微服务治理、架构可维护性、架构演化、CI/CD（本难点<strong>非常适合</strong>"架构可维护性/演化"类题目，因为它体现"架构决策的长期成本"）</li>
+</ul>
+<h3>③ AWS SDK v1 与 v2 长期并存</h3>
+<ul>
+<li><strong>问题</strong>：项目历史遗留使用 AWS SDK <strong>v1</strong>（S3 / STS），
+  而 DynamoDB 增强客户端（<code>DynamoDbEnhancedClient</code>）只在 <strong>v2</strong> 提供，
+  两套 SDK 的凭证链、异常模型、配置方式完全不同，直接替换会波及大量既有代码。</li>
+<li><strong>方案</strong>：<strong>接受双版本并存的过渡态</strong>，按能力边界划分：
+  新增能力（DynamoDB 增强访问、STS AssumeRole）一律走 v2，
+  既有能力暂留 v1；在 <code>DynamoDbConfig</code> / <code>AwsConfig</code> 中集中封装客户端构建，
+  统一注入 STS AssumeRole 临时凭证 + <code>DefaultCredentialsProvider</code> 兜底。</li>
+<li><strong>可量化效果</strong>：新功能不再受阻于 SDK 版本；凭证获取统一收口到配置类，一账户一集群。
+  🔶 建议补充：统一凭证后的凭证失效类故障下降情况。</li>
+<li><strong>可套用主题</strong>：架构演化、遗留系统改造、系统集成（这是<strong>"不追求一次性重写、渐进式演进"</strong>的绝佳论据）</li>
+</ul>
+<h3>④ MySQL 读写分离双数据源</h3>
+<ul>
+<li><strong>问题</strong>：批处理既要从生产库大量读取（成本文件、ToDo、预约导入），
+  又要回写结果，读写互相争抢资源，长事务影响在线业务。</li>
+<li><strong>方案</strong>：在 <code>base-home-batch</code> 中配置<strong>双数据源</strong>：
+  <code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+  <code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>），
+  通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+  事务隔离级别设为 <code>TRANSACTION_READ_COMMITTED</code>，<code>defaultFetchSize=200</code> 控制批量游标。</li>
+<li><strong>可量化效果</strong>：读写物理隔离，批量作业不再挤占在线库连接池。
+  🔶 建议补充：作业耗时、在线接口 P99 响应时间的改善数据。</li>
+<li><strong>可套用主题</strong>：数据架构、批处理、高可用、性能优化</li>
+</ul>
+<h3>⑤ DynamoDB 单表多实体 + 混合存储的数据架构</h3>
+<ul>
+<li><strong>问题</strong>：旅游业务数据形态差异极大——
+  旅行主数据（Travel）字段频繁演进、文档（Document）为二进制引用、
+  消息线程（MessageThread）读写频繁、序列号（Sequence）要求强一致自增。
+  若全部塞进关系库，扩展性与弹性不足；若全部 NoSQL，又丢失事务与关联查询能力。</li>
+<li><strong>方案</strong>：<strong>混合存储（Polyglot Persistence）</strong>：</li>
+<li>关系型（Aurora MySQL）承载交易强一致与复杂查询（53 张 <code>T*</code> 业务表 + 26 张 <code>M*</code> 主数据表）</li>
+<li>DynamoDB 承载高弹性、schema-less 的 5 张表，采用 <strong>分区键 + 排序键</strong> 设计
+    （如 <code>travel</code> 表以 <code>travel_no</code> 为分区键、<code>data_type</code> 为排序键、<code>json_data</code> 存半结构化 JSON），
+    实现<strong>单表多实体</strong>，避免表数量膨胀</li>
+<li>S3 承载文件实体（<code>ap-northeast-1</code> 区域）</li>
+<li><code>Sequence</code> 表用 <code>seq_key/seq_no</code> 提供分布式序列号</li>
+<li><strong>可量化效果</strong>：<code>scan-limit=10000</code> 控制扫描边界；表名带环境前缀，实现「1 账户 1 集群」隔离。
+  🔶 建议补充：单表承载的实体种类数、查询延迟数据。</li>
+<li><strong>可套用主题</strong>：数据架构、大数据、微服务（每个主题都会问"数据怎么存"）</li>
+</ul>
+<h3>⑥ Serverless 数据同步链路（最终一致性）</h3>
+<ul>
+<li><strong>问题</strong>：DynamoDB（服务端写入）与 MySQL（报表/既有系统查询）之间需要同步，
+  但同步逻辑若放在 Java 服务里，会拉长主链路响应时间，且扩容成本高。</li>
+<li><strong>方案</strong>：<strong>事件驱动的 Serverless 同步</strong>：
+  DynamoDB Stream 与 SQS 作为事件源触发 14 个 Lambda 函数，
+  按业务域拆分（<code>import_travel_information</code>、<code>import_document_information</code>、
+  <code>import_message_thread</code>、<code>import_booking_information</code>、<code>import_mail_information</code>、
+  <code>import_parental_consent</code>、<code>import_notification</code>、<code>import_wallet_status</code> 等），
+  每个函数独立 Dockerfile、独立 GitHub Actions 工作流、独立 SAM 部署，
+  配置从 SSM Parameter Store 读取，用 <code>aws_lambda_powertools</code> 做日志/链路追踪/批量部分失败处理。
+  主链路只写 DynamoDB 即返回，同步异步化，达成<strong>最终一致性</strong>。</li>
+<li><strong>可量化效果</strong>：14 个函数按域独立扩缩容；单个函数故障不影响其他业务域。
+  🔶 建议补充：同步延迟（秒级）、峰值消息处理量、按需计费节省的成本比例。</li>
+<li><strong>可套用主题</strong>：云原生、FaaS、数据架构、高可用（<strong>近两年最热，强烈建议准备</strong>）</li>
+</ul>
+<h3>⑦ 批量消息推送的幂等与重试</h3>
+<ul>
+<li><strong>问题</strong>：客户消息（顧客メッセージ）常需<strong>批量推送</strong>（<code>BulkPutCustomerMessage</code>），
+  邮件发送（<code>MailSendJob</code>、<code>AutomaticEmailCreateJob</code>）存在网络抖动、
+  第三方邮件网关限流，重试若不加控制会产生<strong>重复发送</strong>，
+  对客户是严重体验事故。</li>
+<li><strong>方案</strong>：</li>
+<li>幂等控制：<code>app.batch.idempotency-duration-minutes=10</code> 时间窗去重</li>
+<li>专用重试服务：<code>MailSendRetryService</code> 独立承担重试，与业务解耦</li>
+<li>事务边界：<code>service/transaction/*TransactionalService</code> 拆分事务粒度</li>
+<li>可观测：Prometheus PushGateway（<code>shutdown-operation: post</code>）上报作业指标</li>
+<li><strong>可量化效果</strong>：重复发送被幂等窗口拦截；作业失败可观测、可重跑。
+  🔶 建议补充：重试成功率、重复发送率降到多少。</li>
+<li><strong>可套用主题</strong>：批处理、高可用、数据一致性</li>
+</ul>
+<h3>⑧ 跨国多时区时间一致性</h3>
+<ul>
+<li><strong>问题</strong>：系统服务日本本部（源库为 <strong>JST</strong>）、部署环境与开发终端时区各异
+  （容器为 <strong>UTC</strong>、开发机为 <strong>UTC+8</strong>）。
+  预约时间、截止时间、邮件发送时刻等一旦跨时区比较出错，
+  会出现「提前发送」或「漏发」——对旅游业务是不可接受的。</li>
+<li><strong>方案</strong>：确立<strong>时间口径单一化原则</strong>：
+  存储统一 UTC，展示按业务方时区（JST）转换，转换动作集中到 <code>FormatUtils</code> 等工具类，
+  禁止在业务代码中散落 <code>LocalDateTime.now()</code>；
+  批处理的 <code>executionBaseDate</code>、<code>acquisitionRange</code> 作为 JobParameter 显式传入，不依赖系统时钟。</li>
+<li><strong>可量化效果</strong>：时间比较错误集中收口；批处理基准日期可重放（同一参数结果可复现）。
+  🔶 建议补充：改造前时区相关缺陷单数量。</li>
+<li><strong>可套用主题</strong>：数据架构、批处理、国际化系统架构（<strong>特色素材，别人写不出来，容易出彩</strong>）</li>
+</ul>
+<h3>⑨ 分布式会话与在线扩容</h3>
+<ul>
+<li><strong>问题</strong>：Web 层多实例部署后，Session 若存本地内存，用户会被反复踢下线。</li>
+<li><strong>方案</strong>：引入 <strong>Spring Session Data Redis</strong>，接 <strong>Redis Cluster（6 节点）</strong>，
+  客户端 Jedis；<code>spring.session.timeout=3600</code>。
+  安全侧配合 <code>spring-session</code> 与 Spring Security 的会话并发控制。</li>
+<li><strong>可量化效果</strong>：Web 实例无状态化，可水平扩容；实例重启不掉线。
+  🔶 建议补充：扩容后支撑的并发用户数、会话序列化后的请求延迟。</li>
+<li><strong>可套用主题</strong>：高可用、高性能、微服务</li>
+</ul>
+<h3>⑩ 主数据统一（MDM）与外部系统联动</h3>
+<ul>
+<li><strong>问题</strong>：H.I.S. 集团存在 MDM（Master Data Management）主数据平台，
+  本国、城市、航空公司、货币等主数据需与 BASE HOME 保持一致，
+  人工维护必然不一致。</li>
+<li><strong>方案</strong>：<code>ImportMdmJob</code> 定时从 MDM API 拉取主数据落库，
+  经 <code>api/mdm/</code> 封装认证与查询参数；
+  本地保留 26 张 <code>M*</code> 主数据表作为只读副本，业务查询不直连外部。</li>
+<li><strong>可量化效果</strong>：主数据一致性由作业保障，业务侧零改造。
+  🔶 建议补充：主数据同步频率、覆盖的主数据表数量。</li>
+<li><strong>可套用主题</strong>：系统集成、数据架构、企业应用集成（EAI）</li>
+</ul>
+<hr />
+<h2>五、论文通用段落（背下来，考场上省 20 分钟）</h2>
+<h3>5.1 摘要万能结构（约 300 字）</h3>
+<pre><code>本文论述了本人参与的【项目名称】的【主题】设计与实现。
+该系统是【一句话业务定位】，服务于【用户群体】，
+采用【核心技术栈】构建，本人担任【角色，务必写&quot;架构师/技术负责人&quot;】，
+负责【3 项具体职责】。
+针对【核心难题 1】、【核心难题 2】两大挑战，
+本文从【架构视角 1】、【架构视角 2】、【架构视角 3】三个维度进行设计，
+通过【关键手段】实现了【量化成果 1】和【量化成果 2】。
+系统上线后【运行效果】，验证了方案的有效性。
+</code></pre>
+<blockquote>
+<p><strong>摘要三要素</strong>：项目背景 + 本人角色 + 主要工作与成效。
+结尾必须落到「成效」，阅卷老师主要看这一段判断你有没有真做过。</p>
+</blockquote>
+<h3>5.2 项目背景段模板（约 400 字）</h3>
+<pre><code>【项目名称】是【公司名】面向【用户群体】建设的【系统定位】，
+覆盖【业务域 1】、【业务域 2】、【业务域 3】等核心业务，
+日均处理【🔶 填真实量级】。
+系统自【🔶 时间】启动建设，本人作为架构师参与了整体架构设计，
+主要负责【你的真实职责】。
+项目采用【Java 21 + Spring Boot 3.5.7】技术栈，
+按【多模块 Gradle 结构】划分为 Web、Service、Batch、Common、Spec、FaaS 等模块，
+部署于 AWS【区域】。
+</code></pre>
+<h3>5.3 结尾段模板（约 200 字）</h3>
+<pre><code>目前该系统已稳定运行【🔶 时长】，支撑【🔶 业务量】，
+【核心指标】达到【🔶 数值】。
+回顾整个建设过程，仍有可改进之处：
+一是【不足 1】，二是【不足 2】。
+后续计划通过【改进方向】进一步优化。
+通过本项目，本人深刻体会到
+【一句话架构感悟，如：架构设计的本质是在质量属性之间做权衡】。
+</code></pre>
+<blockquote>
+<p><strong>结尾必须写「不足」</strong>。不写不足的论文常被认为缺乏架构思维。
+不足要写得「真诚但无害」，例如「跨语言契约的破坏性变更尚未实现自动化兼容性检测」，
+而不是「系统经常宕机」。</p>
+</blockquote>
+<hr />
+<h2>六、论文写作红线（阅卷扣分点）</h2>
+<table>
+<thead>
+<tr>
+<th>红线</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ 字数不足</td>
+<td>少于 2000 字基本判不及格，必须练到稳定 2500～3000 字</td>
+</tr>
+<tr>
+<td>❌ 通篇讲原理</td>
+<td>架构师论文考「你的决策」，不是考「什么是微服务」</td>
+</tr>
+<tr>
+<td>❌ 没有量化</td>
+<td>难点必须有数字，没有数字的"难点"是伪难点</td>
+</tr>
+<tr>
+<td>❌ 不写本人角色</td>
+<td>「我们团队」是减分项，要写「我主导了…我选择了…」</td>
+</tr>
+<tr>
+<td>❌ 不写权衡</td>
+<td>只写「我选了 A」不写「为什么不是 B」，是初级工程师视角</td>
+</tr>
+<tr>
+<td>❌ 摘要与正文脱节</td>
+<td>摘要里提到的三个维度，正文必须有对应小标题</td>
+</tr>
+<tr>
+<td>❌ 技术堆砌无逻辑</td>
+<td>列出 10 个技术名词却不解释它们如何协同，是典型外行写法</td>
+</tr>
+<tr>
+<td>✅ 加分项</td>
+<td>写架构演化过程（从 A 演进到 B，为什么）、写失败与修正</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>七、🔶 必须由你补充的「数字清单」</h2>
+<p>论文想拿高分，下面这些数据必须补全。请对照真实情况填写，<strong>不要编造</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>需要的数据</th>
+<th>建议来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>业务规模</td>
+<td>日均预约量、注册旅行者数、消息日推量</td>
+<td>运营报表</td>
+</tr>
+<tr>
+<td>用户规模</td>
+<td>营业本部使用人数、门店数、并发用户数</td>
+<td>业务方</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>接口 P99 响应时间、批处理作业耗时、同步延迟</td>
+<td>APM / Prometheus</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>SLA 目标、年度可用率、故障恢复时间（MTTR）</td>
+<td>运维记录</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>数据库数据量、DynamoDB 表条目数、S3 存储量</td>
+<td>云监控</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>上云前后成本对比、Serverless 节省比例</td>
+<td>财务 / Cost Explorer</td>
+</tr>
+<tr>
+<td>质量</td>
+<td>缺陷率下降、重复发送率、数据不一致单数</td>
+<td>质量报告</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>项目启动时间、上线时间、稳定运行时长</td>
+<td>项目计划</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>写作技巧</strong>：数据可以不精确，但必须<strong>自洽</strong>。
+例如说「日均 3 万笔预约」，后文就不能出现「日处理 300 笔」。
+建议先在纸上把口径统一，再动笔写正文。</p>
+</blockquote>
+<hr />
+<p><em>本素材库基于 F:\his-base-home 源码调研生成，所有 ✅ 标注内容均来自真实文件。</em></p>
+</body>
+</html>

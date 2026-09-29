@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>03-数据架构与混合存储</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>论文模板 03 · 数据架构与混合存储设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>近三年明显升温</strong>，且 BASE HOME 素材极佳。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（数据架构整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的数据架构设计，包括数据模型设计、存储选型、
+数据一致性与数据治理等方面。</p>
+</blockquote>
+<p><strong>变体 B（存储选型）</strong></p>
+<blockquote>
+<p>请结合项目论述你在关系型数据库与 NoSQL 数据库之间的选型依据，
+以及如何保证多存储之间的一致性。</p>
+</blockquote>
+<p><strong>变体 C（大数据/高并发数据）</strong></p>
+<blockquote>
+<p>请论述你如何应对系统面临的海量数据存储与高并发访问挑战。</p>
+<p><strong>判断</strong>：变体 B 是 BASE HOME 的<strong>最优命中区</strong>——因为项目真实采用了
+MySQL + DynamoDB + S3 三种存储，有真实选型依据可写。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的数据架构设计与实现。
+该平台承载预约管理、客户消息、通知发送等业务，数据形态差异极大：
+既有强一致的交易数据，也有字段频繁演进的半结构化数据与文件实体。
+本人担任架构师，负责数据模型设计、存储选型与数据同步链路设计。
+针对【单一存储难以兼顾强一致与弹性扩展】、【异构存储间一致性保障】、
+【批量作业与在线业务资源争抢】三大挑战，
+本文从【混合存储选型】、【事件驱动同步】、【读写分离】三个维度进行设计：
+以 Aurora MySQL 承载强一致交易（79 张业务与主数据表），
+以 DynamoDB 承载高弹性半结构化数据（5 张表，单表多实体设计），
+以 S3 承载文件实体，并通过 DynamoDB Stream 驱动 Serverless 链路完成最终一致同步。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与数据挑战（约 400 字）</h3>
+<p><strong>核心是把「数据形态差异」讲清楚</strong>，这是选型的唯一依据。</p>
+<blockquote>
+<p>旅游业务的数据形态差异极大，我将其归纳为四类：
+① <strong>强一致交易数据</strong>——预约、申请人、旅行者、费用，要求事务与关联查询；
+② <strong>频繁演进的半结构化数据</strong>——旅行主信息字段随业务政策频繁增删，
+若用关系表承载则每次变更都需 DDL；
+③ <strong>文件实体</strong>——护照、文档、亲权同意书，体积大且需对象存储能力；
+④ <strong>高频读写的小数据</strong>——消息线程、序列号，读写频繁且要求低延迟。
+用单一存储承载这四类数据，必然在某一方面做出妥协。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：混合存储选型（Polyglot Persistence）</strong></p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储选型</th>
+<th>选型依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>强一致交易</td>
+<td>Aurora MySQL</td>
+<td>需要事务、外键、复杂关联查询；79 张表（26 张 <code>M*</code> 主数据 + 53 张 <code>T*</code> 业务）</td>
+</tr>
+<tr>
+<td>半结构化/弹性</td>
+<td>DynamoDB 5 张表</td>
+<td>schema-less、按需扩缩、毫秒级延迟，字段演进无需 DDL</td>
+</tr>
+<tr>
+<td>文件实体</td>
+<td>S3（ap-northeast-1）</td>
+<td>对象存储，与数据库解耦，降低库体积与备份成本</td>
+</tr>
+<tr>
+<td>分布式序列号</td>
+<td>DynamoDB <code>sequence</code> 表</td>
+<td>需跨实例唯一且自增，关系库自增无法满足分布式场景</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第二层：DynamoDB 单表多实体设计（本项目的技术亮点）</strong></p>
+<blockquote>
+<p>我采用<strong>分区键 + 排序键 + JSON 载荷</strong>的模式实现单表多实体：
+以 <code>travel</code> 表为例，分区键为 <code>travel_no</code>（旅行编号），
+排序键为 <code>data_type</code>（数据类型），实体内容存于 <code>json_data</code> 字段。
+这样一张表可承载同一旅行下的多种数据类型，
+既避免了表数量随业务类型线性膨胀，
+又保证同一旅行的所有数据落在同一分区，<strong>查询时可用一次 Query 取回</strong>，
+无需跨分区扫描。</p>
+<p>其余四张表：
+- <code>document</code> —— 文档元数据（文件实体在 S3）
+- <code>parental</code> —— 亲权同意书（親権同意書）
+- <code>message_thread</code> —— 消息线程
+- <code>sequence</code> —— 序列号（<code>seq_key</code> / <code>seq_no</code>），为分布式环境提供唯一编号</p>
+<p><strong>治理措施</strong>：表名统一带环境前缀，实现「1 账户 1 集群」的环境隔离；
+<code>scan-limit</code> 设为 10000，为全表扫描设置硬边界，防止误用 Scan 拖垮表。</p>
+</blockquote>
+<p><strong>第三层：批处理读写分离</strong></p>
+<blockquote>
+<p>批处理既要大量读取（成本文件生成、外部预约导入、ToDo 状态更新），
+又要回写结果。我为其配置<strong>双数据源</strong>：
+<code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+<code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>），
+通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+使读写请求物理分离，批量作业不再争抢在线业务的连接池资源。
+同时设置事务隔离级别为 <code>TRANSACTION_READ_COMMITTED</code>，
+避免长事务期间大量持有间隙锁影响在线写入；
+<code>defaultFetchSize = 200</code> 控制批量游标，防止一次性载入海量结果集导致 OOM。</p>
+</blockquote>
+<h3>第 3 段 · 关键实现（约 700 字）</h3>
+<p><strong>要素一：数据访问层设计</strong></p>
+<blockquote>
+<p>MySQL 侧统一使用 MyBatis（3.0.5，在统一版本源中强制锁定，
+覆盖 Spring Boot 托管版本以保证行为一致），
+79 个实体按职责分两个 source set 组织，主数据实体与业务实体分离；
+54 个 Mapper 按业务域归入 <code>repository/</code>。
+DynamoDB 侧通过 <code>DynamoDbEnhancedClient</code> 提供对象映射，
+由 <code>DynamoDbRepository</code> 基类封装通用操作，
+实体以 <code>@DynamoDbBean</code> 注解声明，
+属性名集中定义在 <code>consts</code> 包（<code>TravelConsts</code>、<code>DocumentConsts</code> 等），
+避免魔法字符串散落。</p>
+</blockquote>
+<p><strong>要素二：一致性与重试</strong></p>
+<blockquote>
+<p>DynamoDB 侧启用乐观锁重试（<code>@EnableRetry</code>，
+重试 4 次、间隔 500ms），应对并发写入冲突。
+跨存储一致性通过事件驱动链路达成最终一致（DynamoDB Stream → Lambda → MySQL）。</p>
+</blockquote>
+<p><strong>要素三：CSV 与文件下载</strong></p>
+<blockquote>
+<p>成本文件（ACT 原价 / AIR 机票 / HTL 酒店）使用 SuperCSV 注解库
+将实体直接映射为 CSV，配合 <code>CsvDownloader</code> 接口与
+<code>FileUploadService</code> 落 S3，避免大文件在内存中拼装。
+导出列定义通过注解集中在实体上，新增列不会波及导出逻辑。</p>
+</blockquote>
+<p><strong>要素四：主数据治理</strong></p>
+<blockquote>
+<p>集团 MDM 主数据由 <code>ImportMdmJob</code> 定时同步，本地保留 26 张 <code>M*</code> 表作为只读副本，
+业务查询不直连外部系统——既保证主数据一致性，又隔离了外部系统故障对业务的影响。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>数据架构主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑤ DynamoDB 单表多实体 + 混合存储</td>
+<td>主题核心</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「数据访问优化」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑧ 跨国多时区时间一致性</td>
+<td>数据一致性维度，特色鲜明</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据统一</td>
+<td>数据治理维度</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑧ 多时区，非常出彩）</strong>：</p>
+<blockquote>
+<p>系统服务日本本部（源库运行于 JST），而容器环境为 UTC、
+开发终端为 UTC+8。三套时区并存时，预约截止时间、
+邮件发送时刻等跨时区比较极易出错，后果是「提前发送」或「漏发」——
+对旅游业务属于严重事故。
+我的处理原则是<strong>时间口径单一化</strong>：
+存储层统一使用 UTC；展示层按业务方时区（JST）转换；
+转换动作集中到 <code>FormatUtils</code> 等工具类，禁止在业务代码中散落直接取当前时间的调用。
+批处理侧更彻底——<code>executionBaseDate</code>、<code>acquisitionRange</code> 等
+作为 JobParameter 显式传入，不依赖系统时钟，
+使同一参数的重跑结果完全可复现。
+🔶 补充：改造前时区相关缺陷数量与改造后的下降情况。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该数据架构已稳定支撑【🔶 数据量】，DynamoDB 侧查询延迟稳定在【🔶 数值】。
+不足之处：
+一是混合存储引入了运维复杂度，多套存储的备份与容量规划需要分别管理；
+二是跨存储的最终一致链路缺少统一的延迟监控，异常时的排查路径较长。
+后续计划引入统一的数据链路追踪与一致性校验作业。
+通过本项目我认识到，数据架构设计没有&quot;最好的存储&quot;，
+只有&quot;与数据访问特征最匹配的存储&quot;。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关系库</td>
+<td>Aurora MySQL，79 张表（26 <code>M*</code> 主数据 + 53 <code>T*</code> 业务），54 个 Mapper</td>
+</tr>
+<tr>
+<td>NoSQL</td>
+<td>DynamoDB 5 张表：travel / document / parental / sequence / message_thread</td>
+</tr>
+<tr>
+<td>单表多实体</td>
+<td><code>travel</code> 表：分区键 <code>travel_no</code> + 排序键 <code>data_type</code> + <code>json_data</code></td>
+</tr>
+<tr>
+<td>序列号</td>
+<td><code>sequence</code> 表（<code>seq_key</code> / <code>seq_no</code>），分布式唯一编号</td>
+</tr>
+<tr>
+<td>对象存储</td>
+<td>S3，区域 ap-northeast-1</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>MyBatis 3.0.5（强制锁定）；DynamoDB Enhanced Client</td>
+</tr>
+<tr>
+<td>读写分离</td>
+<td>reader/writer 双数据源，包路径隔离 Mapper</td>
+</tr>
+<tr>
+<td>事务隔离</td>
+<td><code>TRANSACTION_READ_COMMITTED</code></td>
+</tr>
+<tr>
+<td>批量游标</td>
+<td><code>mybatis.defaultFetchSize = 200</code></td>
+</tr>
+<tr>
+<td>扫描边界</td>
+<td>DynamoDB <code>scan-limit = 10000</code></td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>乐观锁重试 4 次 / 间隔 500ms（<code>@EnableRetry</code>）</td>
+</tr>
+<tr>
+<td>数据同步</td>
+<td>DynamoDB Stream / SQS → 14 个 Lambda → MySQL</td>
+</tr>
+<tr>
+<td>CSV 导出</td>
+<td>SuperCSV 注解，ACT/AIR/HTL 三类成本文件</td>
+</tr>
+<tr>
+<td>主数据同步</td>
+<td><code>ImportMdmJob</code> 定时从 MDM API 拉取</td>
+</tr>
+<tr>
+<td>实体组织</td>
+<td>独立 source set <code>src/main/entity</code></td>
+</tr>
+<tr>
+<td>通用查询</td>
+<td><code>GenericQueryExecutionJob</code> + <code>MGenericQuery*</code> 表（元数据驱动）</td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>「元数据驱动的通用查询」是个隐藏亮点</strong>：
+<code>GenericQueryExecutionJob</code> 配合 <code>MGenericQuery*</code> 表，
+把查询逻辑外置为元数据，新增查询无需改代码。
+写「数据治理」「架构可扩展性」时非常好用。</p>
+</blockquote>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑤ DynamoDB 单表多实体 + 混合存储</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 数据访问优化</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— 特色，<strong>强烈建议写</strong></li>
+<li><strong>⑥ Serverless 数据同步与最终一致性</strong> ⭐⭐⭐ —— 一致性保障</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐ —— 数据治理</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只说「用了 MySQL 和 DynamoDB」</td>
+<td>没有选型逻辑</td>
+<td>必须写<strong>为什么</strong>：哪类数据适合哪种存储，判据是什么</td>
+</tr>
+<tr>
+<td>把 NoSQL 说成「性能更好」</td>
+<td>外行表述</td>
+<td>正确表述是「schema 灵活、可按需扩缩、单分区内查询低延迟」</td>
+</tr>
+<tr>
+<td>回避一致性代价</td>
+<td>关键失分</td>
+<td>明确写出「牺牲强一致换弹性」，并说明为何业务可接受</td>
+</tr>
+<tr>
+<td>编造分库分表</td>
+<td>高风险</td>
+<td>BASE HOME <strong>未见分库分表证据</strong>；改写「读写分离双数据源」，同样有分量</td>
+</tr>
+<tr>
+<td>编造 Redis 缓存数据</td>
+<td>高风险</td>
+<td>项目 Redis <strong>仅用于 Session</strong>，不要写成业务数据缓存</td>
+</tr>
+<tr>
+<td>忽略数据治理</td>
+<td>漏考点</td>
+<td>补上主数据同步、消息 ID 规范、CSV 导出规范等治理手段</td>
+</tr>
+<tr>
+<td>大谈数据湖/湖仓一体</td>
+<td>无支撑</td>
+<td>本项目无数据湖，不要硬套</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>两个技术真实性红线</strong>：
+① 本项目 <strong>Redis 用于 Session 管理</strong>（<code>spring-session-data-redis</code>），
+未见作为业务数据缓存的证据——写缓存架构时请谨慎，或如实说明「缓存主要用于会话」。
+② 本项目 <strong>未见分库分表（Sharding）</strong> 证据，数据量级应描述为
+「通过读写分离与存储选型应对」，而非「分库分表」。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>04-高并发与高可用架构.md</code> · <code>08-批处理架构设计.md</code>（读写分离细节可复用）</em></p>
+</body>
+</html>
