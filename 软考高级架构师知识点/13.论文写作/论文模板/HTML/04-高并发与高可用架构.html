@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>04-高并发与高可用架构</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>论文模板 04 · 高并发与高可用架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>几乎年年出现</strong>，属必准备项。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（高可用）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的高可用架构设计，包括冗余、故障转移、
+容错与降级策略，并说明你如何验证架构的可用性。</p>
+</blockquote>
+<p><strong>变体 B（高性能）</strong></p>
+<blockquote>
+<p>请论述你如何通过架构手段提升系统的并发处理能力与响应性能。</p>
+</blockquote>
+<p><strong>变体 C（可靠性）</strong></p>
+<blockquote>
+<p>请论述你如何保障系统在异常场景下的数据可靠性与业务连续性。</p>
+<p><strong>判断</strong>：BASE HOME 的强项在<strong>变体 C（可靠性）</strong>与<strong>变体 A 的一部分</strong>——
+因为项目有真实的重试、幂等、读写分离、会话外置等机制。
+变体 B（性能）需要你补充真实压测数据。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的高可用架构设计与实现。
+该平台服务日本 H.I.S. 集团营业本部与旅行者，业务具有强季节性——
+长假前预约量激增、平峰期骤降，对系统的弹性与可靠性提出很高要求。
+本人担任架构师，负责可用性设计、故障隔离方案与可靠性保障机制建设。
+针对【在线业务与批量作业资源争抢】、【消息推送重复发送风险】、
+【多实例部署下的会话一致性】三大挑战，
+本文从【资源隔离】、【幂等与重试】、【状态外置】三个维度进行设计：
+通过读写分离双数据源隔离批量作业影响，通过幂等时间窗与专用重试服务
+杜绝重复推送，通过 Redis Cluster 实现会话外置与无状态扩容。
+系统上线后【🔶 可用率/故障恢复时间】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与可用性目标（约 400 字）</h3>
+<p><strong>必须写出「可用性目标」</strong>，这是高可用论文的标准起手式。</p>
+<blockquote>
+<p>旅游业务对系统可用性有刚性要求：预约窗口期一旦系统不可用，
+直接造成订单流失且无法补回。因此我们为该平台定义了明确目标：
+🔶 年可用率目标（如 99.9%）、🔶 关键接口 P99 响应时间目标、
+🔶 批处理作业完成时限（如次日营业开始前必须完成）。
+这些目标驱动了后续所有的架构决策。</p>
+</blockquote>
+<p><strong>本项目背景</strong>：</p>
+<blockquote>
+<p>BASE HOME 采用 Java 21 + Spring Boot 3.5.7，部署于 AWS ap-northeast-1，
+按多模块划分为 Web、Service、Batch、FaaS 等部署单元。
+本人担任架构师，负责可用性设计与可靠性机制建设。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字）</h3>
+<p><strong>第一层：资源隔离——消除单点相互影响</strong></p>
+<blockquote>
+<p>可用性最大的敌人往往不是外部攻击，而是<strong>内部资源争抢</strong>。
+本项目最典型的场景是：批处理需要从生产库大量读取并回写结果，
+而在线预约接口同时也在访问同一数据库。
+若共享连接池，夜间批处理峰值会直接拖慢甚至拖垮在线接口。</p>
+<p>我的方案是为批处理配置<strong>双数据源</strong>：
+<code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+<code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，<code>@Primary</code>），
+通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>）。
+读写物理分离后，批量作业不再与在线业务争抢同一数据源连接。</p>
+<p>同时设置 <code>TRANSACTION_READ_COMMITTED</code> 隔离级别，
+减少长事务持有锁的时间；<code>defaultFetchSize = 200</code> 控制游标，
+防止海量结果集一次性载入导致内存溢出——这是批处理最常见的 OOM 诱因。</p>
+</blockquote>
+<p><strong>第二层：故障隔离——按部署单元切分故障域</strong></p>
+<blockquote>
+<p>Web、Service、Batch、FaaS 各自独立部署：
+- Batch 模块设置为 <code>web-application-type: none</code>，不占用 Web 端口，
+  与 Web 层无任何进程级耦合
+- FaaS 侧 14 个 Lambda 按业务域拆分，<strong>单个函数故障不会波及其他业务域</strong>
+- 每个函数独立镜像、独立流水线、独立部署，支持单函数灰度与快速回滚</p>
+<p><strong>权衡说明</strong>：这增加了运维单元数量与管理复杂度，
+但把「一个模块崩溃导致全站不可用」的风险降为「单个业务域受影响」。</p>
+</blockquote>
+<p><strong>第三层：状态外置——支撑水平扩容</strong></p>
+<blockquote>
+<p>Web 层多实例部署后，若 Session 存于本地内存，
+负载均衡会把用户请求分发到不同实例，导致反复掉线。
+我引入 <strong>Spring Session Data Redis</strong>，接入 <strong>Redis Cluster（6 节点）</strong>，
+客户端使用 Jedis，会话超时设为 3600 秒。
+会话外置后，Web 实例完全无状态，可任意水平扩容与重启而不影响在线用户。</p>
+</blockquote>
+<p><strong>第四层：数据层可靠性</strong></p>
+<blockquote>
+<p>DynamoDB 侧启用乐观锁重试（<code>@EnableRetry</code>，重试 4 次、间隔 500ms），
+应对并发写入冲突；文件实体落 S3 而非数据库，
+降低库体积与备份恢复时长；主数据保留本地只读副本（26 张 <code>M*</code> 表），
+使外部 MDM 系统故障不影响业务查询。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：幂等控制——防止重复推送</strong></p>
+<blockquote>
+<p>客户消息与邮件推送是本系统的可靠性敏感点：一旦重复发送，
+对客户是直接的体验事故。我们设计了多层防护：
+- <strong>幂等时间窗</strong>：<code>app.batch.idempotency-duration-minutes = 10</code>，
+  同一业务键在窗口内重复触发会被拦截
+- <strong>专用重试服务</strong>：<code>MailSendRetryService</code> 独立承担重试逻辑，
+  与业务处理解耦，避免重试代码侵入业务流程
+- <strong>事务粒度拆分</strong>：<code>service/transaction/*TransactionalService</code> 将事务边界
+  控制在必要范围内，避免大事务回滚造成的连带重放
+- <strong>投递状态跟踪</strong>：<code>TEmailDeliveryManagement</code> 表记录投递状态
+  与 <code>update_travel_status</code> 函数联动，形成可追溯的闭环</p>
+</blockquote>
+<p><strong>要素二：可观测性——故障可发现才可恢复</strong></p>
+<blockquote>
+<p>高可用的前提是「故障能被及时发现」。
+Batch 侧通过 <strong>Prometheus PushGateway</strong> 上报作业指标
+（配置 <code>shutdown-operation: post</code>，确保作业结束前完成指标推送），
+使批处理这类短生命周期进程的运行状态可被监控系统采集。
+FaaS 侧使用 <code>aws_lambda_powertools</code> 的 Logger 与 Tracer
+输出结构化日志与链路追踪信息。</p>
+</blockquote>
+<p><strong>要素三：作业可重跑与可复现</strong></p>
+<blockquote>
+<p>批处理的重跑能力是可靠性的重要保障。
+我们将 <code>executionBaseDate</code>、<code>acquisitionRange</code>、<code>importTargetType</code>
+等关键参数定义为 JobParameter 显式传入，不依赖系统时钟，
+使同一参数的重跑结果完全可复现。
+🔶 补充：这解决了什么具体的补数场景。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>高可用主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑦ 批量推送的幂等与重试</td>
+<td>直接对应「可靠性保障」</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「资源隔离」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑨ 分布式会话 Redis Cluster</td>
+<td>直接对应「无状态扩容」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑧ 跨国多时区一致性</td>
+<td>对应「数据可靠性」，特色鲜明</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑦，三段式写法）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：客户消息常需批量推送（<code>BulkPutCustomerMessage</code> 一次处理多条），
+邮件发送作业在遇到第三方网关限流或网络抖动时必然需要重试。
+但朴素的重试会引入重复发送——对客户而言这是不可接受的体验事故。
+这本质上是分布式环境下的<strong>幂等性问题</strong>，而非简单的异常处理问题。</p>
+<p><strong>方案</strong>：我设计了三层防护。第一层是幂等时间窗，
+以 10 分钟为窗口对同一业务键去重；第二层是把重试能力独立为
+<code>MailSendRetryService</code>，与业务逻辑解耦，
+使重试策略可独立调整而无需改动业务流程；
+第三层是投递状态跟踪表，记录每一次投递的结果，
+使异常场景下可以精确定位漏发与重发范围。</p>
+<p><strong>效果</strong>：🔶 重复发送率降至 X%，🔶 作业失败可观测并支持定点重跑。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该平台已稳定运行【🔶 时长】，年可用率达到【🔶 数值】，
+批量作业在【🔶 时限】内稳定完成。
+不足之处：
+一是跨存储的最终一致性链路尚无统一的延迟监控，异常排查路径偏长；
+二是 Lambda 冷启动在低频函数上仍有可感知延迟。
+后续计划补充一致性延迟监控与预置并发配置。
+通过本项目我认识到，高可用不是靠单一技术实现的，
+而是由资源隔离、故障隔离、状态外置、幂等重试等一系列设计共同构成的体系。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资源隔离</td>
+<td>Batch 读写分离双数据源，Mapper 按 <code>repository/reader</code> / <code>writer</code> 隔离</td>
+</tr>
+<tr>
+<td>事务控制</td>
+<td><code>TRANSACTION_READ_COMMITTED</code>；<code>*TransactionalService</code> 拆分事务粒度</td>
+</tr>
+<tr>
+<td>内存保护</td>
+<td><code>mybatis.defaultFetchSize = 200</code> 控制批量游标</td>
+</tr>
+<tr>
+<td>故障隔离</td>
+<td>Web/Service/Batch/FaaS 独立部署；14 个 Lambda 按业务域拆分</td>
+</tr>
+<tr>
+<td>状态外置</td>
+<td>Spring Session Data Redis + Redis Cluster（6 节点）+ Jedis，超时 3600s</td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>DynamoDB 乐观锁重试 4 次 / 500ms（<code>@EnableRetry</code>）</td>
+</tr>
+<tr>
+<td>幂等</td>
+<td><code>app.batch.idempotency-duration-minutes = 10</code></td>
+</tr>
+<tr>
+<td>重试</td>
+<td><code>MailSendRetryService</code> 专用重试服务</td>
+</tr>
+<tr>
+<td>投递跟踪</td>
+<td><code>TEmailDeliveryManagement</code> + <code>update_travel_status</code></td>
+</tr>
+<tr>
+<td>可观测</td>
+<td>Prometheus PushGateway（Batch）；Powertools Logger/Tracer（FaaS）</td>
+</tr>
+<tr>
+<td>可复现</td>
+<td>JobParameter 显式传入 <code>executionBaseDate</code> / <code>acquisitionRange</code></td>
+</tr>
+<tr>
+<td>降级隔离</td>
+<td>主数据本地只读副本（26 张 <code>M*</code> 表），外部系统故障不影响业务</td>
+</tr>
+<tr>
+<td>传输安全</td>
+<td>gRPC 使用 TLS（<code>tls://</code> endpoint）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑦ 批量推送的幂等与重试</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 资源隔离</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐⭐ —— 无状态化</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— 数据可靠性（特色）</li>
+<li><strong>⑥ Serverless 数据同步</strong> ⭐⭐ —— 最终一致性的可靠性设计</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只写「用了集群所以高可用」</td>
+<td>空洞</td>
+<td>要写<strong>可用性目标 → 威胁 → 措施 → 验证</strong>这条链</td>
+</tr>
+<tr>
+<td>不提可用性指标</td>
+<td>漏考点</td>
+<td>必须给出 SLA 目标（🔶 填真实值）与 MTTR</td>
+</tr>
+<tr>
+<td>编造双活/异地多活</td>
+<td>高风险</td>
+<td>本项目未见多活架构证据；写「多实例 + 状态外置 + 故障域隔离」是真实的</td>
+</tr>
+<tr>
+<td>编造熔断限流框架</td>
+<td>高风险</td>
+<td>本项目<strong>未见 Sentinel/Hystrix/Resilience4j 证据</strong>，不要写「我们用了熔断降级」</td>
+</tr>
+<tr>
+<td>编造 Redis 业务缓存</td>
+<td>高风险</td>
+<td>Redis 仅用于 Session，写成「多级缓存架构」会露馅</td>
+</tr>
+<tr>
+<td>只讲技术不讲验证</td>
+<td>漏考点</td>
+<td>补上「如何验证」：TestContainers + LocalStack 做集成验证、Prometheus 做运行监控</td>
+</tr>
+<tr>
+<td>忽略批量作业可靠性</td>
+<td>片面</td>
+<td>批处理是可靠性重点，务必写入幂等、重试、可重跑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>三条技术真实性红线</strong>（务必遵守）：
+① <strong>未见熔断/限流组件</strong>（Hystrix、Sentinel、Resilience4j）
+② <strong>未见 Redis 业务数据缓存</strong>（仅 Session）
+③ <strong>未见多活/异地容灾架构</strong></p>
+<p>若题目强制要求写熔断降级，可如实写：
+「当前架构以故障域隔离与幂等重试为主要可靠性手段，
+熔断降级尚未引入，这是后续改进方向」——<strong>诚实反而加分</strong>。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>03-数据架构与混合存储.md</code> · <code>08-批处理架构设计.md</code> · <code>05-系统安全架构.md</code></em></p>
+</body>
+</html>

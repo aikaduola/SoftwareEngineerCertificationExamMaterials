@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>06-系统集成与gRPC</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>论文模板 06 · 系统集成与异构系统互操作（gRPC / 契约驱动）</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。
+<strong>本主题是 BASE HOME 的绝对强项</strong>——「一份 proto 驱动 Java/Go/PHP 三语言」
+是极少有人能写出的真实素材，竞赛压力小，<strong>强烈建议重点准备</strong>。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（系统集成整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的集成方案设计，包括集成方式选型、
+接口契约管理与异构系统互操作等方面。</p>
+</blockquote>
+<p><strong>变体 B（接口/契约管理）</strong></p>
+<blockquote>
+<p>请论述你如何在多团队、多技术栈环境下保证接口契约的一致性。</p>
+</blockquote>
+<p><strong>变体 C（企业应用集成 EAI）</strong></p>
+<blockquote>
+<p>请论述你如何实现企业内多个异构系统之间的数据集成与流程集成。</p>
+<p><strong>判断</strong>：变体 B 是本项目的<strong>最优命中区</strong>；
+变体 A、C 也可用同一套素材，只需调整论述重心。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的系统集成架构设计与实现。
+该平台需同时为 Java 内部服务、Go 周边平台与 PHP 既有系统三类调用方提供服务，
+并与集团 MDM 主数据平台、外部预约系统、邮件与消息网关等多方交互。
+本人担任架构师，负责接口契约设计、异构系统集成方案与集成治理机制建设。
+针对【多技术栈下接口定义易漂移】、【依赖版本隐式解析引发运行时故障】、
+【外部系统故障影响业务连续性】三大挑战，
+本文从【契约单一来源】、【构建期版本治理】、【外部依赖本地化】三个维度进行设计：
+以 Protocol Buffers 作为唯一契约源，通过构建流水线生成 Java、Go、PHP
+三语言产物及 OpenAPI 文档；以统一版本管理插件锁定关键依赖；
+以本地只读主数据副本隔离外部平台故障。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与集成挑战（约 400 字）</h3>
+<p><strong>集成类论文的开头要写清「谁和谁集成」</strong>。</p>
+<blockquote>
+<p>BASE HOME 处于集团 IT 版图的中间位置，集成关系复杂：
+- <strong>上游</strong>：集团 MDM 主数据平台（本国、城市、航空公司、货币等主数据）
+- <strong>对外</strong>：周边平台通过 Go 客户端接入，既有系统通过 PHP 客户端接入
+- <strong>对内</strong>：Web 层通过 gRPC 调用 Service 层（17 个 RPC）
+- <strong>下游</strong>：邮件网关、SNS 消息推送、SQS 队列、DynamoDB Stream</p>
+<p>多技术栈并存带来一个根本性问题：<strong>接口定义在哪里是「真」的？</strong>
+如果每个调用方各自维护一份接口定义，字段口径必然随时间漂移，
+而这类问题往往在联调甚至上线后才暴露。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：契约单一来源（Single Source of Truth）</strong></p>
+<blockquote>
+<p>我把 <code>base-home-spec</code> 模块确立为<strong>唯一的接口契约源</strong>，
+所有接口以 protobuf 定义，统一存放于 <code>his/base/home/v1/</code> 目录，
+按职责分层组织：
+- <code>basehome_service.proto</code> —— 服务定义（<code>BaseHomeService</code>，17 个 RPC）
+- <code>request/</code> —— 17 个请求消息
+- <code>response/</code> —— 17 个响应消息
+- <code>enums/</code> —— 13 个枚举（产品类型、文档类型、申请人类型、消息状态、
+  销售渠道、发送者类型、保险类型等）
+- <code>type/</code> —— 约 42 个可复用消息（含统一的 <code>Error{code,message}</code>）</p>
+<p>全部约 90 个 proto 文件纳入版本管理，任何接口变更都必须
+通过该模块提交，从流程上杜绝了「各写一份」的可能。</p>
+<p><strong>层次化组织的价值</strong>：<code>type/</code> 中的可复用消息（如地址、金额、
+旅行者基础信息）被多个 request/response 引用，
+避免了同一结构在 17 个接口中重复定义 17 次——
+这是契约可维护性的关键。</p>
+</blockquote>
+<p><strong>第二层：构建期多语言产物生成</strong></p>
+<blockquote>
+<p>契约定义统一后，我在构建脚本中编排了完整的生成链路：
+<code>build.sh</code> 按 <code>build-java → build-go → build-php → generate-all</code> 顺序执行，
+每种语言使用各自的官方插件：</p>
+<table>
+<thead>
+<tr>
+<th>目标语言</th>
+<th>生成方式</th>
+<th>产物形态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td><code>protobuf-gradle-plugin</code>（protoc + protoc-gen-grpc-java）</td>
+<td>发布至内部 Maven</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>容器内 protoc（<code>--go_out</code> / <code>--go-grpc_out</code> / <code>--grpc-gateway_out</code>）</td>
+<td>Go module zip</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td><code>--php_out</code> + <code>grpc_php_plugin</code></td>
+<td>Composer 包</td>
+</tr>
+<tr>
+<td>文档</td>
+<td><code>--openapiv2_out</code> → MkDocs</td>
+<td>在线 API 文档</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键设计</strong>：把「生成」纳入构建流水线而非依赖人工执行，
+使接口一致性问题从「运行时联调发现」提前到「构建期暴露」——
+这是本次集成设计最重要的收益。</p>
+<p><strong>权衡说明</strong>：多语言生成的构建链路复杂度显著上升
+（需维护 Docker 化的 protoc 环境、三套发布流程），
+但相比接口不一致导致的线上缺陷与联调返工，这个成本是值得的。</p>
+</blockquote>
+<p><strong>第三层：对外依赖本地化</strong></p>
+<blockquote>
+<p>集团 MDM 主数据平台是外部系统，若业务查询直连外部，
+则外部系统的任何抖动都会直接传导到业务操作。
+我采用<strong>本地只读副本</strong>策略：通过 <code>ImportMdmJob</code> 定时从 MDM API 拉取主数据，
+落地为 26 张 <code>M*</code> 主数据表，业务侧只查本地。
+这样 MDM 平台短暂不可用时业务不受影响，
+数据新鲜度通过同步频率控制，是「可用性优先」的合理取舍。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：通信协议选型</strong></p>
+<blockquote>
+<p>服务间通信选择 <strong>gRPC</strong> 而非 REST，依据有三：
+① HTTP/2 多路复用，在高频内部调用下连接利用率更高；
+② protobuf 二进制编码体积小、序列化开销低；
+③ <strong>强类型契约天然由 proto 保证</strong>，与我们的契约单一来源策略一致。
+服务端监听 6565 端口，单次消息上限设为 64MB
+（旅游业务存在较大报文，如批量消息与文件列表），
+并开启 gRPC Reflection 便于调试期接口探查。</p>
+<p>对外则通过 Web 层的 REST 接口（<code>/api/v1/**</code>）暴露，
+兼顾浏览器友好性与前端契约稳定性，
+并用 SpringDoc 生成 OpenAPI 描述（<code>/api-docs</code>）。</p>
+</blockquote>
+<p><strong>要素二：服务端的分发设计</strong></p>
+<blockquote>
+<p><code>base-home-service</code> 以单一入口类 <code>BaseHomeService</code>
+（<code>@GRpcService</code>，继承 proto 生成的 <code>BaseHomeServiceImplBase</code>）承接 17 个 RPC，
+统一经 <code>execute(IGrpcService, req, respObserver)</code> 方法分发。
+业务逻辑委托给 18 个实现类（均实现 <code>IGrpcService</code> 接口）。
+这一设计的价值在于：<strong>横切关注点集中</strong>——
+日志、异常转换、认证上下文校验都可在 <code>execute</code> 中统一处理，
+各业务实现类只关注业务逻辑，避免每个 RPC 重复编写样板代码。</p>
+<p><strong>权衡说明</strong>：单一入口在 RPC 数量极大时会成为维护瓶颈，
+但 17 个 RPC 的规模下，统一分发带来的横切收益大于其复杂度成本。</p>
+</blockquote>
+<p><strong>要素三：跨业务域能力复用</strong></p>
+<blockquote>
+<p>多个 RPC 需要的能力（文档、消息线程、亲权同意书、
+序列号、旅行信息）下沉到 <code>service/shared/</code> 中的 5 个服务，
+避免同一逻辑在多个 RPC 中重复实现。
+文件相关能力单独归入 <code>service/filesystem/</code>。</p>
+</blockquote>
+<p><strong>要素四：错误契约统一</strong></p>
+<blockquote>
+<p>proto 中定义统一的 <code>Error{code, message}</code> 消息，
+所有接口的错误返回结构一致，调用方可编写统一的错误处理逻辑，
+无需为每个接口单独适配。错误码体系与 <code>his-common</code> 的消息 ID 规范对齐
+（如 <code>EABH00001</code> 形式的错误码），使错误在服务端、Web 端与
+文档中具有一致的标识。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>集成主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>① 一份 proto 契约驱动三语言</td>
+<td>主题核心，独一无二</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>② protobuf 版本冲突致启动失败</td>
+<td>直接对应「集成治理」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>③ AWS SDK v1/v2 并存</td>
+<td>直接对应「异构共存」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据统一</td>
+<td>直接对应「企业应用集成」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（②，三段式）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：契约统一后，新的问题出现了——
+契约的「消费者」不止我们的服务，还包括 protobuf 官方的公共类型库。
+一次依赖升级中，<code>proto-google-common-protos</code> 被解析到 2.64.0-rc1，
+gRPC 服务启动直接失败。更棘手的是，由于我们的版本声明采用了
+动态区间（<code>protobufVersion = '[3,4)'</code>、<code>grpcVersion = 'latest.release'</code>），
+这个问题在构建期完全不显现，只在运行时暴露。</p>
+<p>我的判断是：这不是偶发故障，而是<strong>契约不完整</strong>的表现——
+我们统一了业务接口的契约，却没有统一「第三方依赖版本」这一隐式契约。
+因此我没有做局部修复，而是在 <code>base-home-versions</code> 统一版本源中
+用 <code>resolutionStrategy { force ... }</code> 将 <code>proto-google-common-protos</code>
+锁定到 2.63.2，并同步锁定 MyBatis 3.0.5 等关键组件。</p>
+<p><strong>效果</strong>：启动失败问题消除；同一提交在任何机器上构建产物一致，
+<strong>构建可复现性</strong>得到保障。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该集成架构已稳定支撑 Java、Go、PHP 三端调用，
+17 个 RPC 在三端口径一致，接口文档随契约自动生成。
+不足之处：
+一是跨语言契约虽来源统一，但**破坏性变更尚未实现自动化的兼容性检测**，
+目前依赖人工评审；
+二是 Go 与 PHP 侧的对齐仍依赖固定版本号人工同步，
+尚未做到发布即对齐。
+后续计划引入契约兼容性校验与三端发布联动。
+通过本项目我认识到，系统集成的本质不是&quot;把系统连起来&quot;，
+而是&quot;让多个系统对同一件事保持一致的理解&quot;。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>契约源</td>
+<td><code>base-home-spec</code>，protobuf 唯一契约源，约 90 个 proto 文件</td>
+</tr>
+<tr>
+<td>服务定义</td>
+<td><code>basehome_service.proto</code> → <code>service BaseHomeService</code>，17 个 RPC</td>
+</tr>
+<tr>
+<td>契约分层</td>
+<td><code>request/</code>（17）+ <code>response/</code>（17）+ <code>enums/</code>（13）+ <code>type/</code>（约 42）</td>
+</tr>
+<tr>
+<td>统一错误</td>
+<td><code>type/error.proto</code> → <code>Error{code, message}</code></td>
+</tr>
+<tr>
+<td>多语言生成</td>
+<td>Java（protobuf-gradle-plugin）/ Go（protoc + grpc-gateway）/ PHP（grpc_php_plugin）</td>
+</tr>
+<tr>
+<td>生成编排</td>
+<td><code>build.sh</code>：build-java → build-go → build-php → generate-all</td>
+</tr>
+<tr>
+<td>文档生成</td>
+<td><code>--openapiv2_out</code> → <code>base_home_api.swagger.json</code> → MkDocs 站点</td>
+</tr>
+<tr>
+<td>HTTP 映射</td>
+<td>每个 RPC 带 <code>google.api.http</code> 映射，路径 <code>/v1/&lt;RpcName&gt;</code></td>
+</tr>
+<tr>
+<td>服务通信</td>
+<td>gRPC 端口 6565，<code>maxInboundMessageSize</code> 64MB，开启 Reflection</td>
+</tr>
+<tr>
+<td>服务端设计</td>
+<td>单入口 <code>BaseHomeService</code> + <code>execute()</code> 统一分发，18 个实现类</td>
+</tr>
+<tr>
+<td>能力复用</td>
+<td><code>service/shared/</code> 5 个共享服务；<code>service/filesystem/</code> 2 个</td>
+</tr>
+<tr>
+<td>调用方式</td>
+<td>配置化 endpoint（<code>tls://</code>）+ TLS 传输加密</td>
+</tr>
+<tr>
+<td>对外接口</td>
+<td>Web 层 REST <code>/api/v1/**</code>，SpringDoc OpenAPI <code>/api-docs</code></td>
+</tr>
+<tr>
+<td>主数据集成</td>
+<td><code>ImportMdmJob</code> 定时从 MDM API 同步，本地 26 张 <code>M*</code> 只读副本</td>
+</tr>
+<tr>
+<td>外部预约集成</td>
+<td><code>ExternalReservationImportJob</code> + <code>RecvImportType</code></td>
+</tr>
+<tr>
+<td>异步集成</td>
+<td>SNS 主题、SQS 队列、DynamoDB Stream → Lambda</td>
+</tr>
+<tr>
+<td>版本治理</td>
+<td><code>base-home-versions</code> 插件 + <code>resolutionStrategy force</code></td>
+</tr>
+<tr>
+<td>版本对齐</td>
+<td><code>his-common-spec</code> 2.6.0 在 Java/Go/PHP 三侧对齐固定</td>
+</tr>
+<tr>
+<td>依赖方向</td>
+<td>web/service → common + spec；batch → common + mdm-spec</td>
+</tr>
+<tr>
+<td>文档发布</td>
+<td>MkDocs 站点（容器化，端口 8888）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐⭐ —— 本主题核心</li>
+<li><strong>② protobuf 版本冲突致启动失败</strong> ⭐⭐⭐ —— 集成治理</li>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐⭐ —— 异构共存与渐进演进</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐⭐ —— 企业应用集成</li>
+<li><strong>⑥ Serverless 数据同步</strong> ⭐⭐ —— 异步集成</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只说「用了 gRPC」</td>
+<td>无深度</td>
+<td>必须写<strong>为什么不用 REST</strong>（HTTP/2、强类型契约、二进制编码效率）</td>
+</tr>
+<tr>
+<td>不写契约管理</td>
+<td>关键失分</td>
+<td>「契约单一来源」是本主题的灵魂，务必写透</td>
+</tr>
+<tr>
+<td>编造服务注册中心</td>
+<td>高风险</td>
+<td>本项目 gRPC 为 <strong>endpoint 配置直连</strong>，无 Eureka/Nacos/Consul</td>
+</tr>
+<tr>
+<td>编造 API 网关</td>
+<td>高风险</td>
+<td>本项目未见网关组件，不要写「通过网关统一鉴权」；可写「统一路径便于网关层集中治理」作为设计意图</td>
+</tr>
+<tr>
+<td>编造 ESB</td>
+<td>高风险</td>
+<td>本项目未用 ESB，集成靠契约 + 消息队列，如实写即可</td>
+</tr>
+<tr>
+<td>忽略版本治理</td>
+<td>漏考点</td>
+<td>集成不仅是「连起来」，还包括依赖版本的一致性</td>
+</tr>
+<tr>
+<td>忘记写权衡</td>
+<td>缺乏架构思维</td>
+<td>多语言生成的构建复杂度 vs 接口不一致的返工成本，要明确对比</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>本主题的独特优势</strong>：
+「一份契约生成 Java/Go/PHP 三语言 + 自动生成 OpenAPI 文档」
+这个素材<strong>绝大多数考生写不出来</strong>，因为它需要真实的多语言项目经历。
+如果你的考题涉及「接口管理」「多团队协作」「异构系统集成」，
+优先选这道题，用 ① 和 ② 两个难点撑满「难点」段，
+基本可以保证在这一题上拿到高于平均的分数。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code>（服务间通信）· <code>03-数据架构与混合存储.md</code>（数据集成）</em></p>
+</body>
+</html>

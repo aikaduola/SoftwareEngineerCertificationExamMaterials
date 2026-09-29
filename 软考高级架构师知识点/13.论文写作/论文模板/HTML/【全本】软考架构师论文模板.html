@@ -1,0 +1,4366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>软考系统架构设计师</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<div class="cover"><div class="c-title">软考系统架构设计师</div><div class="c-sub">论文模板全集（基于 H.I.S. BASE HOME 项目）</div><div class="c-line"></div><div class="c-meta">含使用说明、项目素材库与 9 大主题模板<br>阅读顺序：先读《使用说明》与《项目素材库》，再按主题查阅<br>共 11 篇</div></div><div class="chapter"><h1>软考「系统架构设计师」论文模板集 · 使用说明</h1>
+<blockquote>
+<p>基于 <strong>H.I.S. BASE HOME 项目</strong>（日本旅游业务系统）真实架构定制。
+目标：把你自己做过的项目，改造成能套多种题目的论文素材。</p>
+</blockquote>
+<hr />
+<h2>一、目录结构</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>主题</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>00-项目素材库.md</code></td>
+<td><strong>项目真实素材、难点库、通用段落</strong></td>
+<td>⭐⭐⭐ 必读</td>
+</tr>
+<tr>
+<td><code>01-微服务架构设计.md</code></td>
+<td>微服务拆分、服务治理</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>02-云原生与FaaS架构.md</code></td>
+<td>AWS Lambda、Serverless、容器化</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>03-数据架构与混合存储.md</code></td>
+<td>MySQL + DynamoDB + S3、读写分离</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>04-高并发与高可用架构.md</code></td>
+<td>缓存、集群、削峰、容错</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>05-系统安全架构.md</code></td>
+<td>Spring Security、OAuth2、多语言契约</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><code>06-系统集成与gRPC.md</code></td>
+<td>proto 三语言契约、异构集成</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>07-架构评估与质量属性.md</code></td>
+<td>ATAM、质量属性场景、权衡点</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><code>08-批处理架构设计.md</code></td>
+<td>Spring Batch、幂等、重试</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><code>09-架构演化与遗留系统改造.md</code></td>
+<td>架构风格、渐进演进、重构</td>
+<td>⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>只求通过：主攻 <strong>01 / 02 / 03 / 04 / 07</strong>，覆盖近五年约 70% 题面。
+求高分：再补 <strong>06 / 09</strong>，这两类题目竞争小、容易出彩。</p>
+</blockquote>
+<h3>与 <code>完整论文/</code> 的区别（重要）</h3>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>性质</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>论文模板/</code>（本目录）</td>
+<td><strong>写作指导</strong>：真题问法、摘要模板、五段框架、填充点、踩坑提醒</td>
+<td>学「怎么写」，自己动手写</td>
+</tr>
+<tr>
+<td><code>论文模板/完整论文/</code></td>
+<td><strong>成品范文</strong>：9 篇可直接背诵的完整论文（试题 + 摘要 + 正文约 2800 字）</td>
+<td>背「写好的」，考前突击</td>
+</tr>
+</tbody>
+</table>
+<p><code>完整论文/</code> 下每篇均按软考「合格论文」格式撰写，结构为：
+标题 → 数字提醒 → 试题（含三问）→ 摘要 → 正文（五个小标题）→ 写作提示（含待替换数字清单）。</p>
+<blockquote>
+<p>⚠️ 范文中的量化数字<strong>全部是示例值</strong>，源码中并不存在，背诵前必须替换为你项目的真实数据。
+每篇末尾的「待替换数字清单」已逐项列出需要核对的位置。</p>
+</blockquote>
+<h3>三种文件形式（内容完全相同，按场景选用）</h3>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>形式</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>论文模板/</code>（根目录）</td>
+<td>Markdown 源文件</td>
+<td>修改内容、被 AI 工具读取</td>
+</tr>
+<tr>
+<td><code>论文模板/PDF/</code></td>
+<td><strong>12 个 PDF</strong></td>
+<td><strong>打印、精读</strong>（含 1 个 64 页全本，带封面）</td>
+</tr>
+<tr>
+<td><code>论文模板/HTML/</code></td>
+<td>网页文件</td>
+<td>浏览器打开，<strong>搜索关键词</strong>更方便</td>
+</tr>
+<tr>
+<td><code>论文模板/_tools/</code></td>
+<td>转换脚本</td>
+<td>改完 md 后一键重新生成</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>推荐用法</strong>：平时用 PDF 或 HTML 阅读；需要改内容时改 <code>.md</code>，
+然后重新生成——<strong>不要直接编辑 PDF</strong>。</p>
+</blockquote>
+<h3>重新生成方法（修改 md 之后）</h3>
+<pre><code class="language-bash">cd &quot;E:\BaiduNetdiskDownload\软考高级架构师知识点\13.论文写作\论文模板\_tools&quot;
+
+python md2pdf.py          # 全量重新生成（PDF + HTML + 全本）
+python md2pdf.py 01       # 只重新生成文件名含 &quot;01&quot; 的
+python check_pdfs.py      # 检查 PDF 页数与字体是否正常
+python fix_md_lists.py --dry   # 检查 md 列表格式（改了内容后建议跑一次）
+</code></pre>
+<blockquote>
+<p>依赖：Python 3 + <code>markdown</code> 库 + Microsoft Edge（已确认本机全部具备）。</p>
+</blockquote>
+<hr />
+<h2>二、使用方法（三步）</h2>
+<h3>第一步：读素材库，定「项目口径」</h3>
+<p>打开 <code>00-项目素材库.md</code>，重点看：</p>
+<ol>
+<li><strong>第一节「项目概况」</strong> —— 论文第一段直接改写</li>
+<li><strong>第四节「难点素材库」</strong>（10 个难点）—— 这是论文的弹药</li>
+<li><strong>第七节「必须补充的数字清单」</strong> —— 🔶 标记处全部填上你的真实数据</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>最关键的一步</strong>：先把数字清单填完再写论文。
+没有数字的论文，阅卷老师 30 秒就能看出是模板套的。</p>
+</blockquote>
+<h3>第二步：按题目选模板</h3>
+<p>每个主题模板的结构固定为六节：</p>
+<pre><code>一、真题常见问法        ← 对照你的考卷，判断属于哪一种
+二、摘要模板            ← 直接改写，替换【】里的内容
+三、正文五段框架        ← 每段都有字数分配和写作要点
+四、本项目填充点        ← 真实模块/类名/配置，直接抄
+五、可用难点素材        ← 从素材库挑 2～3 个填进去
+六、踩坑提醒            ← 这一类题目的特有陷阱
+</code></pre>
+<h3>第三步：换壳不换骨</h3>
+<p>考场策略：<strong>底稿结构不动，按题目要求置换论述重心</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>题目要求</th>
+<th>置换动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「论述你如何进行微服务拆分」</td>
+<td>重心放「四、填充点」的模块划分理由</td>
+</tr>
+<tr>
+<td>「论述微服务架构的服务治理」</td>
+<td>重心放「五、难点素材」的契约一致性 + 版本治理</td>
+</tr>
+<tr>
+<td>「论述微服务架构的挑战」</td>
+<td>重心放「架构演化」——v1/v2 SDK 并存、渐进演进</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、备考节奏建议</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时长</th>
+<th>任务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 素材准备</td>
+<td>2 天</td>
+<td>填完 <code>00</code> 的数字清单；把 10 个难点用<strong>自己的话</strong>复述一遍</td>
+</tr>
+<tr>
+<td>② 精写底稿</td>
+<td>3 天</td>
+<td>选 <code>01-微服务</code> 写一篇完整的 2800 字，<strong>手写</strong>（考场是手写！）</td>
+</tr>
+<tr>
+<td>③ 横向铺开</td>
+<td>4 天</td>
+<td>用同一套素材，改写出 <code>03</code> <code>04</code> <code>07</code> 三篇</td>
+</tr>
+<tr>
+<td>④ 限时训练</td>
+<td>3 天</td>
+<td>每天 1 篇，严格 120 分钟，控制在 2500～3000 字</td>
+</tr>
+<tr>
+<td>⑤ 补漏</td>
+<td>2 天</td>
+<td>挑 <code>02</code> <code>06</code> 各写一篇，确保 4 选 1 时手里有牌可打</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>手写训练不可省</strong>。很多人机打 3000 字只要 40 分钟，
+手写却要 100 分钟，考场上直接写不完。</p>
+</blockquote>
+<hr />
+<h2>四、阅卷评分要点（据历年考情）</h2>
+<table>
+<thead>
+<tr>
+<th>评分维度</th>
+<th>权重</th>
+<th>关键动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切题</td>
+<td>高</td>
+<td>摘要和正文小标题必须呼应题目要求</td>
+</tr>
+<tr>
+<td>项目真实性</td>
+<td>高</td>
+<td>具体业务域、具体技术栈、具体数字</td>
+</tr>
+<tr>
+<td>架构决策能力</td>
+<td>高</td>
+<td>写出「为什么选 A 不选 B」的权衡</td>
+</tr>
+<tr>
+<td>结构完整</td>
+<td>中</td>
+<td>摘要 + 背景 + 设计 + 实现 + 难点 + 总结</td>
+</tr>
+<tr>
+<td>字数</td>
+<td>中</td>
+<td>2500～3000 字</td>
+</tr>
+<tr>
+<td>卷面</td>
+<td>中</td>
+<td>分段清晰，小标题明确，不涂改</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、三条写作心法</h2>
+<ol>
+<li>
+<p><strong>写决策，不写名词</strong>
+   ❌「系统采用了微服务架构，使用了 Docker 和 Kubernetes」
+   ✅「考虑到预约、消息、批处理的伸缩特征差异巨大（预约是突发流量、批处理是定时峰值、
+   消息是持续低频），我把它们拆分为独立部署单元，使批处理的资源峰值不再影响在线预约接口」</p>
+</li>
+<li>
+<p><strong>写权衡，不写完美</strong>
+   ❌「我们选择了最优方案」
+   ✅「该方案牺牲了跨表事务一致性，换来弹性伸缩能力；考虑到旅游预约场景下
+   跨域事务极少，这个交换是可接受的」</p>
+</li>
+<li>
+<p><strong>写演化，不写一步到位</strong>
+   ❌「系统一开始就是现在这个架构」
+   ✅「初期采用单体部署，随着【业务变化】，暴露出【问题】，
+   我们在【阶段】进行了【拆分/重构】，其中【难点】通过【手段】解决」</p>
+</li>
+</ol>
+<hr />
+<h2>六、关于真实性的提醒</h2>
+<p>本模板集基于 <code>F:\his-base-home</code> 源码调研生成，其中的：</p>
+<ul>
+<li>✅ <strong>模块划分、类名、配置项、版本号</strong> —— 均来自真实文件，可放心使用</li>
+<li>🔶 <strong>性能数字、业务量、成本</strong> —— 项目源码中<strong>不存在</strong>，模板已全部标注，
+  <strong>必须由你填入真实数据，不要照抄</strong></li>
+</ul>
+<p>配置文件中包含真实的凭证类配置项，写作时<strong>只能写配置项名称与作用</strong>，
+不得出现任何 Client Secret、Access Key、密码、Issuer 的实际值。</p>
+<hr />
+<h2>七、应急方案（考场上 4 题都不熟时）</h2>
+<ol>
+<li>先排除<strong>题目要求最具体、最窄</strong>的那道（越窄越难写）</li>
+<li>在剩下 3 题里找<strong>能塞进你素材库难点最多</strong>的那道</li>
+<li>按该主题模板的「三、正文五段框架」搭骨架（10 分钟）</li>
+<li>从素材库挑 2 个最贴合的难点填进去</li>
+<li>宁可写「中等深度 + 完整结构」，不要写「局部很深 + 结构残缺」</li>
+</ol>
+<blockquote>
+<p>论文是<strong>及格性考试</strong>，45 分即可。结构完整、切题、有数字、有本人角色，
+基本就能过。不要在考场上追求写出完美范文。</p>
+</blockquote>
+<hr />
+<p><em>祝顺利通过。</em></p></div><div class="chapter"><h1>BASE HOME 项目素材库（论文写作的事实来源）</h1>
+<blockquote>
+<p><strong>本文件是所有主题模板的底座。</strong> 其余 01～09 号模板都从这里取素材。
+写作顺序建议：先读本文件 → 选定项目口径 → 再打开对应主题模板填充。</p>
+</blockquote>
+<hr />
+<h2>⚠️ 先读这一节：素材可信度说明</h2>
+<p>论文最忌讳编造。本素材库严格区分两类内容：</p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>含义</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>真实</strong></td>
+<td>来自项目源码/配置，可直接写进论文</td>
+<td>放心使用</td>
+</tr>
+<tr>
+<td>🔶 <strong>待你补充</strong></td>
+<td>项目里没有的数据（尤其是性能指标）</td>
+<td><strong>必须由你填入真实或合理数字，禁止直接照抄</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>重点提醒</strong>：项目源码中<strong>不存在</strong> QPS、响应时间、并发用户数、数据量等性能数据。
+论文要求「具体数字」，这部分<strong>只能由你结合真实上线情况填写</strong>。
+本文件在需要数字的地方一律标注 🔶，不要编造后当成事实。</p>
+</blockquote>
+<p><strong>脱敏要求</strong>：论文中只能写「配置项名称 + 作用」，不得出现任何真实的
+OAuth2 Client Secret、AWS Access Key、Cognito Issuer、数据库密码等值。</p>
+<hr />
+<h2>一、项目概况（论文第一段直接用）</h2>
+<p><strong>项目名称</strong>：BASE HOME（ベースホーム）</p>
+<p><strong>所属企业</strong>：H.I.S.（エイチ・アイ・エス）——日本大型旅行社集团</p>
+<p><strong>业务定位</strong>：面向旅行者（旅行者）与营业本部（営業本部）的<strong>旅游业务流程支撑平台</strong>，
+覆盖预约管理（予約管理）、客户消息（顧客メッセージ）、通知发送（通知配信）、
+文件管理（ファイル管理）与主数据联动。</p>
+<h3>核心业务域（真实 Controller/Service 归类）</h3>
+<table>
+<thead>
+<tr>
+<th>业务域</th>
+<th>日文原文</th>
+<th>承载模块</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预约管理</td>
+<td>予約管理</td>
+<td>web（预约搜索/管理/全局搜索）+ service（Travel 系列 RPC）</td>
+</tr>
+<tr>
+<td>客户消息</td>
+<td>顧客メッセージ</td>
+<td>web（20+ 消息控制器）+ service（Message RPC 8 个）</td>
+</tr>
+<tr>
+<td>员工消息</td>
+<td>社員メッセージ</td>
+<td>web</td>
+</tr>
+<tr>
+<td>通知发送</td>
+<td>通知配信</td>
+<td>batch（邮件/SNS）+ faas（Wallet 通知、MyPage 通知）</td>
+</tr>
+<tr>
+<td>文件管理</td>
+<td>ファイル管理</td>
+<td>web（S3 下载）+ service（上传/列表 RPC）</td>
+</tr>
+<tr>
+<td>亲权同意书</td>
+<td>親権同意書</td>
+<td>service（Parental 系列）+ faas</td>
+</tr>
+<tr>
+<td>主数据管理</td>
+<td>マスタ管理</td>
+<td>batch（MDM 联动）+ common（26 张 M 表）</td>
+</tr>
+<tr>
+<td>ToDo 管理</td>
+<td>ToDo 管理</td>
+<td>batch + faas + web</td>
+</tr>
+<tr>
+<td>成本文件</td>
+<td>コストファイル</td>
+<td>batch（ACT/AIR/HTL 三类成本文件生成）+ web（下载）</td>
+</tr>
+</tbody>
+</table>
+<h3>项目规模（✅ 真实）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gradle 模块数</td>
+<td>8 个（web / service / batch / common / spec / faas / versions / environment）</td>
+</tr>
+<tr>
+<td>独立 Git 仓库</td>
+<td>各 Java 模块独立仓库，无顶层聚合</td>
+</tr>
+<tr>
+<td>gRPC RPC 方法</td>
+<td>17 个（<code>BaseHomeService</code>），服务端 18 个实现类</td>
+</tr>
+<tr>
+<td>protobuf 文件</td>
+<td>约 90 个（enums 13 + request 17 + response 17 + type 约 42）</td>
+</tr>
+<tr>
+<td>MyBatis 实体</td>
+<td>79 个（26 张 <code>M*</code> 主数据表 + 53 张 <code>T*</code> 业务表）</td>
+</tr>
+<tr>
+<td>MyBatis Mapper</td>
+<td>54 个</td>
+</tr>
+<tr>
+<td>AWS Lambda 函数</td>
+<td>14 个（Python 3.13）</td>
+</tr>
+<tr>
+<td>DynamoDB 表</td>
+<td>5 张（travel / document / parental / sequence / message_thread）</td>
+</tr>
+<tr>
+<td>Spring Batch Job</td>
+<td>10 个（含 1 个测试用 NoopJob）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>二、模块清单（架构图的骨架，✅ 真实）</h2>
+<pre><code>                        ┌─────────────────────────────────┐
+   浏览器 / MyPage  ──► │      base-home-web (8080)       │
+   外部系统 / Wallet    │  Thymeleaf MVC + REST /api/v1   │
+                        └───────┬──────────────┬──────────┘
+                                │              │
+                     gRPC 调用  │              │ MyBatis
+                                ▼              ▼
+              ┌──────────────────────┐   ┌──────────────┐
+              │ base-home-service    │   │  Aurora      │
+              │  (gRPC :6565)        │   │  MySQL       │
+              │  DynamoDB + S3       │   └──────┬───────┘
+              └──────────┬───────────┘          │
+                         │                      │
+                  ┌──────▼───────┐              │
+                  │  DynamoDB    │              │
+                  │  (5 表)      │              │
+                  └──────┬───────┘              │
+                         │ DynamoDB Stream      │
+                         ▼                      │
+              ┌──────────────────────┐          │
+              │ base-home-faas       │──────────┘
+              │ 14 × Lambda (Py3.13) │  写入/更新
+              │ SQS / Stream 触发     │
+              └──────────────────────┘
+                         ▲
+                         │ SNS / 定时
+              ┌──────────┴───────────┐
+              │ base-home-batch      │
+              │ Spring Batch 3.5.7   │
+              │ 双数据源 reader/writer│
+              └──────────────────────┘
+
+  基座：base-home-common（实体/常量/消息/CSV）
+        base-home-spec  （proto → Java/Go/PHP + OpenAPI 文档）
+        base-home-versions（Gradle 统一版本管理插件）
+</code></pre>
+<h3>各模块要点（写作时按主题取用）</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>技术要点</th>
+<th>可支撑的论文主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>base-home-web</strong></td>
+<td>Spring Boot MVC + Thymeleaf、Spring Security + OAuth2/OIDC、Redis Cluster Session、MyBatis、SpringDoc <code>/api-docs</code></td>
+<td>安全架构、高可用、系统集成</td>
+</tr>
+<tr>
+<td><strong>base-home-service</strong></td>
+<td>gRPC 服务端（<code>@GRpcService</code>）、DynamoDB Enhanced Client、S3、STS AssumeRole、重试</td>
+<td>微服务、数据架构、集成、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-batch</strong></td>
+<td>Spring Batch、<strong>双数据源读写分离</strong>、SNS、MDM 联动、Prometheus PushGateway、幂等控制</td>
+<td>批处理、数据架构、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-common</strong></td>
+<td>统一消息体系（<code>EABH00001</code> 类消息 ID）、SuperCSV、79 实体、自动生成的双语 properties</td>
+<td>数据架构、复用</td>
+</tr>
+<tr>
+<td><strong>base-home-spec</strong></td>
+<td>90 个 proto、<strong>一份契约生成 Java/Go/PHP 三语言</strong>、OpenAPI + MkDocs</td>
+<td>系统集成、架构复用、微服务</td>
+</tr>
+<tr>
+<td><strong>base-home-faas</strong></td>
+<td>14 个 Lambda、Powertools、SQS / DynamoDB Stream 触发、SSM Parameter Store、pytest + moto</td>
+<td>云原生、FaaS、数据架构、高可用</td>
+</tr>
+<tr>
+<td><strong>base-home-versions</strong></td>
+<td>Gradle 插件统一版本 + <code>resolutionStrategy force</code></td>
+<td>架构可维护性、构建治理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、技术栈版本（✅ 真实，可直接引用）</h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td><strong>3.5.7</strong></td>
+</tr>
+<tr>
+<td>Spring Batch</td>
+<td><strong>3.5.7</strong></td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td>8.10（wrapper）/ 8.14.3（CI）</td>
+</tr>
+<tr>
+<td>MyBatis</td>
+<td>3.0.5（强制覆盖 Spring Boot 托管版本）</td>
+</tr>
+<tr>
+<td>gRPC (io.grpc)</td>
+<td><strong>1.70.0</strong></td>
+</tr>
+<tr>
+<td>protobuf</td>
+<td><code>[3,4)</code> 区间，实际 3.25.x</td>
+</tr>
+<tr>
+<td>proto-google-common-protos</td>
+<td><strong>2.63.2</strong>（强制降级，见难点素材 ②）</td>
+</tr>
+<tr>
+<td>Redis 客户端</td>
+<td>Jedis（Redis Cluster 6 节点）</td>
+</tr>
+<tr>
+<td>AWS SDK</td>
+<td><strong>v1 + v2 并存</strong>（见难点素材 ③）</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.13</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>1.20</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>grpc ^1.42.0 / protobuf ^3.19 || ^4.26</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>TestContainers + LocalStack + H2 + embedded-redis + pytest/moto</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>四、难点素材库（论文「难点与解决」段的核心弹药）</h2>
+<blockquote>
+<p>每个难点都已标注<strong>可套用的主题</strong>。考场上优先选与你题目最贴合的 2～3 个。</p>
+</blockquote>
+<h3>① 一份 proto 契约驱动三语言客户端</h3>
+<ul>
+<li><strong>问题</strong>：系统需同时为 Java（内部服务）、Go（周边平台）、PHP（既有遗留系统）提供 API。
+  若各自维护接口定义，字段口径必然漂移，联调成本高，回归风险大。</li>
+<li><strong>方案</strong>：在 <code>base-home-spec</code> 中以 protobuf 作为<strong>唯一契约源</strong>，
+  通过 <code>build.sh</code> 编排 <code>build-java → build-go → build-php → generate-all</code>，
+  分别用 <code>protoc-gen-grpc-java</code>、<code>protoc --go_out/--go-grpc_out/--grpc-gateway_out</code>、
+  <code>--php_out + grpc_php_plugin</code> 生成三语言产物并独立发布（Maven / Go module / Composer）。
+  同时用 <code>--openapiv2_out</code> 产出 <code>base_home_api.swagger.json</code>，经 MkDocs 发布为在线文档。</li>
+<li><strong>可量化效果</strong>：一份契约、<strong>17 个 RPC</strong> 三端一致；接口变更由构建流水线统一验证，
+  消除了人工同步定义；<code>base-home-spec</code> 产出的 90 个 proto 文件全部纳入版本管理。
+  🔶 建议补充：改造前后接口联调耗时对比、字段不一致缺陷数下降比例。</li>
+<li><strong>可套用主题</strong>：系统集成、微服务、架构复用、架构演化</li>
+</ul>
+<h3>② protobuf 依赖版本冲突导致服务启动失败</h3>
+<ul>
+<li><strong>问题</strong>：<code>proto-google-common-protos</code> 升到 <code>2.64.0-rc1</code> 后，gRPC 服务启动报错，
+  且因版本区间声明为 <code>[3,4)</code>、<code>grpcVersion = latest.release</code>，故障在构建期不显现，
+  只在运行时暴露，属于典型的<strong>依赖漂移引发的架构风险</strong>。</li>
+<li><strong>方案</strong>：在 <code>base-home-versions</code> 的统一版本源中，
+  通过 <code>resolutionStrategy { force ... }</code> 将 <code>proto-google-common-protos</code> 锁定到 <strong>2.63.2</strong>，
+  并同步锁定 MyBatis 3.0.5 等关键组件，把「隐式版本」变成「显式契约」。</li>
+<li><strong>可量化效果</strong>：启动失败问题消除；构建可复现（同一 commit 任意机器产物一致）。
+  🔶 建议补充：锁定前每月因依赖漂移导致的构建/启动故障次数。</li>
+<li><strong>可套用主题</strong>：微服务治理、架构可维护性、架构演化、CI/CD（本难点<strong>非常适合</strong>"架构可维护性/演化"类题目，因为它体现"架构决策的长期成本"）</li>
+</ul>
+<h3>③ AWS SDK v1 与 v2 长期并存</h3>
+<ul>
+<li><strong>问题</strong>：项目历史遗留使用 AWS SDK <strong>v1</strong>（S3 / STS），
+  而 DynamoDB 增强客户端（<code>DynamoDbEnhancedClient</code>）只在 <strong>v2</strong> 提供，
+  两套 SDK 的凭证链、异常模型、配置方式完全不同，直接替换会波及大量既有代码。</li>
+<li><strong>方案</strong>：<strong>接受双版本并存的过渡态</strong>，按能力边界划分：
+  新增能力（DynamoDB 增强访问、STS AssumeRole）一律走 v2，
+  既有能力暂留 v1；在 <code>DynamoDbConfig</code> / <code>AwsConfig</code> 中集中封装客户端构建，
+  统一注入 STS AssumeRole 临时凭证 + <code>DefaultCredentialsProvider</code> 兜底。</li>
+<li><strong>可量化效果</strong>：新功能不再受阻于 SDK 版本；凭证获取统一收口到配置类，一账户一集群。
+  🔶 建议补充：统一凭证后的凭证失效类故障下降情况。</li>
+<li><strong>可套用主题</strong>：架构演化、遗留系统改造、系统集成（这是<strong>"不追求一次性重写、渐进式演进"</strong>的绝佳论据）</li>
+</ul>
+<h3>④ MySQL 读写分离双数据源</h3>
+<ul>
+<li><strong>问题</strong>：批处理既要从生产库大量读取（成本文件、ToDo、预约导入），
+  又要回写结果，读写互相争抢资源，长事务影响在线业务。</li>
+<li><strong>方案</strong>：在 <code>base-home-batch</code> 中配置<strong>双数据源</strong>：
+  <code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+  <code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>），
+  通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+  事务隔离级别设为 <code>TRANSACTION_READ_COMMITTED</code>，<code>defaultFetchSize=200</code> 控制批量游标。</li>
+<li><strong>可量化效果</strong>：读写物理隔离，批量作业不再挤占在线库连接池。
+  🔶 建议补充：作业耗时、在线接口 P99 响应时间的改善数据。</li>
+<li><strong>可套用主题</strong>：数据架构、批处理、高可用、性能优化</li>
+</ul>
+<h3>⑤ DynamoDB 单表多实体 + 混合存储的数据架构</h3>
+<ul>
+<li><strong>问题</strong>：旅游业务数据形态差异极大——
+  旅行主数据（Travel）字段频繁演进、文档（Document）为二进制引用、
+  消息线程（MessageThread）读写频繁、序列号（Sequence）要求强一致自增。
+  若全部塞进关系库，扩展性与弹性不足；若全部 NoSQL，又丢失事务与关联查询能力。</li>
+<li><strong>方案</strong>：<strong>混合存储（Polyglot Persistence）</strong>：</li>
+<li>关系型（Aurora MySQL）承载交易强一致与复杂查询（53 张 <code>T*</code> 业务表 + 26 张 <code>M*</code> 主数据表）</li>
+<li>DynamoDB 承载高弹性、schema-less 的 5 张表，采用 <strong>分区键 + 排序键</strong> 设计
+    （如 <code>travel</code> 表以 <code>travel_no</code> 为分区键、<code>data_type</code> 为排序键、<code>json_data</code> 存半结构化 JSON），
+    实现<strong>单表多实体</strong>，避免表数量膨胀</li>
+<li>S3 承载文件实体（<code>ap-northeast-1</code> 区域）</li>
+<li><code>Sequence</code> 表用 <code>seq_key/seq_no</code> 提供分布式序列号</li>
+<li><strong>可量化效果</strong>：<code>scan-limit=10000</code> 控制扫描边界；表名带环境前缀，实现「1 账户 1 集群」隔离。
+  🔶 建议补充：单表承载的实体种类数、查询延迟数据。</li>
+<li><strong>可套用主题</strong>：数据架构、大数据、微服务（每个主题都会问"数据怎么存"）</li>
+</ul>
+<h3>⑥ Serverless 数据同步链路（最终一致性）</h3>
+<ul>
+<li><strong>问题</strong>：DynamoDB（服务端写入）与 MySQL（报表/既有系统查询）之间需要同步，
+  但同步逻辑若放在 Java 服务里，会拉长主链路响应时间，且扩容成本高。</li>
+<li><strong>方案</strong>：<strong>事件驱动的 Serverless 同步</strong>：
+  DynamoDB Stream 与 SQS 作为事件源触发 14 个 Lambda 函数，
+  按业务域拆分（<code>import_travel_information</code>、<code>import_document_information</code>、
+  <code>import_message_thread</code>、<code>import_booking_information</code>、<code>import_mail_information</code>、
+  <code>import_parental_consent</code>、<code>import_notification</code>、<code>import_wallet_status</code> 等），
+  每个函数独立 Dockerfile、独立 GitHub Actions 工作流、独立 SAM 部署，
+  配置从 SSM Parameter Store 读取，用 <code>aws_lambda_powertools</code> 做日志/链路追踪/批量部分失败处理。
+  主链路只写 DynamoDB 即返回，同步异步化，达成<strong>最终一致性</strong>。</li>
+<li><strong>可量化效果</strong>：14 个函数按域独立扩缩容；单个函数故障不影响其他业务域。
+  🔶 建议补充：同步延迟（秒级）、峰值消息处理量、按需计费节省的成本比例。</li>
+<li><strong>可套用主题</strong>：云原生、FaaS、数据架构、高可用（<strong>近两年最热，强烈建议准备</strong>）</li>
+</ul>
+<h3>⑦ 批量消息推送的幂等与重试</h3>
+<ul>
+<li><strong>问题</strong>：客户消息（顧客メッセージ）常需<strong>批量推送</strong>（<code>BulkPutCustomerMessage</code>），
+  邮件发送（<code>MailSendJob</code>、<code>AutomaticEmailCreateJob</code>）存在网络抖动、
+  第三方邮件网关限流，重试若不加控制会产生<strong>重复发送</strong>，
+  对客户是严重体验事故。</li>
+<li><strong>方案</strong>：</li>
+<li>幂等控制：<code>app.batch.idempotency-duration-minutes=10</code> 时间窗去重</li>
+<li>专用重试服务：<code>MailSendRetryService</code> 独立承担重试，与业务解耦</li>
+<li>事务边界：<code>service/transaction/*TransactionalService</code> 拆分事务粒度</li>
+<li>可观测：Prometheus PushGateway（<code>shutdown-operation: post</code>）上报作业指标</li>
+<li><strong>可量化效果</strong>：重复发送被幂等窗口拦截；作业失败可观测、可重跑。
+  🔶 建议补充：重试成功率、重复发送率降到多少。</li>
+<li><strong>可套用主题</strong>：批处理、高可用、数据一致性</li>
+</ul>
+<h3>⑧ 跨国多时区时间一致性</h3>
+<ul>
+<li><strong>问题</strong>：系统服务日本本部（源库为 <strong>JST</strong>）、部署环境与开发终端时区各异
+  （容器为 <strong>UTC</strong>、开发机为 <strong>UTC+8</strong>）。
+  预约时间、截止时间、邮件发送时刻等一旦跨时区比较出错，
+  会出现「提前发送」或「漏发」——对旅游业务是不可接受的。</li>
+<li><strong>方案</strong>：确立<strong>时间口径单一化原则</strong>：
+  存储统一 UTC，展示按业务方时区（JST）转换，转换动作集中到 <code>FormatUtils</code> 等工具类，
+  禁止在业务代码中散落 <code>LocalDateTime.now()</code>；
+  批处理的 <code>executionBaseDate</code>、<code>acquisitionRange</code> 作为 JobParameter 显式传入，不依赖系统时钟。</li>
+<li><strong>可量化效果</strong>：时间比较错误集中收口；批处理基准日期可重放（同一参数结果可复现）。
+  🔶 建议补充：改造前时区相关缺陷单数量。</li>
+<li><strong>可套用主题</strong>：数据架构、批处理、国际化系统架构（<strong>特色素材，别人写不出来，容易出彩</strong>）</li>
+</ul>
+<h3>⑨ 分布式会话与在线扩容</h3>
+<ul>
+<li><strong>问题</strong>：Web 层多实例部署后，Session 若存本地内存，用户会被反复踢下线。</li>
+<li><strong>方案</strong>：引入 <strong>Spring Session Data Redis</strong>，接 <strong>Redis Cluster（6 节点）</strong>，
+  客户端 Jedis；<code>spring.session.timeout=3600</code>。
+  安全侧配合 <code>spring-session</code> 与 Spring Security 的会话并发控制。</li>
+<li><strong>可量化效果</strong>：Web 实例无状态化，可水平扩容；实例重启不掉线。
+  🔶 建议补充：扩容后支撑的并发用户数、会话序列化后的请求延迟。</li>
+<li><strong>可套用主题</strong>：高可用、高性能、微服务</li>
+</ul>
+<h3>⑩ 主数据统一（MDM）与外部系统联动</h3>
+<ul>
+<li><strong>问题</strong>：H.I.S. 集团存在 MDM（Master Data Management）主数据平台，
+  本国、城市、航空公司、货币等主数据需与 BASE HOME 保持一致，
+  人工维护必然不一致。</li>
+<li><strong>方案</strong>：<code>ImportMdmJob</code> 定时从 MDM API 拉取主数据落库，
+  经 <code>api/mdm/</code> 封装认证与查询参数；
+  本地保留 26 张 <code>M*</code> 主数据表作为只读副本，业务查询不直连外部。</li>
+<li><strong>可量化效果</strong>：主数据一致性由作业保障，业务侧零改造。
+  🔶 建议补充：主数据同步频率、覆盖的主数据表数量。</li>
+<li><strong>可套用主题</strong>：系统集成、数据架构、企业应用集成（EAI）</li>
+</ul>
+<hr />
+<h2>五、论文通用段落（背下来，考场上省 20 分钟）</h2>
+<h3>5.1 摘要万能结构（约 300 字）</h3>
+<pre><code>本文论述了本人参与的【项目名称】的【主题】设计与实现。
+该系统是【一句话业务定位】，服务于【用户群体】，
+采用【核心技术栈】构建，本人担任【角色，务必写&quot;架构师/技术负责人&quot;】，
+负责【3 项具体职责】。
+针对【核心难题 1】、【核心难题 2】两大挑战，
+本文从【架构视角 1】、【架构视角 2】、【架构视角 3】三个维度进行设计，
+通过【关键手段】实现了【量化成果 1】和【量化成果 2】。
+系统上线后【运行效果】，验证了方案的有效性。
+</code></pre>
+<blockquote>
+<p><strong>摘要三要素</strong>：项目背景 + 本人角色 + 主要工作与成效。
+结尾必须落到「成效」，阅卷老师主要看这一段判断你有没有真做过。</p>
+</blockquote>
+<h3>5.2 项目背景段模板（约 400 字）</h3>
+<pre><code>【项目名称】是【公司名】面向【用户群体】建设的【系统定位】，
+覆盖【业务域 1】、【业务域 2】、【业务域 3】等核心业务，
+日均处理【🔶 填真实量级】。
+系统自【🔶 时间】启动建设，本人作为架构师参与了整体架构设计，
+主要负责【你的真实职责】。
+项目采用【Java 21 + Spring Boot 3.5.7】技术栈，
+按【多模块 Gradle 结构】划分为 Web、Service、Batch、Common、Spec、FaaS 等模块，
+部署于 AWS【区域】。
+</code></pre>
+<h3>5.3 结尾段模板（约 200 字）</h3>
+<pre><code>目前该系统已稳定运行【🔶 时长】，支撑【🔶 业务量】，
+【核心指标】达到【🔶 数值】。
+回顾整个建设过程，仍有可改进之处：
+一是【不足 1】，二是【不足 2】。
+后续计划通过【改进方向】进一步优化。
+通过本项目，本人深刻体会到
+【一句话架构感悟，如：架构设计的本质是在质量属性之间做权衡】。
+</code></pre>
+<blockquote>
+<p><strong>结尾必须写「不足」</strong>。不写不足的论文常被认为缺乏架构思维。
+不足要写得「真诚但无害」，例如「跨语言契约的破坏性变更尚未实现自动化兼容性检测」，
+而不是「系统经常宕机」。</p>
+</blockquote>
+<hr />
+<h2>六、论文写作红线（阅卷扣分点）</h2>
+<table>
+<thead>
+<tr>
+<th>红线</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ 字数不足</td>
+<td>少于 2000 字基本判不及格，必须练到稳定 2500～3000 字</td>
+</tr>
+<tr>
+<td>❌ 通篇讲原理</td>
+<td>架构师论文考「你的决策」，不是考「什么是微服务」</td>
+</tr>
+<tr>
+<td>❌ 没有量化</td>
+<td>难点必须有数字，没有数字的"难点"是伪难点</td>
+</tr>
+<tr>
+<td>❌ 不写本人角色</td>
+<td>「我们团队」是减分项，要写「我主导了…我选择了…」</td>
+</tr>
+<tr>
+<td>❌ 不写权衡</td>
+<td>只写「我选了 A」不写「为什么不是 B」，是初级工程师视角</td>
+</tr>
+<tr>
+<td>❌ 摘要与正文脱节</td>
+<td>摘要里提到的三个维度，正文必须有对应小标题</td>
+</tr>
+<tr>
+<td>❌ 技术堆砌无逻辑</td>
+<td>列出 10 个技术名词却不解释它们如何协同，是典型外行写法</td>
+</tr>
+<tr>
+<td>✅ 加分项</td>
+<td>写架构演化过程（从 A 演进到 B，为什么）、写失败与修正</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>七、🔶 必须由你补充的「数字清单」</h2>
+<p>论文想拿高分，下面这些数据必须补全。请对照真实情况填写，<strong>不要编造</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>需要的数据</th>
+<th>建议来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>业务规模</td>
+<td>日均预约量、注册旅行者数、消息日推量</td>
+<td>运营报表</td>
+</tr>
+<tr>
+<td>用户规模</td>
+<td>营业本部使用人数、门店数、并发用户数</td>
+<td>业务方</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>接口 P99 响应时间、批处理作业耗时、同步延迟</td>
+<td>APM / Prometheus</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>SLA 目标、年度可用率、故障恢复时间（MTTR）</td>
+<td>运维记录</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>数据库数据量、DynamoDB 表条目数、S3 存储量</td>
+<td>云监控</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>上云前后成本对比、Serverless 节省比例</td>
+<td>财务 / Cost Explorer</td>
+</tr>
+<tr>
+<td>质量</td>
+<td>缺陷率下降、重复发送率、数据不一致单数</td>
+<td>质量报告</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>项目启动时间、上线时间、稳定运行时长</td>
+<td>项目计划</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>写作技巧</strong>：数据可以不精确，但必须<strong>自洽</strong>。
+例如说「日均 3 万笔预约」，后文就不能出现「日处理 300 笔」。
+建议先在纸上把口径统一，再动笔写正文。</p>
+</blockquote>
+<hr />
+<p><em>本素材库基于 F:\his-base-home 源码调研生成，所有 ✅ 标注内容均来自真实文件。</em></p></div><div class="chapter"><h1>论文模板 01 · 微服务架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本模板所有 ✅ 内容均来自 BASE HOME 真实源码。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（架构设计型）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的微服务架构设计，包括服务拆分原则、服务间通信方式、
+服务治理机制，并说明你在设计过程中遇到的挑战及解决方案。</p>
+</blockquote>
+<p><strong>变体 B（拆分决策型）</strong></p>
+<blockquote>
+<p>微服务架构的核心难点之一是服务粒度的划分。请结合你参与的项目，
+论述你如何确定服务边界，以及拆分过程中如何保证数据一致性。</p>
+</blockquote>
+<p><strong>变体 C（挑战型）</strong></p>
+<blockquote>
+<p>请论述微服务架构在实际落地中面临的挑战（如分布式事务、服务依赖、版本管理），
+并结合项目说明你的应对措施。</p>
+<p><strong>判断</strong>：题目若强调「拆分/边界」→ 重心放服务划分理由；
+强调「治理/挑战」→ 重心放契约一致性 + 版本治理 + 最终一致性。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的微服务架构设计与实现。
+该平台面向日本 H.I.S. 集团的营业本部与旅行者，覆盖预约管理（予約管理）、
+客户消息（顧客メッセージ）、通知发送（通知配信）与主数据联动等核心业务。
+本人担任架构师，负责服务边界划分、服务间通信契约设计与构建治理体系。
+针对【业务伸缩特征差异大】、【跨语言调用契约易漂移】、【新旧技术栈长期并存】三大挑战，
+本文从【服务拆分】、【契约驱动】、【渐进演进】三个维度进行设计：
+按业务特征与伸缩曲线将系统划分为 Web、Service、Batch、FaaS 等独立部署单元，
+以 Protocol Buffers 作为唯一契约源驱动 Java、Go、PHP 三语言客户端生成，
+并通过统一版本管理插件锁定关键依赖，规避了依赖漂移引发的运行时故障。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与本人角色（约 400 字）</h3>
+<p><strong>写什么</strong>：</p>
+<ul>
+<li>项目名称、所属企业、业务定位、服务对象</li>
+<li>项目规模（用素材库第二节的数字：8 个模块、17 个 RPC、79 个实体、14 个 Lambda）</li>
+<li>本人角色与 3 项具体职责</li>
+<li>一句话点出「为什么需要微服务」（引出后文）</li>
+</ul>
+<p><strong>本项目可直接用</strong>：</p>
+<blockquote>
+<p>BASE HOME 是 H.I.S. 面向旅游业务建设的支撑平台，覆盖预约管理、客户消息、
+通知发送与主数据联动等业务域，采用 Java 21 + Spring Boot 3.5.7 技术栈，
+按多模块 Gradle 结构划分为 Web、Service、Batch、Common、Spec、FaaS 等模块，
+部署于 AWS 东京区域（ap-northeast-1）。
+本人担任架构师，负责服务边界划分、服务间通信契约设计以及构建版本治理。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>必须先讲「拆分依据」——这是区分架构师与工程师的关键。</strong></p>
+<p>推荐三个拆分维度（本项目真实成立）：</p>
+<p><strong>维度一：按伸缩特征拆分</strong></p>
+<blockquote>
+<p>Web 层承载营业本部员工的交互操作，流量呈<strong>工作日昼间高峰</strong>特征；
+Batch 层承载成本文件生成、邮件发送等定时作业，呈<strong>夜间定时峰值</strong>且瞬时资源占用大；
+FaaS 层承载数据同步，呈<strong>持续低频</strong>特征。
+若合并部署，批处理的资源峰值会直接冲击在线预约接口的响应时间。
+因此我将三者拆分为独立部署单元，使各层可按自身曲线独立扩缩容。
+<strong>权衡说明</strong>：这牺牲了单体部署的调用简单性，换来了资源隔离与独立伸缩能力。</p>
+</blockquote>
+<p><strong>维度二：按访问协议与调用方拆分</strong></p>
+<blockquote>
+<p>内部服务间采用 <strong>gRPC</strong>（<code>base-home-service</code> 暴露 6565 端口，17 个 RPC），
+而非 REST。原因是服务间调用对性能与强类型契约更敏感，gRPC 基于 HTTP/2 多路复用
+且由 proto 保证强类型；对外则通过 Web 层的 REST 接口（<code>/api/v1/**</code>）暴露，
+兼顾浏览器友好性与前后端契约稳定性。</p>
+</blockquote>
+<p><strong>维度三：按数据存储特征拆分（本项目最有说服力的一点）</strong></p>
+<blockquote>
+<p>我采用<strong>混合存储（Polyglot Persistence）</strong>：
+Aurora MySQL 承载强一致交易与复杂关联查询（79 张业务/主数据表）；
+DynamoDB 承载 5 张 schema-less 高弹性表（travel / document / parental /
+sequence / message_thread）；S3 承载文件实体。
+服务边界与数据边界对齐，避免多个服务共享同一张表造成的隐性耦合。</p>
+</blockquote>
+<p><strong>画架构图</strong>（文字版，考场上画方框箭头即可）：</p>
+<pre><code>Web(8080) ──gRPC──► Service(6565) ──► DynamoDB(5表) + S3
+    │                                        │
+    └──MyBatis──► Aurora MySQL ◄──Batch       │ DynamoDB Stream
+                       ▲                      ▼
+                       └────────────── FaaS(14×Lambda)
+</code></pre>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：契约驱动的服务通信</strong></p>
+<blockquote>
+<p>系统需同时为 Java、Go、PHP 三种技术栈的调用方提供服务。
+我在 <code>base-home-spec</code> 模块中以 protobuf 作为<strong>唯一契约源</strong>，
+通过构建脚本编排 <code>build-java → build-go → build-php → generate-all</code>，
+分别生成三语言产物并独立发布（Maven / Go module / Composer）。
+同时用 <code>--openapiv2_out</code> 产出 OpenAPI 描述文件，经 MkDocs 发布为在线文档。
+该设计使「17 个 RPC 的接口口径」在三端天然一致，
+把接口不一致问题从「运行时联调发现」提前到「构建期暴露」。</p>
+</blockquote>
+<p><strong>要素二：服务端的分发与复用</strong></p>
+<blockquote>
+<p><code>base-home-service</code> 采用单一入口 <code>BaseHomeService</code>（<code>@GRpcService</code>）承接 17 个 RPC，
+统一经 <code>execute(IGrpcService, req, respObserver)</code> 方法分发到各业务实现类，
+共 18 个实现类；跨业务域的能力（文档、消息线程、亲权同意书、
+序列号、旅行信息）下沉到 <code>service/shared/</code> 复用，
+避免同一逻辑在多个 RPC 中重复实现。</p>
+</blockquote>
+<p><strong>要素三：构建期依赖治理</strong></p>
+<blockquote>
+<p>项目通过独立的 <code>base-home-versions</code> Gradle 插件统一版本源
+（<code>base-home.versions.gradle</code>），各模块以 <code>apply plugin: 'base-home.versions'</code> 接入，
+并用 <code>resolutionStrategy { force ... }</code> 锁定关键组件。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>从素材库第四节挑 2～3 个</strong>。微服务主题的<strong>最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>为什么适合微服务主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>① 一份 proto 契约驱动三语言</td>
+<td>直接对应「服务间通信」考点</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>② protobuf 版本冲突致启动失败</td>
+<td>直接对应「服务治理」考点</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑥ Serverless 数据同步（最终一致性）</td>
+<td>直接对应「分布式数据一致性」考点</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点写法三段式</strong>（每个难点 200 字左右）：</p>
+<pre><code>问题 → 为什么这是个架构问题（不是编码问题）
+方案 → 你的决策 + 为什么选它（对比其他选项）
+效果 → 🔶 量化数字
+</code></pre>
+<p>示例（难点 ②）：</p>
+<blockquote>
+<p>我们在升级 protobuf 依赖时，<code>proto-google-common-protos</code> 被解析到 2.64.0-rc1，
+导致 gRPC 服务启动直接失败。更棘手的是，由于版本声明采用了动态区间
+（<code>protobufVersion = '[3,4)'</code>、<code>grpcVersion = 'latest.release'</code>），
+该问题在构建期完全不显现，只在运行时暴露——这属于典型的依赖漂移风险。
+我的判断是：这不是一次偶发故障，而是「版本契约不明确」这一架构缺陷的必然结果。
+因此我没有只做局部修复，而是在统一版本源中将该组件强制锁定到 2.63.2，
+并同步锁定 MyBatis 3.0.5 等关键组件，把隐式版本变成显式契约。
+改造后构建具备可复现性，同一提交在任何机器上产物一致。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前 BASE HOME 已稳定支撑【🔶 业务量】，【🔶 核心指标】达到【🔶 数值】。
+回顾建设过程，仍存在两点不足：
+一是跨语言契约虽有统一来源，但破坏性变更尚未实现自动化的兼容性检测；
+二是 AWS SDK v1 与 v2 仍处于并存状态，长期维护成本尚未完全消除。
+后续计划通过引入契约兼容性校验工具、逐步收敛 SDK 版本进一步优化。
+通过本项目，我深刻体会到微服务架构的价值不在于&quot;拆&quot;本身，
+而在于让每个服务能够按自身的业务节奏独立演进。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务划分单元</td>
+<td>Web / Service / Batch / Common / Spec / FaaS</td>
+</tr>
+<tr>
+<td>通信方式</td>
+<td>服务间 gRPC（HTTP/2 + 强类型契约）；对外 REST <code>/api/v1/**</code></td>
+</tr>
+<tr>
+<td>RPC 数量</td>
+<td>17 个 RPC，18 个服务端实现类</td>
+</tr>
+<tr>
+<td>服务内复用</td>
+<td><code>service/shared/</code> 5 个共享服务</td>
+</tr>
+<tr>
+<td>契约管理</td>
+<td>protobuf 唯一契约源，Java/Go/PHP 三语言 + OpenAPI 文档</td>
+</tr>
+<tr>
+<td>数据边界</td>
+<td>Aurora MySQL（79 表）+ DynamoDB（5 表）+ S3</td>
+</tr>
+<tr>
+<td>版本治理</td>
+<td><code>base-home-versions</code> 插件 + <code>resolutionStrategy force</code></td>
+</tr>
+<tr>
+<td>独立部署</td>
+<td>每个 Lambda 独立 Dockerfile + 独立 GitHub Actions</td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>DynamoDB 表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+<tr>
+<td>本地研发</td>
+<td>TestContainers + LocalStack（<code>:4566</code>）模拟 AWS</td>
+</tr>
+<tr>
+<td>依赖方向</td>
+<td>web → common + spec；service → common + spec；batch → common + mdm-spec</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐⭐ —— 服务间通信、契约一致性</li>
+<li><strong>② protobuf 版本冲突致启动失败</strong> ⭐⭐⭐ —— 服务治理、依赖漂移</li>
+<li><strong>⑥ Serverless 数据同步与最终一致性</strong> ⭐⭐⭐ —— 分布式数据一致性</li>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐ —— 渐进演进（也可放"挑战"类题目）</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐ —— 有状态服务的无状态化</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只写「我们用了微服务」</td>
+<td>判定为背概念</td>
+<td>必须写<strong>拆分依据</strong>，且依据要来自业务特征</td>
+</tr>
+<tr>
+<td>大谈 CAP、BASE 理论</td>
+<td>空洞</td>
+<td>用一个具体场景说明最终一致性（如 DynamoDB Stream → Lambda → MySQL）</td>
+</tr>
+<tr>
+<td>把模块当微服务数</td>
+<td>逻辑矛盾</td>
+<td>8 个 Gradle 模块 ≠ 8 个微服务，说清「部署单元」与「代码模块」的区别</td>
+</tr>
+<tr>
+<td>不提代价</td>
+<td>缺乏架构思维</td>
+<td>明确写出微服务带来的成本：分布式调试难、跨服务事务缺失、运维复杂度上升</td>
+</tr>
+<tr>
+<td>忽略数据边界</td>
+<td>关键失分点</td>
+<td>服务拆分必须谈数据拆分，本项目「混合存储」是绝佳论据</td>
+</tr>
+<tr>
+<td>说的是「服务注册发现」但项目没用</td>
+<td>编造风险</td>
+<td>本项目未用服务注册中心（gRPC 直连 endpoint + TLS），<strong>不要编造 Eureka/Nacos</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>最后一条最重要</strong>：BASE HOME 的 gRPC 调用是<strong>配置化 endpoint 直连</strong>
+（<code>tls://dev-base-home.hisgroup.app:6565</code>），并非通过注册中心发现。
+论文中若写「我们使用 Nacos 做服务发现」，一旦被追问细节就会露馅。
+诚实写「服务地址通过配置中心化下发，配合 TLS 保证传输安全」同样成立且更真实。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>00-项目素材库.md</code> · <code>06-系统集成与gRPC.md</code>（契约部分可互相复用）</em></p></div><div class="chapter"><h1>论文模板 02 · 云原生与 Serverless（FaaS）架构</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>近三年出现频率极高</strong>，强烈建议准备。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（云原生整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的云原生架构设计，包括容器化、微服务、
+持续交付、DevOps 等方面的实践，并说明其带来的价值。</p>
+</blockquote>
+<p><strong>变体 B（Serverless 专项）</strong></p>
+<blockquote>
+<p>请论述 Serverless（无服务器）架构的适用场景与设计要点，
+结合你参与的项目说明如何划分函数粒度、如何处理冷启动与状态管理。</p>
+</blockquote>
+<p><strong>变体 C（弹性与成本）</strong></p>
+<blockquote>
+<p>请论述你如何利用云平台能力实现系统的弹性伸缩与成本优化。</p>
+<p><strong>判断</strong>：题目提「容器/K8s/CI-CD」→ 走变体 A 路线；
+提「函数计算/事件驱动/按量付费」→ 走变体 B 路线（本项目 Lambda 素材极强）。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的云原生架构设计与实现。
+该平台部署于 AWS 东京区域，承载预约管理、客户消息、通知发送等业务。
+本人担任架构师，负责容器化方案设计、Serverless 数据同步链路设计与交付流水线建设。
+针对【数据同步与主链路解耦】、【函数粒度划分】、【多云资源治理】三大挑战，
+本文从【事件驱动解耦】、【按业务域拆分函数】、【基础设施即代码】三个维度进行设计：
+以 DynamoDB Stream 与 SQS 作为事件源，驱动 14 个按业务域划分的 Lambda 函数
+完成数据同步，使主链路仅写 DynamoDB 即可返回，达成分钟级最终一致性；
+每个函数独立镜像、独立流水线、独立部署，实现故障域隔离。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与为何选择云原生（约 400 字）</h3>
+<p><strong>关键</strong>：不要一上来就说「我们上云了」，要写<strong>驱动力</strong>。</p>
+<blockquote>
+<p>旅游业务的典型特征是<strong>强季节性</strong>：长假前预约量激增，平峰期骤降。
+传统固定容量的部署方式在旺季需要按峰值配置资源，淡季则大量闲置，
+资源利用率长期偏低。这一矛盾是推动我们采用云原生架构的直接动因。</p>
+</blockquote>
+<p><strong>本项目可直接用</strong>：</p>
+<blockquote>
+<p>BASE HOME 部署于 AWS ap-northeast-1，采用 Java 21 + Spring Boot 3.5.7，
+各模块以容器镜像方式交付（基础镜像统一为内部 Java 21 镜像），
+数据同步链路由 14 个 Python 3.13 Lambda 函数承担，配置统一存放于
+SSM Parameter Store，避免密钥硬编码。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字）</h3>
+<p><strong>分三层论述</strong>：</p>
+<p><strong>第一层：容器化与交付</strong></p>
+<blockquote>
+<p>Web（8080）、Service（gRPC 6565）、Batch（无 Web 容器，
+<code>spring.main.web-application-type: none</code>）各自独立 Dockerfile 与镜像，
+镜像基于集团统一基础镜像，保证运行时基线一致。
+本地研发环境通过 TestContainers 拉起 MySQL，
+通过 LocalStack（<code>:4566</code>）模拟 DynamoDB 与 S3，
+使「本地能跑通」与「云上能跑通」的技术栈一致，消除了环境差异导致的缺陷。</p>
+</blockquote>
+<p><strong>第二层：Serverless 数据同步（本文核心）</strong></p>
+<blockquote>
+<p>系统的写入主链路落在 DynamoDB，而报表与既有系统仍需从 MySQL 查询。
+若在 Java 服务中同步写两侧，主链路响应时间会被拉长，
+且同步逻辑的扩容需求会绑架整个服务的资源配置。
+因此我把同步链路设计为<strong>事件驱动的 Serverless 架构</strong>：</p>
+<ul>
+<li><strong>事件源</strong>：DynamoDB Stream（写后事件）+ SQS（业务消息队列）</li>
+<li><strong>计算单元</strong>：14 个 Lambda 函数，按业务域拆分</li>
+<li><strong>配置源</strong>：SSM Parameter Store</li>
+<li><strong>可观测</strong>：<code>aws_lambda_powertools</code> 提供结构化日志、Tracer 链路追踪
+  与 SQS/Stream 批量处理工具</li>
+</ul>
+<p>按触发方式可分为两类：
+| 触发方式 | 函数 |
+|---|---|
+| DynamoDB Stream | <code>import_document_information</code>、<code>import_message_thread</code>、<code>import_parental_consent</code>、<code>import_travel_information</code>、<code>send_travel_information</code> |
+| SQS | <code>import_booking_information</code>、<code>import_mail_information</code>、<code>import_notification</code>、<code>import_wallet_notification</code>、<code>import_wallet_status</code>、<code>update_travel_status</code> |
+| 定时 | <code>send_email_footer</code>、<code>send_email_template</code>、<code>send_todo_information</code> |</p>
+<p><strong>权衡说明</strong>：该设计以<strong>最终一致性</strong>替代强一致性——主链路返回时，
+MySQL 侧数据尚未更新。评估后我们认为对报表与通知场景可接受，
+而预约写入等强一致场景仍走关系库事务，不做异步化。</p>
+</blockquote>
+<p><strong>第三层：函数粒度划分原则</strong></p>
+<blockquote>
+<p>我没有按「一张表一个函数」划分，而是按<strong>业务域</strong>划分。
+理由：同一业务域的实体更新往往需要一起处理（如旅行信息变更需同步
+申请人与预约数据），按表拆会导致函数间编排复杂、
+且同一业务逻辑被多次触发。按域拆分使每个函数内部可完成完整的业务处理，
+同时故障域按业务隔离——某个域的函数异常不会波及其他业务。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：事件驱动的解耦</strong></p>
+<blockquote>
+<p>主链路只写 DynamoDB 即返回，同步由 Stream 异步接管，
+把「写数据库」与「同步数据」两个关注点彻底解耦。
+🔶 补充：主链路响应时间从 X ms 降到 Y ms。</p>
+</blockquote>
+<p><strong>要素二：批量处理与部分失败</strong></p>
+<blockquote>
+<p>Lambda 处理 SQS/Stream 批次时，单条记录失败不应导致整批重试。
+我们使用 <code>aws_lambda_powertools</code> 的 batch 处理工具，
+支持<strong>部分批次失败</strong>语义，仅将失败记录投入死信队列，正常记录正常提交。</p>
+</blockquote>
+<p><strong>要素三：配置与密钥管理</strong></p>
+<blockquote>
+<p>所有配置（数据库连接、SNS Topic ARN、外部端点）统一从
+SSM Parameter Store 读取（<code>aws/ssm_client.SsmClient</code>），
+代码仓库中不落任何明文凭证。
+服务端侧同样采用 STS AssumeRole 获取临时凭证 + <code>DefaultCredentialsProvider</code> 兜底，
+避免长期凭证泄露风险。</p>
+</blockquote>
+<p><strong>要素四：独立交付流水线</strong></p>
+<blockquote>
+<p>每个 Lambda 拥有独立的 Dockerfile 与独立的 GitHub Actions 工作流
+（按 <code>import-*</code> / <code>send-*</code> / <code>update-travel-status</code> 命名），
+支持单函数灰度与回滚，部署动作通过 SAM 完成。
+这带来一个重要收益：<strong>单个函数的变更不需要整体回归</strong>。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>云原生主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑥ Serverless 数据同步链路</td>
+<td>主题核心</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>⑦ 批量推送的幂等与重试</td>
+<td>体现 Serverless 下的可靠性设计</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑨ 分布式会话（Redis Cluster）</td>
+<td>体现「无状态化」这一云原生核心原则</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑧ 跨国多时区一致性</td>
+<td>跨国部署的特色问题，容易出彩</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑥）</strong>：</p>
+<blockquote>
+<p>挑战在于<strong>同步延迟与顺序性</strong>。DynamoDB Stream 保证同一分区的记录有序，
+但跨分区不保证。若两个业务域的数据存在先后依赖，
+并行处理可能产生顺序错乱。我们的应对是：
+把存在依赖关系的实体收敛到同一分区键下（如旅行信息统一以 <code>travel_no</code> 为分区键），
+借由 Stream 的分区内有序性保证处理顺序；
+对确实跨域的场景，采用<strong>幂等 + 版本号</strong>的设计，
+使乱序到达的更新可以通过比较版本号判定是否过期，避免旧数据覆盖新数据。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前 14 个函数已稳定支撑数据同步，主链路响应时间显著下降，
+且各函数按需计费，平峰期成本大幅降低。
+不足之处有两点：
+一是冷启动在低频函数上仍有可感知延迟，尚未引入预置并发；
+二是函数间缺少统一的编排视图，跨域数据流向的全局监控还不够直观。
+后续计划通过预置并发与链路追踪可视化进一步完善。
+通过本项目，我认识到 Serverless 并非&quot;银弹&quot;——
+它适合事件驱动、无状态、突发型的负载，
+而强一致的事务场景仍需依托关系型数据库。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>云平台</td>
+<td>AWS ap-northeast-1（东京）</td>
+</tr>
+<tr>
+<td>容器化</td>
+<td>各模块独立 Dockerfile，统一 Java 21 基础镜像；Service 暴露 6565</td>
+</tr>
+<tr>
+<td>本地云环境</td>
+<td>LocalStack（<code>:4566</code>）模拟 DynamoDB/S3；TestContainers 模拟 MySQL</td>
+</tr>
+<tr>
+<td>Serverless 规模</td>
+<td>14 个 Lambda 函数，Python 3.13</td>
+</tr>
+<tr>
+<td>运行时框架</td>
+<td><code>aws_lambda_powertools</code>（Logger / Tracer / batch 处理）</td>
+</tr>
+<tr>
+<td>事件源</td>
+<td>DynamoDB Stream（5 个函数）+ SQS（6 个函数）+ 定时（3 个函数）</td>
+</tr>
+<tr>
+<td>配置管理</td>
+<td>SSM Parameter Store（<code>SsmClient</code>）</td>
+</tr>
+<tr>
+<td>凭证管理</td>
+<td>STS AssumeRole 临时凭证 + DefaultCredentialsProvider</td>
+</tr>
+<tr>
+<td>交付方式</td>
+<td>每函数独立 Dockerfile + 独立 GitHub Actions + SAM 部署</td>
+</tr>
+<tr>
+<td>批处理容器</td>
+<td>Batch 模块 <code>web-application-type: none</code>，无端口占用</td>
+</tr>
+<tr>
+<td>监控</td>
+<td>Prometheus PushGateway（Batch）；Powertools Tracer（FaaS）</td>
+</tr>
+<tr>
+<td>存储服务</td>
+<td>S3（ap-northeast-1）、DynamoDB（5 表）、Aurora MySQL</td>
+</tr>
+<tr>
+<td>消息服务</td>
+<td>SNS（<code>app.services.aws.sns</code>）、SQS</td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td>pytest + moto（模拟 AWS 服务），覆盖率纳入 CI</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑥ Serverless 数据同步与最终一致性</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>⑦ 批量推送的幂等与重试</strong> ⭐⭐⭐ —— 可靠性设计</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐ —— 无状态化</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— 跨国部署特色，<strong>强烈建议写</strong></li>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐ —— 云 SDK 演进</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>把 Serverless 说成万能</td>
+<td>缺乏判断力</td>
+<td>明确写出<strong>不适用场景</strong>（强一致事务、长时任务、高频稳定负载）</td>
+</tr>
+<tr>
+<td>不提冷启动</td>
+<td>明显漏考点</td>
+<td>主动提，并说明你的缓解手段（本文用「低频函数可接受延迟」+ 预置并发作为改进方向）</td>
+</tr>
+<tr>
+<td>编造 K8s 使用经历</td>
+<td>高风险</td>
+<td>本项目<strong>未见 K8s 编排证据</strong>，不要写「我们用 K8s 做服务编排」；写 Docker 镜像 + 独立部署即可</td>
+</tr>
+<tr>
+<td>编造服务网格（Istio）</td>
+<td>高风险</td>
+<td>同上，本项目无 Service Mesh</td>
+</tr>
+<tr>
+<td>只讲成本不讲复杂度</td>
+<td>片面</td>
+<td>写出 Serverless 的代价：本地调试困难、分布式追踪复杂、函数间依赖不直观</td>
+</tr>
+<tr>
+<td>忽略 IaC</td>
+<td>漏考点</td>
+<td>本项目用 SAM 部署、GitHub Actions 流水线，可提「基础设施即代码」</td>
+</tr>
+<tr>
+<td>数字全靠编</td>
+<td>阅卷老师能看出来</td>
+<td>只填你真实知道的；不确定的量级宁可写相对值（如「下降约 40%」）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>技术真实性红线</strong>：BASE HOME 使用 Docker + Lambda + SAM + GitHub Actions，
+但<strong>没有 Kubernetes、没有 Istio、没有服务网格</strong>。
+若题目明确问 K8s，请评估后改用其他题目，或如实写「容器编排需求较轻，
+以单容器部署为主，未引入 K8s」——这本身就是一个合理的架构决策。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code> · <code>03-数据架构与混合存储.md</code>（同步链路的另一端）</em></p></div><div class="chapter"><h1>论文模板 03 · 数据架构与混合存储设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>近三年明显升温</strong>，且 BASE HOME 素材极佳。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（数据架构整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的数据架构设计，包括数据模型设计、存储选型、
+数据一致性与数据治理等方面。</p>
+</blockquote>
+<p><strong>变体 B（存储选型）</strong></p>
+<blockquote>
+<p>请结合项目论述你在关系型数据库与 NoSQL 数据库之间的选型依据，
+以及如何保证多存储之间的一致性。</p>
+</blockquote>
+<p><strong>变体 C（大数据/高并发数据）</strong></p>
+<blockquote>
+<p>请论述你如何应对系统面临的海量数据存储与高并发访问挑战。</p>
+<p><strong>判断</strong>：变体 B 是 BASE HOME 的<strong>最优命中区</strong>——因为项目真实采用了
+MySQL + DynamoDB + S3 三种存储，有真实选型依据可写。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的数据架构设计与实现。
+该平台承载预约管理、客户消息、通知发送等业务，数据形态差异极大：
+既有强一致的交易数据，也有字段频繁演进的半结构化数据与文件实体。
+本人担任架构师，负责数据模型设计、存储选型与数据同步链路设计。
+针对【单一存储难以兼顾强一致与弹性扩展】、【异构存储间一致性保障】、
+【批量作业与在线业务资源争抢】三大挑战，
+本文从【混合存储选型】、【事件驱动同步】、【读写分离】三个维度进行设计：
+以 Aurora MySQL 承载强一致交易（79 张业务与主数据表），
+以 DynamoDB 承载高弹性半结构化数据（5 张表，单表多实体设计），
+以 S3 承载文件实体，并通过 DynamoDB Stream 驱动 Serverless 链路完成最终一致同步。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与数据挑战（约 400 字）</h3>
+<p><strong>核心是把「数据形态差异」讲清楚</strong>，这是选型的唯一依据。</p>
+<blockquote>
+<p>旅游业务的数据形态差异极大，我将其归纳为四类：
+① <strong>强一致交易数据</strong>——预约、申请人、旅行者、费用，要求事务与关联查询；
+② <strong>频繁演进的半结构化数据</strong>——旅行主信息字段随业务政策频繁增删，
+若用关系表承载则每次变更都需 DDL；
+③ <strong>文件实体</strong>——护照、文档、亲权同意书，体积大且需对象存储能力；
+④ <strong>高频读写的小数据</strong>——消息线程、序列号，读写频繁且要求低延迟。
+用单一存储承载这四类数据，必然在某一方面做出妥协。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：混合存储选型（Polyglot Persistence）</strong></p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储选型</th>
+<th>选型依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>强一致交易</td>
+<td>Aurora MySQL</td>
+<td>需要事务、外键、复杂关联查询；79 张表（26 张 <code>M*</code> 主数据 + 53 张 <code>T*</code> 业务）</td>
+</tr>
+<tr>
+<td>半结构化/弹性</td>
+<td>DynamoDB 5 张表</td>
+<td>schema-less、按需扩缩、毫秒级延迟，字段演进无需 DDL</td>
+</tr>
+<tr>
+<td>文件实体</td>
+<td>S3（ap-northeast-1）</td>
+<td>对象存储，与数据库解耦，降低库体积与备份成本</td>
+</tr>
+<tr>
+<td>分布式序列号</td>
+<td>DynamoDB <code>sequence</code> 表</td>
+<td>需跨实例唯一且自增，关系库自增无法满足分布式场景</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第二层：DynamoDB 单表多实体设计（本项目的技术亮点）</strong></p>
+<blockquote>
+<p>我采用<strong>分区键 + 排序键 + JSON 载荷</strong>的模式实现单表多实体：
+以 <code>travel</code> 表为例，分区键为 <code>travel_no</code>（旅行编号），
+排序键为 <code>data_type</code>（数据类型），实体内容存于 <code>json_data</code> 字段。
+这样一张表可承载同一旅行下的多种数据类型，
+既避免了表数量随业务类型线性膨胀，
+又保证同一旅行的所有数据落在同一分区，<strong>查询时可用一次 Query 取回</strong>，
+无需跨分区扫描。</p>
+<p>其余四张表：
+- <code>document</code> —— 文档元数据（文件实体在 S3）
+- <code>parental</code> —— 亲权同意书（親権同意書）
+- <code>message_thread</code> —— 消息线程
+- <code>sequence</code> —— 序列号（<code>seq_key</code> / <code>seq_no</code>），为分布式环境提供唯一编号</p>
+<p><strong>治理措施</strong>：表名统一带环境前缀，实现「1 账户 1 集群」的环境隔离；
+<code>scan-limit</code> 设为 10000，为全表扫描设置硬边界，防止误用 Scan 拖垮表。</p>
+</blockquote>
+<p><strong>第三层：批处理读写分离</strong></p>
+<blockquote>
+<p>批处理既要大量读取（成本文件生成、外部预约导入、ToDo 状态更新），
+又要回写结果。我为其配置<strong>双数据源</strong>：
+<code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+<code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>），
+通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+使读写请求物理分离，批量作业不再争抢在线业务的连接池资源。
+同时设置事务隔离级别为 <code>TRANSACTION_READ_COMMITTED</code>，
+避免长事务期间大量持有间隙锁影响在线写入；
+<code>defaultFetchSize = 200</code> 控制批量游标，防止一次性载入海量结果集导致 OOM。</p>
+</blockquote>
+<h3>第 3 段 · 关键实现（约 700 字）</h3>
+<p><strong>要素一：数据访问层设计</strong></p>
+<blockquote>
+<p>MySQL 侧统一使用 MyBatis（3.0.5，在统一版本源中强制锁定，
+覆盖 Spring Boot 托管版本以保证行为一致），
+79 个实体按职责分两个 source set 组织，主数据实体与业务实体分离；
+54 个 Mapper 按业务域归入 <code>repository/</code>。
+DynamoDB 侧通过 <code>DynamoDbEnhancedClient</code> 提供对象映射，
+由 <code>DynamoDbRepository</code> 基类封装通用操作，
+实体以 <code>@DynamoDbBean</code> 注解声明，
+属性名集中定义在 <code>consts</code> 包（<code>TravelConsts</code>、<code>DocumentConsts</code> 等），
+避免魔法字符串散落。</p>
+</blockquote>
+<p><strong>要素二：一致性与重试</strong></p>
+<blockquote>
+<p>DynamoDB 侧启用乐观锁重试（<code>@EnableRetry</code>，
+重试 4 次、间隔 500ms），应对并发写入冲突。
+跨存储一致性通过事件驱动链路达成最终一致（DynamoDB Stream → Lambda → MySQL）。</p>
+</blockquote>
+<p><strong>要素三：CSV 与文件下载</strong></p>
+<blockquote>
+<p>成本文件（ACT 原价 / AIR 机票 / HTL 酒店）使用 SuperCSV 注解库
+将实体直接映射为 CSV，配合 <code>CsvDownloader</code> 接口与
+<code>FileUploadService</code> 落 S3，避免大文件在内存中拼装。
+导出列定义通过注解集中在实体上，新增列不会波及导出逻辑。</p>
+</blockquote>
+<p><strong>要素四：主数据治理</strong></p>
+<blockquote>
+<p>集团 MDM 主数据由 <code>ImportMdmJob</code> 定时同步，本地保留 26 张 <code>M*</code> 表作为只读副本，
+业务查询不直连外部系统——既保证主数据一致性，又隔离了外部系统故障对业务的影响。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>数据架构主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑤ DynamoDB 单表多实体 + 混合存储</td>
+<td>主题核心</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「数据访问优化」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑧ 跨国多时区时间一致性</td>
+<td>数据一致性维度，特色鲜明</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据统一</td>
+<td>数据治理维度</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑧ 多时区，非常出彩）</strong>：</p>
+<blockquote>
+<p>系统服务日本本部（源库运行于 JST），而容器环境为 UTC、
+开发终端为 UTC+8。三套时区并存时，预约截止时间、
+邮件发送时刻等跨时区比较极易出错，后果是「提前发送」或「漏发」——
+对旅游业务属于严重事故。
+我的处理原则是<strong>时间口径单一化</strong>：
+存储层统一使用 UTC；展示层按业务方时区（JST）转换；
+转换动作集中到 <code>FormatUtils</code> 等工具类，禁止在业务代码中散落直接取当前时间的调用。
+批处理侧更彻底——<code>executionBaseDate</code>、<code>acquisitionRange</code> 等
+作为 JobParameter 显式传入，不依赖系统时钟，
+使同一参数的重跑结果完全可复现。
+🔶 补充：改造前时区相关缺陷数量与改造后的下降情况。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该数据架构已稳定支撑【🔶 数据量】，DynamoDB 侧查询延迟稳定在【🔶 数值】。
+不足之处：
+一是混合存储引入了运维复杂度，多套存储的备份与容量规划需要分别管理；
+二是跨存储的最终一致链路缺少统一的延迟监控，异常时的排查路径较长。
+后续计划引入统一的数据链路追踪与一致性校验作业。
+通过本项目我认识到，数据架构设计没有&quot;最好的存储&quot;，
+只有&quot;与数据访问特征最匹配的存储&quot;。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关系库</td>
+<td>Aurora MySQL，79 张表（26 <code>M*</code> 主数据 + 53 <code>T*</code> 业务），54 个 Mapper</td>
+</tr>
+<tr>
+<td>NoSQL</td>
+<td>DynamoDB 5 张表：travel / document / parental / sequence / message_thread</td>
+</tr>
+<tr>
+<td>单表多实体</td>
+<td><code>travel</code> 表：分区键 <code>travel_no</code> + 排序键 <code>data_type</code> + <code>json_data</code></td>
+</tr>
+<tr>
+<td>序列号</td>
+<td><code>sequence</code> 表（<code>seq_key</code> / <code>seq_no</code>），分布式唯一编号</td>
+</tr>
+<tr>
+<td>对象存储</td>
+<td>S3，区域 ap-northeast-1</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>MyBatis 3.0.5（强制锁定）；DynamoDB Enhanced Client</td>
+</tr>
+<tr>
+<td>读写分离</td>
+<td>reader/writer 双数据源，包路径隔离 Mapper</td>
+</tr>
+<tr>
+<td>事务隔离</td>
+<td><code>TRANSACTION_READ_COMMITTED</code></td>
+</tr>
+<tr>
+<td>批量游标</td>
+<td><code>mybatis.defaultFetchSize = 200</code></td>
+</tr>
+<tr>
+<td>扫描边界</td>
+<td>DynamoDB <code>scan-limit = 10000</code></td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>乐观锁重试 4 次 / 间隔 500ms（<code>@EnableRetry</code>）</td>
+</tr>
+<tr>
+<td>数据同步</td>
+<td>DynamoDB Stream / SQS → 14 个 Lambda → MySQL</td>
+</tr>
+<tr>
+<td>CSV 导出</td>
+<td>SuperCSV 注解，ACT/AIR/HTL 三类成本文件</td>
+</tr>
+<tr>
+<td>主数据同步</td>
+<td><code>ImportMdmJob</code> 定时从 MDM API 拉取</td>
+</tr>
+<tr>
+<td>实体组织</td>
+<td>独立 source set <code>src/main/entity</code></td>
+</tr>
+<tr>
+<td>通用查询</td>
+<td><code>GenericQueryExecutionJob</code> + <code>MGenericQuery*</code> 表（元数据驱动）</td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>「元数据驱动的通用查询」是个隐藏亮点</strong>：
+<code>GenericQueryExecutionJob</code> 配合 <code>MGenericQuery*</code> 表，
+把查询逻辑外置为元数据，新增查询无需改代码。
+写「数据治理」「架构可扩展性」时非常好用。</p>
+</blockquote>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑤ DynamoDB 单表多实体 + 混合存储</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 数据访问优化</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— 特色，<strong>强烈建议写</strong></li>
+<li><strong>⑥ Serverless 数据同步与最终一致性</strong> ⭐⭐⭐ —— 一致性保障</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐ —— 数据治理</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只说「用了 MySQL 和 DynamoDB」</td>
+<td>没有选型逻辑</td>
+<td>必须写<strong>为什么</strong>：哪类数据适合哪种存储，判据是什么</td>
+</tr>
+<tr>
+<td>把 NoSQL 说成「性能更好」</td>
+<td>外行表述</td>
+<td>正确表述是「schema 灵活、可按需扩缩、单分区内查询低延迟」</td>
+</tr>
+<tr>
+<td>回避一致性代价</td>
+<td>关键失分</td>
+<td>明确写出「牺牲强一致换弹性」，并说明为何业务可接受</td>
+</tr>
+<tr>
+<td>编造分库分表</td>
+<td>高风险</td>
+<td>BASE HOME <strong>未见分库分表证据</strong>；改写「读写分离双数据源」，同样有分量</td>
+</tr>
+<tr>
+<td>编造 Redis 缓存数据</td>
+<td>高风险</td>
+<td>项目 Redis <strong>仅用于 Session</strong>，不要写成业务数据缓存</td>
+</tr>
+<tr>
+<td>忽略数据治理</td>
+<td>漏考点</td>
+<td>补上主数据同步、消息 ID 规范、CSV 导出规范等治理手段</td>
+</tr>
+<tr>
+<td>大谈数据湖/湖仓一体</td>
+<td>无支撑</td>
+<td>本项目无数据湖，不要硬套</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>两个技术真实性红线</strong>：
+① 本项目 <strong>Redis 用于 Session 管理</strong>（<code>spring-session-data-redis</code>），
+未见作为业务数据缓存的证据——写缓存架构时请谨慎，或如实说明「缓存主要用于会话」。
+② 本项目 <strong>未见分库分表（Sharding）</strong> 证据，数据量级应描述为
+「通过读写分离与存储选型应对」，而非「分库分表」。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>04-高并发与高可用架构.md</code> · <code>08-批处理架构设计.md</code>（读写分离细节可复用）</em></p></div><div class="chapter"><h1>论文模板 04 · 高并发与高可用架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>几乎年年出现</strong>，属必准备项。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（高可用）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的高可用架构设计，包括冗余、故障转移、
+容错与降级策略，并说明你如何验证架构的可用性。</p>
+</blockquote>
+<p><strong>变体 B（高性能）</strong></p>
+<blockquote>
+<p>请论述你如何通过架构手段提升系统的并发处理能力与响应性能。</p>
+</blockquote>
+<p><strong>变体 C（可靠性）</strong></p>
+<blockquote>
+<p>请论述你如何保障系统在异常场景下的数据可靠性与业务连续性。</p>
+<p><strong>判断</strong>：BASE HOME 的强项在<strong>变体 C（可靠性）</strong>与<strong>变体 A 的一部分</strong>——
+因为项目有真实的重试、幂等、读写分离、会话外置等机制。
+变体 B（性能）需要你补充真实压测数据。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的高可用架构设计与实现。
+该平台服务日本 H.I.S. 集团营业本部与旅行者，业务具有强季节性——
+长假前预约量激增、平峰期骤降，对系统的弹性与可靠性提出很高要求。
+本人担任架构师，负责可用性设计、故障隔离方案与可靠性保障机制建设。
+针对【在线业务与批量作业资源争抢】、【消息推送重复发送风险】、
+【多实例部署下的会话一致性】三大挑战，
+本文从【资源隔离】、【幂等与重试】、【状态外置】三个维度进行设计：
+通过读写分离双数据源隔离批量作业影响，通过幂等时间窗与专用重试服务
+杜绝重复推送，通过 Redis Cluster 实现会话外置与无状态扩容。
+系统上线后【🔶 可用率/故障恢复时间】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与可用性目标（约 400 字）</h3>
+<p><strong>必须写出「可用性目标」</strong>，这是高可用论文的标准起手式。</p>
+<blockquote>
+<p>旅游业务对系统可用性有刚性要求：预约窗口期一旦系统不可用，
+直接造成订单流失且无法补回。因此我们为该平台定义了明确目标：
+🔶 年可用率目标（如 99.9%）、🔶 关键接口 P99 响应时间目标、
+🔶 批处理作业完成时限（如次日营业开始前必须完成）。
+这些目标驱动了后续所有的架构决策。</p>
+</blockquote>
+<p><strong>本项目背景</strong>：</p>
+<blockquote>
+<p>BASE HOME 采用 Java 21 + Spring Boot 3.5.7，部署于 AWS ap-northeast-1，
+按多模块划分为 Web、Service、Batch、FaaS 等部署单元。
+本人担任架构师，负责可用性设计与可靠性机制建设。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字）</h3>
+<p><strong>第一层：资源隔离——消除单点相互影响</strong></p>
+<blockquote>
+<p>可用性最大的敌人往往不是外部攻击，而是<strong>内部资源争抢</strong>。
+本项目最典型的场景是：批处理需要从生产库大量读取并回写结果，
+而在线预约接口同时也在访问同一数据库。
+若共享连接池，夜间批处理峰值会直接拖慢甚至拖垮在线接口。</p>
+<p>我的方案是为批处理配置<strong>双数据源</strong>：
+<code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）与
+<code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，<code>@Primary</code>），
+通过包路径隔离 Mapper（<code>repository/reader/</code> 与 <code>repository/writer/</code>）。
+读写物理分离后，批量作业不再与在线业务争抢同一数据源连接。</p>
+<p>同时设置 <code>TRANSACTION_READ_COMMITTED</code> 隔离级别，
+减少长事务持有锁的时间；<code>defaultFetchSize = 200</code> 控制游标，
+防止海量结果集一次性载入导致内存溢出——这是批处理最常见的 OOM 诱因。</p>
+</blockquote>
+<p><strong>第二层：故障隔离——按部署单元切分故障域</strong></p>
+<blockquote>
+<p>Web、Service、Batch、FaaS 各自独立部署：
+- Batch 模块设置为 <code>web-application-type: none</code>，不占用 Web 端口，
+  与 Web 层无任何进程级耦合
+- FaaS 侧 14 个 Lambda 按业务域拆分，<strong>单个函数故障不会波及其他业务域</strong>
+- 每个函数独立镜像、独立流水线、独立部署，支持单函数灰度与快速回滚</p>
+<p><strong>权衡说明</strong>：这增加了运维单元数量与管理复杂度，
+但把「一个模块崩溃导致全站不可用」的风险降为「单个业务域受影响」。</p>
+</blockquote>
+<p><strong>第三层：状态外置——支撑水平扩容</strong></p>
+<blockquote>
+<p>Web 层多实例部署后，若 Session 存于本地内存，
+负载均衡会把用户请求分发到不同实例，导致反复掉线。
+我引入 <strong>Spring Session Data Redis</strong>，接入 <strong>Redis Cluster（6 节点）</strong>，
+客户端使用 Jedis，会话超时设为 3600 秒。
+会话外置后，Web 实例完全无状态，可任意水平扩容与重启而不影响在线用户。</p>
+</blockquote>
+<p><strong>第四层：数据层可靠性</strong></p>
+<blockquote>
+<p>DynamoDB 侧启用乐观锁重试（<code>@EnableRetry</code>，重试 4 次、间隔 500ms），
+应对并发写入冲突；文件实体落 S3 而非数据库，
+降低库体积与备份恢复时长；主数据保留本地只读副本（26 张 <code>M*</code> 表），
+使外部 MDM 系统故障不影响业务查询。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：幂等控制——防止重复推送</strong></p>
+<blockquote>
+<p>客户消息与邮件推送是本系统的可靠性敏感点：一旦重复发送，
+对客户是直接的体验事故。我们设计了多层防护：
+- <strong>幂等时间窗</strong>：<code>app.batch.idempotency-duration-minutes = 10</code>，
+  同一业务键在窗口内重复触发会被拦截
+- <strong>专用重试服务</strong>：<code>MailSendRetryService</code> 独立承担重试逻辑，
+  与业务处理解耦，避免重试代码侵入业务流程
+- <strong>事务粒度拆分</strong>：<code>service/transaction/*TransactionalService</code> 将事务边界
+  控制在必要范围内，避免大事务回滚造成的连带重放
+- <strong>投递状态跟踪</strong>：<code>TEmailDeliveryManagement</code> 表记录投递状态
+  与 <code>update_travel_status</code> 函数联动，形成可追溯的闭环</p>
+</blockquote>
+<p><strong>要素二：可观测性——故障可发现才可恢复</strong></p>
+<blockquote>
+<p>高可用的前提是「故障能被及时发现」。
+Batch 侧通过 <strong>Prometheus PushGateway</strong> 上报作业指标
+（配置 <code>shutdown-operation: post</code>，确保作业结束前完成指标推送），
+使批处理这类短生命周期进程的运行状态可被监控系统采集。
+FaaS 侧使用 <code>aws_lambda_powertools</code> 的 Logger 与 Tracer
+输出结构化日志与链路追踪信息。</p>
+</blockquote>
+<p><strong>要素三：作业可重跑与可复现</strong></p>
+<blockquote>
+<p>批处理的重跑能力是可靠性的重要保障。
+我们将 <code>executionBaseDate</code>、<code>acquisitionRange</code>、<code>importTargetType</code>
+等关键参数定义为 JobParameter 显式传入，不依赖系统时钟，
+使同一参数的重跑结果完全可复现。
+🔶 补充：这解决了什么具体的补数场景。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>高可用主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑦ 批量推送的幂等与重试</td>
+<td>直接对应「可靠性保障」</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「资源隔离」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑨ 分布式会话 Redis Cluster</td>
+<td>直接对应「无状态扩容」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑧ 跨国多时区一致性</td>
+<td>对应「数据可靠性」，特色鲜明</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑦，三段式写法）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：客户消息常需批量推送（<code>BulkPutCustomerMessage</code> 一次处理多条），
+邮件发送作业在遇到第三方网关限流或网络抖动时必然需要重试。
+但朴素的重试会引入重复发送——对客户而言这是不可接受的体验事故。
+这本质上是分布式环境下的<strong>幂等性问题</strong>，而非简单的异常处理问题。</p>
+<p><strong>方案</strong>：我设计了三层防护。第一层是幂等时间窗，
+以 10 分钟为窗口对同一业务键去重；第二层是把重试能力独立为
+<code>MailSendRetryService</code>，与业务逻辑解耦，
+使重试策略可独立调整而无需改动业务流程；
+第三层是投递状态跟踪表，记录每一次投递的结果，
+使异常场景下可以精确定位漏发与重发范围。</p>
+<p><strong>效果</strong>：🔶 重复发送率降至 X%，🔶 作业失败可观测并支持定点重跑。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该平台已稳定运行【🔶 时长】，年可用率达到【🔶 数值】，
+批量作业在【🔶 时限】内稳定完成。
+不足之处：
+一是跨存储的最终一致性链路尚无统一的延迟监控，异常排查路径偏长；
+二是 Lambda 冷启动在低频函数上仍有可感知延迟。
+后续计划补充一致性延迟监控与预置并发配置。
+通过本项目我认识到，高可用不是靠单一技术实现的，
+而是由资源隔离、故障隔离、状态外置、幂等重试等一系列设计共同构成的体系。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资源隔离</td>
+<td>Batch 读写分离双数据源，Mapper 按 <code>repository/reader</code> / <code>writer</code> 隔离</td>
+</tr>
+<tr>
+<td>事务控制</td>
+<td><code>TRANSACTION_READ_COMMITTED</code>；<code>*TransactionalService</code> 拆分事务粒度</td>
+</tr>
+<tr>
+<td>内存保护</td>
+<td><code>mybatis.defaultFetchSize = 200</code> 控制批量游标</td>
+</tr>
+<tr>
+<td>故障隔离</td>
+<td>Web/Service/Batch/FaaS 独立部署；14 个 Lambda 按业务域拆分</td>
+</tr>
+<tr>
+<td>状态外置</td>
+<td>Spring Session Data Redis + Redis Cluster（6 节点）+ Jedis，超时 3600s</td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>DynamoDB 乐观锁重试 4 次 / 500ms（<code>@EnableRetry</code>）</td>
+</tr>
+<tr>
+<td>幂等</td>
+<td><code>app.batch.idempotency-duration-minutes = 10</code></td>
+</tr>
+<tr>
+<td>重试</td>
+<td><code>MailSendRetryService</code> 专用重试服务</td>
+</tr>
+<tr>
+<td>投递跟踪</td>
+<td><code>TEmailDeliveryManagement</code> + <code>update_travel_status</code></td>
+</tr>
+<tr>
+<td>可观测</td>
+<td>Prometheus PushGateway（Batch）；Powertools Logger/Tracer（FaaS）</td>
+</tr>
+<tr>
+<td>可复现</td>
+<td>JobParameter 显式传入 <code>executionBaseDate</code> / <code>acquisitionRange</code></td>
+</tr>
+<tr>
+<td>降级隔离</td>
+<td>主数据本地只读副本（26 张 <code>M*</code> 表），外部系统故障不影响业务</td>
+</tr>
+<tr>
+<td>传输安全</td>
+<td>gRPC 使用 TLS（<code>tls://</code> endpoint）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑦ 批量推送的幂等与重试</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 资源隔离</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐⭐ —— 无状态化</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— 数据可靠性（特色）</li>
+<li><strong>⑥ Serverless 数据同步</strong> ⭐⭐ —— 最终一致性的可靠性设计</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只写「用了集群所以高可用」</td>
+<td>空洞</td>
+<td>要写<strong>可用性目标 → 威胁 → 措施 → 验证</strong>这条链</td>
+</tr>
+<tr>
+<td>不提可用性指标</td>
+<td>漏考点</td>
+<td>必须给出 SLA 目标（🔶 填真实值）与 MTTR</td>
+</tr>
+<tr>
+<td>编造双活/异地多活</td>
+<td>高风险</td>
+<td>本项目未见多活架构证据；写「多实例 + 状态外置 + 故障域隔离」是真实的</td>
+</tr>
+<tr>
+<td>编造熔断限流框架</td>
+<td>高风险</td>
+<td>本项目<strong>未见 Sentinel/Hystrix/Resilience4j 证据</strong>，不要写「我们用了熔断降级」</td>
+</tr>
+<tr>
+<td>编造 Redis 业务缓存</td>
+<td>高风险</td>
+<td>Redis 仅用于 Session，写成「多级缓存架构」会露馅</td>
+</tr>
+<tr>
+<td>只讲技术不讲验证</td>
+<td>漏考点</td>
+<td>补上「如何验证」：TestContainers + LocalStack 做集成验证、Prometheus 做运行监控</td>
+</tr>
+<tr>
+<td>忽略批量作业可靠性</td>
+<td>片面</td>
+<td>批处理是可靠性重点，务必写入幂等、重试、可重跑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>三条技术真实性红线</strong>（务必遵守）：
+① <strong>未见熔断/限流组件</strong>（Hystrix、Sentinel、Resilience4j）
+② <strong>未见 Redis 业务数据缓存</strong>（仅 Session）
+③ <strong>未见多活/异地容灾架构</strong></p>
+<p>若题目强制要求写熔断降级，可如实写：
+「当前架构以故障域隔离与幂等重试为主要可靠性手段，
+熔断降级尚未引入，这是后续改进方向」——<strong>诚实反而加分</strong>。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>03-数据架构与混合存储.md</code> · <code>08-批处理架构设计.md</code> · <code>05-系统安全架构.md</code></em></p></div><div class="chapter"><h1>论文模板 05 · 系统安全架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>稳定出现</strong>，且与你的项目契合度高。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（安全体系整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的安全架构设计，包括身份认证、访问控制、
+数据安全与安全审计等方面。</p>
+</blockquote>
+<p><strong>变体 B（认证授权）</strong></p>
+<blockquote>
+<p>请论述你如何设计系统的统一身份认证与授权体系，并说明如何实现细粒度权限控制。</p>
+</blockquote>
+<p><strong>变体 C（数据安全）</strong></p>
+<blockquote>
+<p>请论述你如何保障系统敏感数据的机密性、完整性与可用性。</p>
+<p><strong>判断</strong>：BASE HOME 的最强项是<strong>变体 A 与变体 B</strong>——
+项目真实使用了 OAuth2/OIDC、Spring Security、
+细粒度 scope 权限、Redis Session、STS 临时凭证、TLS 传输。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的安全架构设计与实现。
+该平台承载旅行者的护照信息、亲权同意书（親権同意書）、
+紧急联系人等敏感个人数据，且需与集团多个外部系统交互，
+安全要求高、合规约束严。
+本人担任架构师，负责身份认证体系设计、权限模型设计与凭证管理方案。
+针对【多角色细粒度权限控制】、【跨系统凭证泄露风险】、
+【敏感数据传输与存储安全】三大挑战，
+本文从【统一身份认证】、【基于 scope 的细粒度授权】、
+【临时凭证与加密传输】三个维度进行设计：
+基于 Spring Security 集成 OAuth2/OIDC 实现统一登录，
+以权限 scope 列表驱动接口级授权，
+以 STS AssumeRole 临时凭证替代长期密钥并与 TLS 结合保障传输安全。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与安全需求（约 400 字）</h3>
+<p><strong>安全论文的开头必须写「保护什么」</strong>，否则后面所有措施都失去依据。</p>
+<blockquote>
+<p>BASE HOME 处理的数据具有高度敏感性，我将其分级为三类：
+① <strong>个人身份信息</strong>——旅行者护照信息、姓名、出生日期；
+② <strong>特殊敏感数据</strong>——未成年人亲权同意书（親権同意書）、紧急联系人信息；
+③ <strong>业务敏感数据</strong>——预约成本、客户消息内容。
+此外，系统需与集团 MDM 主数据平台、外部预约系统、邮件网关、
+消息推送服务等多方交互，每个交互面都是潜在的攻击入口。
+合规方面，系统需满足日本个人信息保护法的相关要求。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字）</h3>
+<p><strong>按安全架构的经典四层组织：身份认证 → 访问控制 → 数据安全 → 安全审计</strong></p>
+<p><strong>第一层：身份认证（Authentication）</strong></p>
+<blockquote>
+<p>系统采用 <strong>OAuth2/OIDC</strong> 协议实现统一身份认证，
+Web 层通过 <code>spring-boot-starter-oauth2-client</code> 接入集团统一认证服务，
+以授权码模式完成登录，令牌校验使用 <code>spring-security-oauth2-jose</code>（JOSE/JWT）。
+用户身份属性通过 <code>user-name-attribute</code> 配置从令牌中提取，
+避免依赖本地用户表——这使账号生命周期由集团统一治理。</p>
+<p>同时通过 <code>thymeleaf-extras-springsecurity6</code> 把安全上下文暴露到视图层，
+使页面元素的显隐可以直接由权限决定，而不是靠前端 JavaScript 隐藏
+（后者只是「看不见」，后者才能做到「点不到」）。</p>
+<p><strong>权衡说明</strong>：OIDC 引入了对外部认证服务的依赖，
+我们通过将用户信息缓存于会话中，使认证服务短暂不可用时
+已登录用户仍可继续操作，避免认证服务成为可用性单点。</p>
+</blockquote>
+<p><strong>第二层：访问控制（Authorization）</strong></p>
+<blockquote>
+<p>授权模型我采用 <strong>RBAC + 接口级 scope 校验</strong>的组合。
+角色维度划分为管理员（admin）、操作员（operator）、
+主管（chief）、VIP 等，各角色持有不同的权限 scope 列表。
+权限校验下沉到接口层（<code>/api/v1/**</code> 由 Spring Security 统一拦截），
+而非散落在各 Controller 的业务代码中——
+这样新增接口时权限是「默认拒绝」而非「默认放行」，
+从架构上避免了「忘记加权限注解」这类遗漏风险。</p>
+</blockquote>
+<p><strong>第三层：数据安全（Data Security）</strong></p>
+<blockquote>
+<p><strong>传输安全</strong>：内部服务间 gRPC 调用使用 TLS
+（endpoint 采用 <code>tls://</code> 前缀），对外 Web 访问全站 HTTPS。
+<strong>凭证安全</strong>：这是我重点处理的部分。
+系统不使用长期固定的 AWS 密钥，而是通过
+<strong>STS AssumeRole 获取临时凭证</strong>，配合 <code>DefaultCredentialsProvider</code> 兜底，
+凭证自动轮换，即使泄露其有效期也极短。
+<strong>配置安全</strong>：FaaS 侧所有配置（数据库连接、外部端点）
+统一从 SSM Parameter Store 读取，代码仓库中不落任何明文凭证。
+<strong>存储安全</strong>：文件实体统一存放 S3，数据库仅保存文件引用；
+数据库账号按 reader/writer 职责分离，批处理读账号无写权限。</p>
+</blockquote>
+<p><strong>第四层：安全审计（Audit）</strong></p>
+<blockquote>
+<p>系统在 Web 层设置独立的审计能力：
+画面操作日志由 <code>system</code> 域的控制器统一记录，
+关键业务操作（预约变更、消息发送、主数据修改）
+均留存操作者、操作时间与操作内容。
+审计日志与业务数据分离存储，避免业务回滚时日志同时丢失。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：会话安全</strong></p>
+<blockquote>
+<p>会话由 <strong>Spring Session Data Redis</strong> 统一管理，
+存储于 <strong>Redis Cluster（6 节点）</strong>，超时时间 3600 秒。
+相比本地会话，集中式会话带来两个安全收益：
+一是会话数据不落在应用服务器磁盘上，降低主机被入侵后的会话窃取风险；
+二是可在服务端强制失效任意会话，实现「管理员踢出用户」
+与「用户改密后全端下线」这类安全能力。</p>
+</blockquote>
+<p><strong>要素二：凭证与密钥的集中治理</strong></p>
+<blockquote>
+<p>我把凭证获取统一收口到配置类（<code>DynamoDbConfig</code>、
+<code>AwsConfig</code>、<code>SsmClient</code>），业务代码不直接接触凭证。
+这样做的价值在于：凭证轮换、加密算法升级、
+权限范围调整都只需在单一位置修改，不会遗漏调用点。
+环境隔离同样重要——DynamoDB 表名统一带环境前缀，
+实现「1 账户 1 集群」，防止测试环境误连生产数据。</p>
+</blockquote>
+<p><strong>要素三：接口契约中的安全边界</strong></p>
+<blockquote>
+<p>由于系统通过 protobuf 向 Java/Go/PHP 三端提供接口，
+契约本身也承担安全职责：
+每个 RPC 均声明 HTTP 映射（<code>google.api.http</code>），
+统一走 <code>/v1/&lt;RpcName&gt;</code> 路径，便于在网关层集中做鉴权与限流；
+错误信息通过统一的 <code>Error{code,message}</code> 结构返回，
+对外只暴露错误码与友好提示，<strong>不泄漏堆栈与内部实现细节</strong>。</p>
+</blockquote>
+<p><strong>要素四：输入校验与注入防护</strong></p>
+<blockquote>
+<p>Web 层启用 <code>spring-boot-starter-validation</code> 做参数校验，
+数据库访问全部通过 MyBatis 参数绑定，杜绝字符串拼接 SQL。
+涉及 HTML 内容处理的场景使用 Jsoup 做净化，
+防止存储型 XSS——这在客户消息场景尤其重要，
+因为消息内容会在 MyPage 页面回显给其他用户。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>安全主题最佳组合</strong>（安全主题的难点需要自行组织，素材库难点适配度中等）：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点方向</th>
+<th>素材来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td><strong>多角色细粒度权限的默认拒绝设计</strong></td>
+<td>由项目 scope 权限模型推导</td>
+</tr>
+<tr>
+<td>次选</td>
+<td><strong>三语言契约下的安全边界统一</strong></td>
+<td>素材库 ①</td>
+</tr>
+<tr>
+<td>三选</td>
+<td><strong>跨国多时区与数据合规</strong></td>
+<td>素材库 ⑧</td>
+</tr>
+<tr>
+<td>加分</td>
+<td><strong>凭证长期化风险治理</strong></td>
+<td>素材库 ③（v1/v2 SDK 并存背景下的凭证统一）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（权限默认拒绝）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：系统角色众多（管理员、操作员、主管、VIP 等），
+且不同角色可见的业务域差异极大。项目初期采用在 Controller 方法上
+逐个添加权限注解的方式，随着接口数量增长（REST 接口按业务域
+分布在 8 个包下），出现了「新增接口忘记加注解」的遗漏风险——
+这类漏洞不会在测试期暴露，只在被利用时才显现。</p>
+<p><strong>方案</strong>：我把授权策略从「逐个放行」改为「默认拒绝」。
+在 Spring Security 配置中统一拦截 <code>/api/v1/**</code>，
+未显式声明的路径一律拒绝；权限以 scope 列表的形式
+随令牌下发，接口层按 scope 校验而非按角色硬编码判断。
+这样角色与权限的关系可以在配置侧调整，
+无需修改业务代码——新增角色只需分配 scope 组合。</p>
+<p><strong>效果</strong>：🔶 消除新增接口的权限遗漏风险；
+角色调整从「改代码」变为「改配置」，🔶 权限变更耗时从 X 降到 Y。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该安全架构已稳定支撑【🔶 用户规模】，未发生【🔶 安全事件情况】。
+不足之处：
+一是权限模型目前以角色为单位的 scope 组合为主，
+尚未实现对单条数据级（行级）的细粒度控制；
+二是跨语言契约的破坏性变更尚未引入自动化安全影响评估。
+后续计划引入数据级授权与契约变更审计。
+通过本项目我认识到，安全架构的核心不是堆砌安全产品，
+而是建立&quot;默认拒绝&quot;的基线，并让凭证、权限、审计都收口到可治理的位置。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>认证协议</td>
+<td>OAuth2 / OIDC 授权码模式</td>
+</tr>
+<tr>
+<td>认证实现</td>
+<td><code>spring-boot-starter-oauth2-client</code> + <code>spring-security-oauth2-jose</code></td>
+</tr>
+<tr>
+<td>身份来源</td>
+<td>令牌中的 <code>user-name-attribute</code>，账号由集团统一治理</td>
+</tr>
+<tr>
+<td>视图层安全</td>
+<td><code>thymeleaf-extras-springsecurity6</code>（页面元素按权限显隐）</td>
+</tr>
+<tr>
+<td>授权模型</td>
+<td>角色 + scope 权限列表；接口层统一拦截 <code>/api/v1/**</code></td>
+</tr>
+<tr>
+<td>角色划分</td>
+<td>admin / operator1~4 / chief / vip</td>
+</tr>
+<tr>
+<td>会话管理</td>
+<td>Spring Session Data Redis + Redis Cluster（6 节点）+ Jedis，3600s</td>
+</tr>
+<tr>
+<td>传输安全</td>
+<td>gRPC 使用 <code>tls://</code> endpoint；对外 HTTPS</td>
+</tr>
+<tr>
+<td>凭证管理</td>
+<td>STS AssumeRole 临时凭证 + <code>DefaultCredentialsProvider</code></td>
+</tr>
+<tr>
+<td>配置安全</td>
+<td>SSM Parameter Store（FaaS）；凭证集中在 <code>DynamoDbConfig</code> / <code>AwsConfig</code></td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>DynamoDB 表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+<tr>
+<td>数据库权限</td>
+<td>reader / writer 双数据源职责分离</td>
+</tr>
+<tr>
+<td>审计</td>
+<td><code>system</code> 域画面操作日志（操作者/时间/内容）</td>
+</tr>
+<tr>
+<td>输入校验</td>
+<td><code>spring-boot-starter-validation</code>；MyBatis 参数绑定防注入</td>
+</tr>
+<tr>
+<td>内容净化</td>
+<td>Jsoup（1.22.1）处理 HTML 内容，防存储型 XSS</td>
+</tr>
+<tr>
+<td>错误信息</td>
+<td>统一 <code>Error{code,message}</code>，不泄漏内部细节</td>
+</tr>
+<tr>
+<td>消息规范</td>
+<td>消息 ID 前缀区分类型（E=错误、F=字段标签）</td>
+</tr>
+<tr>
+<td>接口文档</td>
+<td>SpringDoc OpenAPI <code>/api-docs</code>，仅匹配 <code>/api/v1/**</code></td>
+</tr>
+<tr>
+<td>日志脱敏</td>
+<td>properties 自动生成消息常量，避免硬编码敏感文案</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>「消息 ID 体系」是一个容易被忽略的亮点</strong>：
+系统通过 properties 文件自动生成消息常量类
+（<code>ApiMessageId</code>、<code>WebMessageId</code>、<code>FileItem</code>，均标注「自动生成、修正不可」），
+并以 ID 首字符区分消息类型。这既是代码规范，
+也是<strong>安全审计与国际化</strong>的双重基础设施——写安全或可维护性时都可以用。</p>
+</blockquote>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>权限模型的「默认拒绝」重构</strong> ⭐⭐⭐ —— 本主题首选（需自行组织，参考上文示例）</li>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐ —— 契约级安全边界统一</li>
+<li><strong>③ AWS SDK v1/v2 并存下的凭证统一</strong> ⭐⭐ —— 凭证治理</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐ —— 数据合规维度</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐ —— 会话安全</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>罗列安全产品</td>
+<td>空洞</td>
+<td>按「保护什么 → 威胁是什么 → 措施是什么」组织</td>
+</tr>
+<tr>
+<td>编造等保/ISO 认证</td>
+<td>高风险</td>
+<td>未确认的合规资质不要写；写「参照日本个人信息保护法要求」更稳妥</td>
+</tr>
+<tr>
+<td>编造加密算法细节</td>
+<td>高风险</td>
+<td>只写「TLS 传输加密」「STS 临时凭证」，不编 AES-256/国密等具体算法</td>
+</tr>
+<tr>
+<td>编造 WAF/堡垒机/IDS</td>
+<td>高风险</td>
+<td>本项目未见此类证据，不要写</td>
+</tr>
+<tr>
+<td>忽略审计</td>
+<td>漏考点</td>
+<td>安全架构四要素「认证/授权/加密/审计」缺一不可</td>
+</tr>
+<tr>
+<td>只说技术不说管理</td>
+<td>片面</td>
+<td>补上凭证轮换、环境隔离、权限变更流程等治理手段</td>
+</tr>
+<tr>
+<td>忘记「默认拒绝」原则</td>
+<td>关键失分</td>
+<td>这是安全架构最重要的设计原则，务必体现</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>技术真实性提醒</strong>：
+本项目有 <strong>OAuth2/OIDC + Spring Security + TLS + STS 临时凭证 + Jsoup 净化</strong>，
+但<strong>未见</strong> WAF、IDS/IPS、堡垒机、加密机、国密算法等企业级安全设备的使用证据。
+论文中不要为了「显得安全」而堆砌未使用的产品。
+相反，把「默认拒绝的授权设计」「凭证集中治理」这两个<strong>真实的架构决策</strong>写透，
+比列十个安全产品更有说服力。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code> · <code>06-系统集成与gRPC.md</code>（契约安全部分）</em></p></div><div class="chapter"><h1>论文模板 06 · 系统集成与异构系统互操作（gRPC / 契约驱动）</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。
+<strong>本主题是 BASE HOME 的绝对强项</strong>——「一份 proto 驱动 Java/Go/PHP 三语言」
+是极少有人能写出的真实素材，竞赛压力小，<strong>强烈建议重点准备</strong>。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（系统集成整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的集成方案设计，包括集成方式选型、
+接口契约管理与异构系统互操作等方面。</p>
+</blockquote>
+<p><strong>变体 B（接口/契约管理）</strong></p>
+<blockquote>
+<p>请论述你如何在多团队、多技术栈环境下保证接口契约的一致性。</p>
+</blockquote>
+<p><strong>变体 C（企业应用集成 EAI）</strong></p>
+<blockquote>
+<p>请论述你如何实现企业内多个异构系统之间的数据集成与流程集成。</p>
+<p><strong>判断</strong>：变体 B 是本项目的<strong>最优命中区</strong>；
+变体 A、C 也可用同一套素材，只需调整论述重心。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的系统集成架构设计与实现。
+该平台需同时为 Java 内部服务、Go 周边平台与 PHP 既有系统三类调用方提供服务，
+并与集团 MDM 主数据平台、外部预约系统、邮件与消息网关等多方交互。
+本人担任架构师，负责接口契约设计、异构系统集成方案与集成治理机制建设。
+针对【多技术栈下接口定义易漂移】、【依赖版本隐式解析引发运行时故障】、
+【外部系统故障影响业务连续性】三大挑战，
+本文从【契约单一来源】、【构建期版本治理】、【外部依赖本地化】三个维度进行设计：
+以 Protocol Buffers 作为唯一契约源，通过构建流水线生成 Java、Go、PHP
+三语言产物及 OpenAPI 文档；以统一版本管理插件锁定关键依赖；
+以本地只读主数据副本隔离外部平台故障。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与集成挑战（约 400 字）</h3>
+<p><strong>集成类论文的开头要写清「谁和谁集成」</strong>。</p>
+<blockquote>
+<p>BASE HOME 处于集团 IT 版图的中间位置，集成关系复杂：
+- <strong>上游</strong>：集团 MDM 主数据平台（本国、城市、航空公司、货币等主数据）
+- <strong>对外</strong>：周边平台通过 Go 客户端接入，既有系统通过 PHP 客户端接入
+- <strong>对内</strong>：Web 层通过 gRPC 调用 Service 层（17 个 RPC）
+- <strong>下游</strong>：邮件网关、SNS 消息推送、SQS 队列、DynamoDB Stream</p>
+<p>多技术栈并存带来一个根本性问题：<strong>接口定义在哪里是「真」的？</strong>
+如果每个调用方各自维护一份接口定义，字段口径必然随时间漂移，
+而这类问题往往在联调甚至上线后才暴露。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：契约单一来源（Single Source of Truth）</strong></p>
+<blockquote>
+<p>我把 <code>base-home-spec</code> 模块确立为<strong>唯一的接口契约源</strong>，
+所有接口以 protobuf 定义，统一存放于 <code>his/base/home/v1/</code> 目录，
+按职责分层组织：
+- <code>basehome_service.proto</code> —— 服务定义（<code>BaseHomeService</code>，17 个 RPC）
+- <code>request/</code> —— 17 个请求消息
+- <code>response/</code> —— 17 个响应消息
+- <code>enums/</code> —— 13 个枚举（产品类型、文档类型、申请人类型、消息状态、
+  销售渠道、发送者类型、保险类型等）
+- <code>type/</code> —— 约 42 个可复用消息（含统一的 <code>Error{code,message}</code>）</p>
+<p>全部约 90 个 proto 文件纳入版本管理，任何接口变更都必须
+通过该模块提交，从流程上杜绝了「各写一份」的可能。</p>
+<p><strong>层次化组织的价值</strong>：<code>type/</code> 中的可复用消息（如地址、金额、
+旅行者基础信息）被多个 request/response 引用，
+避免了同一结构在 17 个接口中重复定义 17 次——
+这是契约可维护性的关键。</p>
+</blockquote>
+<p><strong>第二层：构建期多语言产物生成</strong></p>
+<blockquote>
+<p>契约定义统一后，我在构建脚本中编排了完整的生成链路：
+<code>build.sh</code> 按 <code>build-java → build-go → build-php → generate-all</code> 顺序执行，
+每种语言使用各自的官方插件：</p>
+<table>
+<thead>
+<tr>
+<th>目标语言</th>
+<th>生成方式</th>
+<th>产物形态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td><code>protobuf-gradle-plugin</code>（protoc + protoc-gen-grpc-java）</td>
+<td>发布至内部 Maven</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>容器内 protoc（<code>--go_out</code> / <code>--go-grpc_out</code> / <code>--grpc-gateway_out</code>）</td>
+<td>Go module zip</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td><code>--php_out</code> + <code>grpc_php_plugin</code></td>
+<td>Composer 包</td>
+</tr>
+<tr>
+<td>文档</td>
+<td><code>--openapiv2_out</code> → MkDocs</td>
+<td>在线 API 文档</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键设计</strong>：把「生成」纳入构建流水线而非依赖人工执行，
+使接口一致性问题从「运行时联调发现」提前到「构建期暴露」——
+这是本次集成设计最重要的收益。</p>
+<p><strong>权衡说明</strong>：多语言生成的构建链路复杂度显著上升
+（需维护 Docker 化的 protoc 环境、三套发布流程），
+但相比接口不一致导致的线上缺陷与联调返工，这个成本是值得的。</p>
+</blockquote>
+<p><strong>第三层：对外依赖本地化</strong></p>
+<blockquote>
+<p>集团 MDM 主数据平台是外部系统，若业务查询直连外部，
+则外部系统的任何抖动都会直接传导到业务操作。
+我采用<strong>本地只读副本</strong>策略：通过 <code>ImportMdmJob</code> 定时从 MDM API 拉取主数据，
+落地为 26 张 <code>M*</code> 主数据表，业务侧只查本地。
+这样 MDM 平台短暂不可用时业务不受影响，
+数据新鲜度通过同步频率控制，是「可用性优先」的合理取舍。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：通信协议选型</strong></p>
+<blockquote>
+<p>服务间通信选择 <strong>gRPC</strong> 而非 REST，依据有三：
+① HTTP/2 多路复用，在高频内部调用下连接利用率更高；
+② protobuf 二进制编码体积小、序列化开销低；
+③ <strong>强类型契约天然由 proto 保证</strong>，与我们的契约单一来源策略一致。
+服务端监听 6565 端口，单次消息上限设为 64MB
+（旅游业务存在较大报文，如批量消息与文件列表），
+并开启 gRPC Reflection 便于调试期接口探查。</p>
+<p>对外则通过 Web 层的 REST 接口（<code>/api/v1/**</code>）暴露，
+兼顾浏览器友好性与前端契约稳定性，
+并用 SpringDoc 生成 OpenAPI 描述（<code>/api-docs</code>）。</p>
+</blockquote>
+<p><strong>要素二：服务端的分发设计</strong></p>
+<blockquote>
+<p><code>base-home-service</code> 以单一入口类 <code>BaseHomeService</code>
+（<code>@GRpcService</code>，继承 proto 生成的 <code>BaseHomeServiceImplBase</code>）承接 17 个 RPC，
+统一经 <code>execute(IGrpcService, req, respObserver)</code> 方法分发。
+业务逻辑委托给 18 个实现类（均实现 <code>IGrpcService</code> 接口）。
+这一设计的价值在于：<strong>横切关注点集中</strong>——
+日志、异常转换、认证上下文校验都可在 <code>execute</code> 中统一处理，
+各业务实现类只关注业务逻辑，避免每个 RPC 重复编写样板代码。</p>
+<p><strong>权衡说明</strong>：单一入口在 RPC 数量极大时会成为维护瓶颈，
+但 17 个 RPC 的规模下，统一分发带来的横切收益大于其复杂度成本。</p>
+</blockquote>
+<p><strong>要素三：跨业务域能力复用</strong></p>
+<blockquote>
+<p>多个 RPC 需要的能力（文档、消息线程、亲权同意书、
+序列号、旅行信息）下沉到 <code>service/shared/</code> 中的 5 个服务，
+避免同一逻辑在多个 RPC 中重复实现。
+文件相关能力单独归入 <code>service/filesystem/</code>。</p>
+</blockquote>
+<p><strong>要素四：错误契约统一</strong></p>
+<blockquote>
+<p>proto 中定义统一的 <code>Error{code, message}</code> 消息，
+所有接口的错误返回结构一致，调用方可编写统一的错误处理逻辑，
+无需为每个接口单独适配。错误码体系与 <code>his-common</code> 的消息 ID 规范对齐
+（如 <code>EABH00001</code> 形式的错误码），使错误在服务端、Web 端与
+文档中具有一致的标识。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>集成主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>① 一份 proto 契约驱动三语言</td>
+<td>主题核心，独一无二</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>② protobuf 版本冲突致启动失败</td>
+<td>直接对应「集成治理」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>③ AWS SDK v1/v2 并存</td>
+<td>直接对应「异构共存」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据统一</td>
+<td>直接对应「企业应用集成」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（②，三段式）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：契约统一后，新的问题出现了——
+契约的「消费者」不止我们的服务，还包括 protobuf 官方的公共类型库。
+一次依赖升级中，<code>proto-google-common-protos</code> 被解析到 2.64.0-rc1，
+gRPC 服务启动直接失败。更棘手的是，由于我们的版本声明采用了
+动态区间（<code>protobufVersion = '[3,4)'</code>、<code>grpcVersion = 'latest.release'</code>），
+这个问题在构建期完全不显现，只在运行时暴露。</p>
+<p>我的判断是：这不是偶发故障，而是<strong>契约不完整</strong>的表现——
+我们统一了业务接口的契约，却没有统一「第三方依赖版本」这一隐式契约。
+因此我没有做局部修复，而是在 <code>base-home-versions</code> 统一版本源中
+用 <code>resolutionStrategy { force ... }</code> 将 <code>proto-google-common-protos</code>
+锁定到 2.63.2，并同步锁定 MyBatis 3.0.5 等关键组件。</p>
+<p><strong>效果</strong>：启动失败问题消除；同一提交在任何机器上构建产物一致，
+<strong>构建可复现性</strong>得到保障。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该集成架构已稳定支撑 Java、Go、PHP 三端调用，
+17 个 RPC 在三端口径一致，接口文档随契约自动生成。
+不足之处：
+一是跨语言契约虽来源统一，但**破坏性变更尚未实现自动化的兼容性检测**，
+目前依赖人工评审；
+二是 Go 与 PHP 侧的对齐仍依赖固定版本号人工同步，
+尚未做到发布即对齐。
+后续计划引入契约兼容性校验与三端发布联动。
+通过本项目我认识到，系统集成的本质不是&quot;把系统连起来&quot;，
+而是&quot;让多个系统对同一件事保持一致的理解&quot;。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>契约源</td>
+<td><code>base-home-spec</code>，protobuf 唯一契约源，约 90 个 proto 文件</td>
+</tr>
+<tr>
+<td>服务定义</td>
+<td><code>basehome_service.proto</code> → <code>service BaseHomeService</code>，17 个 RPC</td>
+</tr>
+<tr>
+<td>契约分层</td>
+<td><code>request/</code>（17）+ <code>response/</code>（17）+ <code>enums/</code>（13）+ <code>type/</code>（约 42）</td>
+</tr>
+<tr>
+<td>统一错误</td>
+<td><code>type/error.proto</code> → <code>Error{code, message}</code></td>
+</tr>
+<tr>
+<td>多语言生成</td>
+<td>Java（protobuf-gradle-plugin）/ Go（protoc + grpc-gateway）/ PHP（grpc_php_plugin）</td>
+</tr>
+<tr>
+<td>生成编排</td>
+<td><code>build.sh</code>：build-java → build-go → build-php → generate-all</td>
+</tr>
+<tr>
+<td>文档生成</td>
+<td><code>--openapiv2_out</code> → <code>base_home_api.swagger.json</code> → MkDocs 站点</td>
+</tr>
+<tr>
+<td>HTTP 映射</td>
+<td>每个 RPC 带 <code>google.api.http</code> 映射，路径 <code>/v1/&lt;RpcName&gt;</code></td>
+</tr>
+<tr>
+<td>服务通信</td>
+<td>gRPC 端口 6565，<code>maxInboundMessageSize</code> 64MB，开启 Reflection</td>
+</tr>
+<tr>
+<td>服务端设计</td>
+<td>单入口 <code>BaseHomeService</code> + <code>execute()</code> 统一分发，18 个实现类</td>
+</tr>
+<tr>
+<td>能力复用</td>
+<td><code>service/shared/</code> 5 个共享服务；<code>service/filesystem/</code> 2 个</td>
+</tr>
+<tr>
+<td>调用方式</td>
+<td>配置化 endpoint（<code>tls://</code>）+ TLS 传输加密</td>
+</tr>
+<tr>
+<td>对外接口</td>
+<td>Web 层 REST <code>/api/v1/**</code>，SpringDoc OpenAPI <code>/api-docs</code></td>
+</tr>
+<tr>
+<td>主数据集成</td>
+<td><code>ImportMdmJob</code> 定时从 MDM API 同步，本地 26 张 <code>M*</code> 只读副本</td>
+</tr>
+<tr>
+<td>外部预约集成</td>
+<td><code>ExternalReservationImportJob</code> + <code>RecvImportType</code></td>
+</tr>
+<tr>
+<td>异步集成</td>
+<td>SNS 主题、SQS 队列、DynamoDB Stream → Lambda</td>
+</tr>
+<tr>
+<td>版本治理</td>
+<td><code>base-home-versions</code> 插件 + <code>resolutionStrategy force</code></td>
+</tr>
+<tr>
+<td>版本对齐</td>
+<td><code>his-common-spec</code> 2.6.0 在 Java/Go/PHP 三侧对齐固定</td>
+</tr>
+<tr>
+<td>依赖方向</td>
+<td>web/service → common + spec；batch → common + mdm-spec</td>
+</tr>
+<tr>
+<td>文档发布</td>
+<td>MkDocs 站点（容器化，端口 8888）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐⭐ —— 本主题核心</li>
+<li><strong>② protobuf 版本冲突致启动失败</strong> ⭐⭐⭐ —— 集成治理</li>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐⭐ —— 异构共存与渐进演进</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐⭐ —— 企业应用集成</li>
+<li><strong>⑥ Serverless 数据同步</strong> ⭐⭐ —— 异步集成</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只说「用了 gRPC」</td>
+<td>无深度</td>
+<td>必须写<strong>为什么不用 REST</strong>（HTTP/2、强类型契约、二进制编码效率）</td>
+</tr>
+<tr>
+<td>不写契约管理</td>
+<td>关键失分</td>
+<td>「契约单一来源」是本主题的灵魂，务必写透</td>
+</tr>
+<tr>
+<td>编造服务注册中心</td>
+<td>高风险</td>
+<td>本项目 gRPC 为 <strong>endpoint 配置直连</strong>，无 Eureka/Nacos/Consul</td>
+</tr>
+<tr>
+<td>编造 API 网关</td>
+<td>高风险</td>
+<td>本项目未见网关组件，不要写「通过网关统一鉴权」；可写「统一路径便于网关层集中治理」作为设计意图</td>
+</tr>
+<tr>
+<td>编造 ESB</td>
+<td>高风险</td>
+<td>本项目未用 ESB，集成靠契约 + 消息队列，如实写即可</td>
+</tr>
+<tr>
+<td>忽略版本治理</td>
+<td>漏考点</td>
+<td>集成不仅是「连起来」，还包括依赖版本的一致性</td>
+</tr>
+<tr>
+<td>忘记写权衡</td>
+<td>缺乏架构思维</td>
+<td>多语言生成的构建复杂度 vs 接口不一致的返工成本，要明确对比</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>本主题的独特优势</strong>：
+「一份契约生成 Java/Go/PHP 三语言 + 自动生成 OpenAPI 文档」
+这个素材<strong>绝大多数考生写不出来</strong>，因为它需要真实的多语言项目经历。
+如果你的考题涉及「接口管理」「多团队协作」「异构系统集成」，
+优先选这道题，用 ① 和 ② 两个难点撑满「难点」段，
+基本可以保证在这一题上拿到高于平均的分数。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code>（服务间通信）· <code>03-数据架构与混合存储.md</code>（数据集成）</em></p></div><div class="chapter"><h1>论文模板 07 · 架构评估与质量属性</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>理论性最强</strong>，也是最容易写出「架构味」的一类题。
+⚠️ 本主题要求掌握 ATAM / 质量属性场景等<strong>教材概念</strong>，请先复习教材对应章节。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（架构评估）</strong></p>
+<blockquote>
+<p>请论述你如何对系统架构进行评估，包括评估方法、评估过程与评估结果的应用。</p>
+</blockquote>
+<p><strong>变体 B（质量属性）</strong></p>
+<blockquote>
+<p>请论述质量属性在架构设计中的作用，并结合项目说明你如何实现
+性能、可用性、安全性等质量属性之间的权衡。</p>
+</blockquote>
+<p><strong>变体 C（架构决策）</strong></p>
+<blockquote>
+<p>请论述你在架构设计过程中如何进行技术决策，如何处理多个质量属性之间的冲突。</p>
+<p><strong>判断</strong>：变体 B 是 BASE HOME 的最优命中区——
+项目有大量真实的「权衡决策」可写（混合存储的取舍、
+Serverless 的一致性取舍、双 SDK 并存的取舍）。</p>
+</blockquote>
+<hr />
+<h2>二、必背理论要点（先背熟，再谈项目）</h2>
+<h3>2.1 六大质量属性</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+<th>本项目对应设计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性能</strong></td>
+<td>响应时间、吞吐量</td>
+<td>gRPC（HTTP/2）、读写分离、<code>fetchSize</code> 控制、DynamoDB 单分区查询</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>系统正常运行时间比例</td>
+<td>故障域隔离、会话外置、乐观锁重试、幂等</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>抵御攻击、保护数据</td>
+<td>OAuth2/OIDC、默认拒绝授权、TLS、STS 临时凭证</td>
+</tr>
+<tr>
+<td><strong>可修改性</strong></td>
+<td>变更的成本与难度</td>
+<td>契约单一来源、版本统一治理、模块化拆分</td>
+</tr>
+<tr>
+<td><strong>可测试性</strong></td>
+<td>发现缺陷的难易</td>
+<td>TestContainers、LocalStack、pytest+moto</td>
+</tr>
+<tr>
+<td><strong>易用性</strong></td>
+<td>用户完成任务的效率</td>
+<td>MyPage 界面、ToDo 管理、通知推送</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 质量属性场景六要素</h3>
+<pre><code>刺激源(Source) → 刺激(Stimulus) → 环境(Environment)
+    → 制品(Artifact) → 响应(Response) → 响应度量(Response Measure)
+</code></pre>
+<p><strong>示例（本项目可用）</strong>：</p>
+<blockquote>
+<p>当<strong>营业本部操作员</strong>（刺激源）在<strong>长假前预约高峰期</strong>（环境）
+提交<strong>预约查询请求</strong>（刺激）时，<strong>Web 与 Service 模块</strong>（制品）
+应在 <strong>2 秒内</strong>（响应度量）返回结果（响应）。</p>
+</blockquote>
+<h3>2.3 ATAM 四个阶段与关键概念</h3>
+<p><strong>ATAM 四阶段</strong>：</p>
+<ol>
+<li><strong>场景和需求收集</strong> —— 与利益相关者共同梳理质量属性场景</li>
+<li><strong>架构视图和场景实现</strong> —— 描述架构如何支持各场景</li>
+<li><strong>属性模型构造和分析</strong> —— 建立性能/可用性等分析模型</li>
+<li><strong>架构决策与折中</strong> —— 识别权衡点并形成决策</li>
+</ol>
+<p><strong>四个关键概念（必考，务必准确使用）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>定义</th>
+<th>本项目示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>敏感点</strong></td>
+<td>为实现某质量属性，一个或多个构件所具有的关键性质</td>
+<td>DynamoDB 的 <code>travel_no</code> 分区键设计是<strong>性能</strong>的敏感点（决定查询是否落单分区）</td>
+</tr>
+<tr>
+<td><strong>权衡点</strong></td>
+<td>影响多个质量属性、且对多个属性敏感的敏感点</td>
+<td><strong>混合存储选型</strong>：提升性能与可扩展性（性能/可修改性），但增加运维复杂度（可维护性/可测试性）</td>
+</tr>
+<tr>
+<td><strong>风险点</strong></td>
+<td>可能导致问题的架构决策</td>
+<td>采用动态版本区间（<code>latest.release</code>）——导致构建不可复现（已发生实际故障）</td>
+</tr>
+<tr>
+<td><strong>非风险点</strong></td>
+<td>经分析确认安全的决策</td>
+<td>使用 Spring Session + Redis Cluster 实现会话外置——已有成熟实践支撑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>考场上「敏感点/权衡点/风险点」这三个词只要用对，就能明显区分于普通考生。</strong>
+建议在「难点」段中显式使用这些术语。</p>
+</blockquote>
+<h3>2.4 常见质量属性策略（战术）</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>常见策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可用性</td>
+<td>冗余、故障检测、恢复、<strong>故障隔离</strong></td>
+</tr>
+<tr>
+<td>性能</td>
+<td>资源调度、并发、<strong>减少计算/存储开销</strong>、缓存</td>
+</tr>
+<tr>
+<td>可修改性</td>
+<td><strong>限制依赖</strong>、抽象、信息隐藏、<strong>延迟绑定</strong></td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>认证、授权、<strong>限制访问</strong>、审计</td>
+</tr>
+<tr>
+<td>可测试性</td>
+<td>记录回放、接口分离、<strong>可观测</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与质量属性需求（约 400 字）</h3>
+<blockquote>
+<p>BASE HOME 是 H.I.S. 面向旅游业务的支撑平台，采用 Java 21 + Spring Boot 3.5.7，
+部署于 AWS ap-northeast-1。本人担任架构师，负责架构设计与质量属性权衡。</p>
+<p>在项目初期，我与业务方、运维方共同梳理了关键质量属性需求，并
+<strong>将其转化为可度量的质量属性场景</strong>，作为后续所有架构决策的依据：</p>
+<table>
+<thead>
+<tr>
+<th>质量属性</th>
+<th>场景（简化）</th>
+<th>度量目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可用性</td>
+<td>长假预约高峰期间，Web 层单实例故障</td>
+<td>🔶 服务不中断，用户会话不丢失</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>高峰期操作员提交预约查询</td>
+<td>🔶 P99 ≤ 2 秒</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>未授权用户尝试访问客户消息接口</td>
+<td>拒绝访问并记录审计日志</td>
+</tr>
+<tr>
+<td>可修改性</td>
+<td>新增一类通知渠道</td>
+<td>🔶 不改动核心服务，仅新增一个单元</td>
+</tr>
+<tr>
+<td>可测试性</td>
+<td>开发人员本地验证数据同步逻辑</td>
+<td>无需连接真实 AWS 即可完成</td>
+</tr>
+</tbody>
+</table>
+<p>这种「场景化」的表达方式，使质量属性从抽象口号变成了可验证的工程目标。</p>
+<p>⚠️ <strong>注意</strong>：表格中的 🔶 数字必须由你填真实值。
+但即使填了估计值，「把需求写成场景」这一动作本身就体现架构思维。</p>
+</blockquote>
+<h3>第 2 段 · 评估方法与过程（约 800 字，本文核心）</h3>
+<p><strong>推荐用 ATAM 四阶段组织</strong>：</p>
+<p><strong>阶段一：场景和需求收集</strong></p>
+<blockquote>
+<p>我组织了由业务方（营业本部代表）、运维方、开发负责人参与的评估会议，
+采用 <strong>效用树（Utility Tree）</strong> 对质量属性需求进行优先级排序。
+排序依据为「重要性」与「实现难度」两个维度，
+高重要性且高难度的需求优先投入架构资源。
+经排序后，<strong>性能</strong>与<strong>可用性</strong>被列为最高优先级，
+<strong>可修改性</strong>次之（因业务政策变动频繁，接口与字段需持续演进）。</p>
+</blockquote>
+<p><strong>阶段二：架构视图和场景实现</strong></p>
+<blockquote>
+<p>我以视图为单位描述架构对场景的支撑，本项目主要涉及四个视图：
+- <strong>逻辑视图</strong>：8 个 Gradle 模块的职责划分与依赖方向
+- <strong>开发视图</strong>：<code>common</code>（实体/常量/消息）、<code>spec</code>（契约）、
+  <code>versions</code>（版本治理）等支撑模块的组织
+- <strong>进程视图</strong>：Web（8080）、Service（gRPC 6565）、Batch（无 Web 容器）、
+  FaaS（14 个 Lambda）的运行时交互
+- <strong>部署视图</strong>：AWS ap-northeast-1，多实例部署 + Redis Cluster +
+  Aurora + DynamoDB + S3 + SQS/SNS</p>
+</blockquote>
+<p><strong>阶段三：属性模型构造和分析</strong></p>
+<blockquote>
+<p>针对性能与可用性，我们构造了简化的分析模型：
+- <strong>性能</strong>：分析关键路径（Web → gRPC → DynamoDB），
+  识别出 DynamoDB 查询是否落在单一分区是主导因素，
+  因此把分区键设计作为性能敏感点重点评审
+- <strong>可用性</strong>：分析方法是将部署单元逐个标记为「失效」，
+  观察影响范围。分析中发现 Batch 与 Web 共享数据源时，
+  批处理峰值会传导为在线接口延迟——这成为后续读写分离的直接依据</p>
+</blockquote>
+<p><strong>阶段四：架构决策与折中</strong></p>
+<blockquote>
+<p>评估的核心产出是<strong>识别权衡点并形成决策记录</strong>。本项目的三个主要权衡：</p>
+<p><strong>权衡一：混合存储（MySQL + DynamoDB + S3）</strong>
+- 正向：性能↑（DynamoDB 低延迟、单分区查询）、可修改性↑（schema-less，字段演进免 DDL）
+- 负向：可维护性↓（多套存储的备份/容量规划）、一致性↓（需事件驱动达成最终一致）
+- <strong>决策</strong>：接受。理由是四类数据的访问特征差异足够大，统一存储的代价更高。</p>
+<p><strong>权衡二：Serverless 数据同步</strong>
+- 正向：性能↑（主链路解耦）、成本↓（按需计费）、可用性↑（故障域隔离）
+- 负向：一致性↓（最终一致）、可测试性↓（本地调试困难）
+- <strong>决策</strong>：接受。理由是同步场景对延迟不敏感，且用 moto/LocalStack 缓解了测试困难。</p>
+<p><strong>权衡三：契约单一来源</strong>
+- 正向：可修改性↑（接口变更一处生效）、可测试性↑（构建期暴露不一致）
+- 负向：构建复杂度↑（需维护 Docker 化 protoc 环境与三套发布流程）
+- <strong>决策</strong>：接受。理由见难点素材 ①。</p>
+</blockquote>
+<h3>第 3 段 · 敏感点、风险点识别（约 700 字）</h3>
+<p><strong>这一节是本文的加分核心，务必显式使用术语。</strong></p>
+<p><strong>敏感点识别</strong>：</p>
+<blockquote>
+<p>通过评估，我们识别出以下关键敏感点：</p>
+<table>
+<thead>
+<tr>
+<th>敏感点</th>
+<th>影响的质量属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DynamoDB 分区键设计（<code>travel_no</code> + <code>data_type</code>）</td>
+<td>性能</td>
+<td>决定查询能否落单分区，是延迟的主导因素</td>
+</tr>
+<tr>
+<td><code>mybatis.defaultFetchSize = 200</code></td>
+<td>性能、可用性</td>
+<td>批量游标大小直接关系内存占用与 OOM 风险</td>
+</tr>
+<tr>
+<td>Session 存储位置（本地 vs Redis）</td>
+<td>可用性</td>
+<td>决定 Web 实例能否水平扩容与无损重启</td>
+</tr>
+<tr>
+<td>依赖版本声明方式（区间 vs 固定）</td>
+<td>可修改性、可测试性</td>
+<td>决定构建是否可复现</td>
+</tr>
+<tr>
+<td>授权校验位置（接口层 vs 业务代码）</td>
+<td>安全性</td>
+<td>决定权限遗漏风险的高低</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p><strong>风险点与非风险点</strong>：</p>
+<blockquote>
+<p><strong>风险点</strong>：采用 <code>[3,4)</code> 与 <code>latest.release</code> 这样的动态版本区间，
+使构建产物不可复现，任何一次依赖发布都可能引入破坏性变更。
+该风险在评估中被识别为高风险——<strong>并且后续真实发生了</strong>
+（<code>proto-google-common-protos</code> 2.64.0-rc1 导致服务启动失败）。
+这印证了评估的价值：被识别的风险可以提前预案。</p>
+<p><strong>非风险点</strong>：Spring Session + Redis Cluster 的会话外置方案。
+该方案在业界有大量成熟实践，且 Redis Cluster 本身提供分片与故障转移，
+评估确认无需额外预案。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>架构评估主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>② protobuf 版本冲突（风险点转化为实际故障）</td>
+<td>对应「风险点识别」</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>⑤ 混合存储（典型权衡点）</td>
+<td>对应「权衡点分析」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑥ Serverless 同步（一致性与性能的权衡）</td>
+<td>对应「属性冲突处理」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>③ AWS SDK v1/v2 并存</td>
+<td>对应「可修改性的长期成本」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点写法提示</strong>：本主题的难点要<strong>用质量属性的语言写</strong>，
+而不是用技术语言。例如不要写「我们把版本锁住了」，
+而要写「我们识别出该决策对可修改性与可测试性构成风险，
+通过将隐式版本契约显式化，把风险转化为可控状态」。</p>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>通过本次评估，我们共识别出【🔶 数量】个敏感点、【🔶 数量】个权衡点
+与【🔶 数量】个风险点，其中【🔶 数量】个风险点在建设期真实发生并有预案应对。
+系统上线后【🔶 核心质量指标】达到预期。
+不足之处：
+一是评估主要依靠会议评审与经验判断，尚未引入量化的属性分析模型
+（如排队模型、可靠性框图）；
+二是评估结论缺少工具化沉淀，决策记录以文档形式保存，检索与追溯不够便捷。
+后续计划引入量化分析工具与架构决策记录（ADR）机制。
+通过本项目我深刻体会到，架构评估的价值不在于证明架构正确，
+而在于**在投入大量资源之前，把&quot;可能的错误&quot;找出来**。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查（术语对照表）</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>本项目实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>性能敏感点</strong></td>
+<td>DynamoDB 分区键设计；<code>fetchSize=200</code>；<code>scan-limit=10000</code></td>
+</tr>
+<tr>
+<td><strong>可用性敏感点</strong></td>
+<td>Session 存储位置；批量作业数据源隔离；Lambda 函数粒度</td>
+</tr>
+<tr>
+<td><strong>安全性敏感点</strong></td>
+<td>授权校验位置；凭证获取方式（STS vs 长期密钥）</td>
+</tr>
+<tr>
+<td><strong>可修改性敏感点</strong></td>
+<td>契约定义位置；依赖版本声明方式；模块依赖方向</td>
+</tr>
+<tr>
+<td><strong>可测试性敏感点</strong></td>
+<td>云依赖是否可本地模拟（LocalStack / TestContainers / moto）</td>
+</tr>
+<tr>
+<td><strong>权衡点</strong></td>
+<td>混合存储；Serverless 同步；多语言契约生成</td>
+</tr>
+<tr>
+<td><strong>风险点（已发生）</strong></td>
+<td>动态版本区间导致构建不可复现 → protobuf 启动失败</td>
+</tr>
+<tr>
+<td><strong>风险点（未发生）</strong></td>
+<td>AWS SDK v1/v2 长期并存的维护成本累积</td>
+</tr>
+<tr>
+<td><strong>非风险点</strong></td>
+<td>Spring Session + Redis Cluster 会话外置</td>
+</tr>
+<tr>
+<td><strong>质量属性战术（可用性）</strong></td>
+<td>故障隔离（部署单元拆分、Lambda 按域拆分）</td>
+</tr>
+<tr>
+<td><strong>质量属性战术（性能）</strong></td>
+<td>减少存储开销（读写分离）、协议优化（gRPC/HTTP2）</td>
+</tr>
+<tr>
+<td><strong>质量属性战术（可修改性）</strong></td>
+<td>限制依赖（版本 force 锁定）、抽象（<code>IGrpcService</code> 接口）</td>
+</tr>
+<tr>
+<td><strong>质量属性战术（可测试性）</strong></td>
+<td>本地云模拟（LocalStack）、接口分离（<code>IGrpcService</code>）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>② protobuf 版本冲突</strong> ⭐⭐⭐ —— 风险点 → 实际故障，论点完整</li>
+<li><strong>⑤ 混合存储选型</strong> ⭐⭐⭐ —— 最典型的权衡点</li>
+<li><strong>⑥ Serverless 同步</strong> ⭐⭐⭐ —— 性能与一致性的冲突处理</li>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐ —— 可修改性的长期成本</li>
+<li><strong>① 契约单一来源</strong> ⭐⭐ —— 可修改性战术</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不提 ATAM 或提了不会用</td>
+<td>明显不切题</td>
+<td>背熟四阶段 + 四概念（敏感点/权衡点/风险点/非风险点）</td>
+</tr>
+<tr>
+<td>术语用错</td>
+<td>反而扣分</td>
+<td>敏感点=关键性质；权衡点=影响多属性的敏感点；风险点=可能致问题的决策</td>
+</tr>
+<tr>
+<td>只写「我们评估了」不写过程</td>
+<td>空洞</td>
+<td>按「场景收集 → 视图描述 → 属性分析 → 折中决策」四步写</td>
+</tr>
+<tr>
+<td>不写量化目标</td>
+<td>关键失分</td>
+<td>质量属性场景必须有<strong>响应度量</strong></td>
+</tr>
+<tr>
+<td>说「所有质量属性都达到最优」</td>
+<td>逻辑错误</td>
+<td>质量属性天然相互制约，必须写权衡</td>
+</tr>
+<tr>
+<td>编造评估工具</td>
+<td>高风险</td>
+<td>本项目未见 Archimate 等工具使用证据；写「效用树 + 会议评审」是可行的</td>
+</tr>
+<tr>
+<td>忘记写评估的产出</td>
+<td>结构缺失</td>
+<td>评估必须落到「识别了哪些点 + 形成了什么决策 + 有何效果」</td>
+</tr>
+<tr>
+<td>与项目脱节，纯讲理论</td>
+<td>判定为背书</td>
+<td>每个理论点都要挂一个本项目实例</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>本主题的备考捷径</strong>：
+把上面「四、术语对照表」背下来。
+这张表把教材术语与你的项目一一对应，
+考场上只要题目沾「评估/质量属性/权衡」，就可以直接展开。
+这是本模板集中<strong>理论性最强也最容易拿分</strong>的一篇。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code> · <code>03-数据架构与混合存储.md</code> · <code>09-架构演化与遗留系统改造.md</code></em></p></div><div class="chapter"><h1>论文模板 08 · 批处理架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>出现频率中等</strong>，
+但因多数考生缺乏真实批处理经验，竞争压力小，<strong>是稳妥的备选题</strong>。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（批处理整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统中批处理（离线处理）部分的设计，
+包括作业调度、容错重跑、性能优化等方面。</p>
+</blockquote>
+<p><strong>变体 B（数据导入导出）</strong></p>
+<blockquote>
+<p>请论述你如何设计系统的数据导入/导出功能，如何保证大批量数据处理的正确性与效率。</p>
+</blockquote>
+<p><strong>变体 C（作业可靠性）</strong></p>
+<blockquote>
+<p>请论述你如何保障定时作业的可靠性，如何处理作业失败与幂等性问题。</p>
+<p><strong>判断</strong>：BASE HOME 在三个变体上都有真实素材——
+10 个 Spring Batch Job、双数据源读写分离、幂等控制、
+专用重试服务、Prometheus 监控、CSV 生成与 S3 上传。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台中批处理架构的设计与实现。
+该平台的批处理承担成本文件生成、自动邮件生成与发送、外部预约数据导入、
+主数据联动、ToDo 状态更新等核心离线业务，共 10 个 Spring Batch 作业。
+本人担任架构师，负责批处理架构设计、作业可靠性保障与性能优化。
+针对【批量作业与在线业务争抢数据库资源】、【消息推送重复发送风险】、
+【作业失败后的可恢复性】三大挑战，
+本文从【读写分离双数据源】、【幂等与专用重试】、
+【参数化可重跑设计】三个维度进行设计：
+为批处理配置独立的读写数据源并按包路径隔离 Mapper，
+以幂等时间窗与独立重试服务杜绝重复推送，
+将基准日期等关键参数显式参数化以保证结果可复现。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与批处理业务（约 400 字）</h3>
+<p><strong>批处理论文开头要列清「有哪些作业」</strong>，体现真实经历。</p>
+<blockquote>
+<p>BASE HOME 的批处理承载日终与定时的离线业务，
+基于 Spring Batch 3.5.7 实现，共 10 个作业：</p>
+<table>
+<thead>
+<tr>
+<th>作业</th>
+<th>业务含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ActivityCostFileCreateJob</code></td>
+<td>活动原价成本文件生成</td>
+</tr>
+<tr>
+<td><code>AirCostFileCreateJob</code></td>
+<td>机票成本文件生成</td>
+</tr>
+<tr>
+<td><code>HotelCostFileCreateJob</code></td>
+<td>酒店成本文件生成</td>
+</tr>
+<tr>
+<td><code>AutomaticEmailCreateJob</code></td>
+<td>自动邮件生成</td>
+</tr>
+<tr>
+<td><code>MailSendJob</code></td>
+<td>邮件发送</td>
+</tr>
+<tr>
+<td><code>ExternalReservationImportJob</code></td>
+<td>外部预约数据导入</td>
+</tr>
+<tr>
+<td><code>ImportMdmJob</code></td>
+<td>集团 MDM 主数据联动</td>
+</tr>
+<tr>
+<td><code>GenericQueryExecutionJob</code></td>
+<td>通用查询执行（元数据驱动）</td>
+</tr>
+<tr>
+<td><code>TodoStatusUpdateJob</code></td>
+<td>MyPage ToDo 状态更新</td>
+</tr>
+<tr>
+<td><code>NoopJob</code></td>
+<td>测试用空作业</td>
+</tr>
+</tbody>
+</table>
+<p>这些作业的业务特征差异很大：成本文件生成是<strong>计算密集型</strong>（需汇总大量费用明细），
+邮件发送是<strong>IO 密集型</strong>（依赖外部网关），数据导入则是<strong>混合型</strong>。
+批处理模块设置为 <code>web-application-type: none</code>，不占用 Web 端口，
+与在线业务在进程级完全隔离。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字，本文核心）</h3>
+<p><strong>第一层：资源隔离——读写分离双数据源</strong></p>
+<blockquote>
+<p>批处理最大的架构风险不是作业本身失败，而是<strong>批量作业拖垮在线业务</strong>。
+成本文件生成需要扫描大量费用明细，外部预约导入需要回写大量记录，
+若与在线接口共享数据库连接池，夜间批次高峰会直接推高在线接口延迟。</p>
+<p>我的方案是配置<strong>双数据源</strong>：
+- <code>ReaderDataSourceConfig</code>（<code>spring.datasource.reader</code>）—— 只读账号，承担大量查询
+- <code>WriterDataSourceConfig</code>（<code>spring.datasource.writer</code>，标 <code>@Primary</code>）—— 写账号，承担结果回写</p>
+<p>通过<strong>包路径隔离 Mapper</strong>（<code>repository/reader/</code> 与 <code>repository/writer/</code>），
+使读写走不同数据源，物理层面互不干扰。
+配合的优化还包括：
+- 事务隔离级别设为 <code>TRANSACTION_READ_COMMITTED</code>，
+  避免长事务期间持有大量间隙锁影响在线写入
+- <code>mybatis.defaultFetchSize = 200</code> 控制批量游标，
+  防止一次性载入海量结果集导致 JVM 内存溢出——
+  这是批处理最典型的故障模式</p>
+<p><strong>权衡说明</strong>：双数据源增加了配置复杂度，
+且跨数据源无法使用单一事务（需业务上避免跨源事务），
+但换来的在线业务稳定性收益远大于此成本。</p>
+</blockquote>
+<p><strong>第二层：作业组织与复用</strong></p>
+<blockquote>
+<p>10 个作业统一继承 <code>job/base/ManagedBaseJob</code> 基类，
+把作业的公共能力（参数解析、日志、异常处理）收敛到基类，
+各作业只关注自身业务逻辑。
+业务逻辑下沉到 <code>service/</code> 层的对应服务
+（<code>MailSendService</code>、<code>ImportMdmService</code>、<code>FileCreateService</code> 等），
+使作业类只承担编排职责，业务逻辑可被测试与复用。
+作业参数通过枚举统一定义（<code>JobParameterKey</code>）：
+<code>acquisitionRange</code>（取得范围）、<code>executionBaseDate</code>（执行基准日）、
+<code>todoDistinction</code>、<code>emailType</code>、<code>importTargetType</code>。</p>
+</blockquote>
+<p><strong>第三层：作业的可靠性设计</strong></p>
+<blockquote>
+<ul>
+<li><strong>幂等控制</strong>：<code>app.batch.idempotency-duration-minutes = 10</code>
+  提供时间窗去重，防止重复执行造成重复推送</li>
+<li><strong>专用重试服务</strong>：<code>MailSendRetryService</code> 独立承担邮件重试，
+  与业务解耦，重试策略可独立调整</li>
+<li><strong>事务粒度控制</strong>：<code>service/transaction/*TransactionalService</code>
+  把事务边界限制在必要范围，避免大事务回滚造成连带重放</li>
+<li><strong>可观测性</strong>：通过 <strong>Prometheus PushGateway</strong> 上报作业指标
+  （<code>shutdown-operation: post</code> 确保短生命周期进程在退出前完成指标推送），
+  使定时作业的运行状态可被监控系统采集与告警</li>
+</ul>
+</blockquote>
+<p><strong>第四层：元数据驱动的通用查询</strong></p>
+<blockquote>
+<p><code>GenericQueryExecutionJob</code> 配合 <code>MGenericQuery*</code> 系列表，
+把查询逻辑外置为元数据配置，新增一类查询只需配置数据而无需改代码。
+这一设计显著提升了批处理的<strong>可修改性</strong>——
+业务侧新增报表类查询不再需要开发排期。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：CSV 文件生成与上传</strong></p>
+<blockquote>
+<p>三类成本文件（ACT/AIR/HTL）使用 <strong>SuperCSV 注解库</strong>实现，
+通过注解将实体字段直接映射为 CSV 列，
+导出列定义集中在实体上（<code>ActivityCostDownloadCsv</code>、
+<code>AirCostDownloadCsv</code>、<code>HotelCostDownloadCsv</code>），
+配合 <code>CsvDownloader</code> 接口与 <code>FileUploadService</code> 落 S3。
+<strong>设计价值</strong>：新增导出列时只需修改实体注解，
+不会波及导出逻辑代码——这是「限制变更影响范围」的可修改性战术。</p>
+</blockquote>
+<p><strong>要素二：外部数据导入</strong></p>
+<blockquote>
+<p>外部预约数据导入（<code>ExternalReservationImportJob</code>）
+通过 <code>RecvImportType</code> 枚举区分导入类型，
+经 <code>ExternalReservationImportService</code> 处理入库。
+集团主数据联动（<code>ImportMdmJob</code>）通过 <code>api/mdm/</code> 封装的
+认证与查询参数访问 MDM API，本地落为 26 张 <code>M*</code> 主数据表。</p>
+</blockquote>
+<p><strong>要素三：消息通知联动</strong></p>
+<blockquote>
+<p>批处理完成后需推送通知，通过 <code>SnsService</code> 发布到 SNS 主题
+（<code>app.services.aws.sns</code>），由下游 Lambda 消费。
+这种「批处理产出 → SNS → Lambda 消费」的模式，
+把批处理与通知渠道解耦：新增通知渠道无需修改批处理代码。</p>
+</blockquote>
+<p><strong>要素四：作业参数的显式化</strong></p>
+<blockquote>
+<p>我把 <code>executionBaseDate</code>（执行基准日）、<code>acquisitionRange</code>（取得范围）
+等关键参数定义在 <code>JobParameterKey</code> 枚举中并显式传入，
+而非在代码中直接取系统当前时间。
+这一设计带来两个收益：
+① <strong>可重跑</strong>——补数时指定历史日期即可重新生成，结果与当日运行一致；
+② <strong>可测试</strong>——测试可固定参数，使结果可预期。
+这对跨国系统尤其重要：服务日本本部（源库 JST）而容器运行于 UTC，
+若依赖系统时钟取「今天」，跨时区下极易取到错误的日期边界。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>批处理主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>⑦ 批量推送的幂等与重试</td>
+<td>主题核心</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>④ MySQL 读写分离双数据源</td>
+<td>直接对应「资源隔离」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>⑧ 跨国多时区一致性</td>
+<td><strong>本主题的杀手级素材</strong>，直接对应「作业正确性」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑩ MDM 主数据同步</td>
+<td>对应「数据导入」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（⑧ 多时区，批处理视角）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：系统服务日本本部，源数据库运行于 JST，
+而批处理容器环境为 UTC。这个差异在「取当天数据生成成本文件」
+这类作业上会直接造成错误——容器认为的「今天」
+在 JST 下可能还是「昨天」，反之亦然。
+后果是成本文件漏当天的数据或重复包含前一天的数据，
+而这类错误不会抛出异常，只会静默地产生错误结果。</p>
+<p><strong>方案</strong>：我的处理分两处。
+第一处是<strong>存储口径统一</strong>：数据库中的时间统一以 UTC 存储，
+展示与业务判断时按 JST 转换，转换动作集中到 <code>FormatUtils</code> 工具类，
+禁止业务代码中散落直接取当前时间的调用。
+第二处是<strong>批处理参数化</strong>：把 <code>executionBaseDate</code> 作为 JobParameter
+显式传入而不依赖系统时钟，使作业的日期边界由调用方决定。
+这带来的额外收益是<strong>可重放性</strong>——指定同一基准日重跑，
+结果与当日运行完全一致，补数场景可靠。</p>
+<p><strong>效果</strong>：🔶 时区相关缺陷数量下降情况；作业结果可复现。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前 10 个批处理作业已稳定运行【🔶 时长】，
+成本文件与邮件在【🔶 时限】内稳定完成，未发生重复推送事故。
+不足之处：
+一是幂等控制基于时间窗，理论上在窗口边界仍有极小概率的重复；
+二是作业间的依赖关系（如邮件生成必须先于邮件发送）目前依靠调度时序保障，
+尚未引入显式的依赖编排。
+后续计划引入基于持久化状态位的幂等机制与作业依赖编排。
+通过本项目我认识到，批处理架构的关键不在于&quot;批&quot;的效率，
+而在于&quot;失败之后能不能干净地重来&quot;——
+幂等与可重跑，比处理速度更重要。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>框架</td>
+<td>Spring Batch 3.5.7（Spring Boot 3.5.7）</td>
+</tr>
+<tr>
+<td>作业数量</td>
+<td>10 个（含 1 个测试用 <code>NoopJob</code>）</td>
+</tr>
+<tr>
+<td>作业基类</td>
+<td><code>job/base/ManagedBaseJob</code></td>
+</tr>
+<tr>
+<td>成本文件作业</td>
+<td><code>ActivityCostFileCreateJob</code> / <code>AirCostFileCreateJob</code> / <code>HotelCostFileCreateJob</code></td>
+</tr>
+<tr>
+<td>邮件作业</td>
+<td><code>AutomaticEmailCreateJob</code>（生成）/ <code>MailSendJob</code>（发送）</td>
+</tr>
+<tr>
+<td>导入作业</td>
+<td><code>ExternalReservationImportJob</code> / <code>ImportMdmJob</code></td>
+</tr>
+<tr>
+<td>通用查询</td>
+<td><code>GenericQueryExecutionJob</code> + <code>MGenericQuery*</code> 元数据表</td>
+</tr>
+<tr>
+<td>ToDo 作业</td>
+<td><code>TodoStatusUpdateJob</code></td>
+</tr>
+<tr>
+<td>读写分离</td>
+<td><code>ReaderDataSourceConfig</code> / <code>WriterDataSourceConfig</code>（<code>@Primary</code>）</td>
+</tr>
+<tr>
+<td>Mapper 隔离</td>
+<td><code>repository/reader/</code> 与 <code>repository/writer/</code></td>
+</tr>
+<tr>
+<td>事务隔离</td>
+<td><code>TRANSACTION_READ_COMMITTED</code>（Hikari 配置）</td>
+</tr>
+<tr>
+<td>批量游标</td>
+<td><code>mybatis.defaultFetchSize = 200</code></td>
+</tr>
+<tr>
+<td>幂等</td>
+<td><code>app.batch.idempotency-duration-minutes = 10</code></td>
+</tr>
+<tr>
+<td>重试服务</td>
+<td><code>service/retry/MailSendRetryService</code></td>
+</tr>
+<tr>
+<td>事务服务</td>
+<td><code>service/transaction/*TransactionalService</code></td>
+</tr>
+<tr>
+<td>作业参数</td>
+<td><code>JobParameterKey</code>：<code>acquisitionRange</code> / <code>executionBaseDate</code> / <code>todoDistinction</code> / <code>emailType</code> / <code>importTargetType</code></td>
+</tr>
+<tr>
+<td>命令类型</td>
+<td><code>CommandType</code>：DELETE / INSERT / UPDATE / DDL / NOT_FOUND</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>SuperCSV 注解库；<code>CsvDownloader</code> 接口；<code>FileUploadService</code> 上传 S3</td>
+</tr>
+<tr>
+<td>输出类型</td>
+<td><code>CostFile</code>（ACT/AIR/HTL）、<code>EmailType</code>、<code>SenderName</code>、<code>SubjectHeader</code></td>
+</tr>
+<tr>
+<td>消息推送</td>
+<td><code>SnsService</code> → SNS 主题；<code>MailSendService</code></td>
+</tr>
+<tr>
+<td>监控</td>
+<td>Prometheus PushGateway（<code>shutdown-operation: post</code>）</td>
+</tr>
+<tr>
+<td>运行模式</td>
+<td><code>spring.main.web-application-type: none</code>（无 Web 容器）</td>
+</tr>
+<tr>
+<td>邮件发送配置</td>
+<td><code>sender = log</code>（测试用日志代替实际发送）、<code>sleep-after-send = 0</code></td>
+</tr>
+<tr>
+<td>主数据联动</td>
+<td><code>api/mdm/</code>（认证 + 查询参数），<code>MdmContent</code> 枚举</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>TestContainers + MySQL 镜像；<code>NoopJob</code> / <code>NoopService</code> 便于集成测试</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>⑦ 批量推送的幂等与重试</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐⭐ —— <strong>本主题的差异化杀手素材</strong></li>
+<li><strong>④ MySQL 读写分离双数据源</strong> ⭐⭐⭐ —— 资源隔离</li>
+<li><strong>⑩ MDM 主数据统一</strong> ⭐⭐ —— 数据导入</li>
+<li><strong>② protobuf 版本冲突</strong> ⭐⭐ —— 依赖治理（可放"构建可靠性"）</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只讲「用了 Spring Batch」</td>
+<td>无深度</td>
+<td>写清作业划分、参数化、幂等、重试、监控</td>
+</tr>
+<tr>
+<td>不提幂等</td>
+<td>关键失分</td>
+<td>批处理论文<strong>必写幂等</strong>，这是可靠性核心</td>
+</tr>
+<tr>
+<td>不提作业失败处理</td>
+<td>漏考点</td>
+<td>写「失败可观测（Prometheus）+ 可重跑（参数化）」</td>
+</tr>
+<tr>
+<td>只说「性能优化用了多线程」</td>
+<td>高风险</td>
+<td>本项目未见分区（Partitioning）并行证据，不要编造</td>
+</tr>
+<tr>
+<td>编造 Quartz/XXL-Job</td>
+<td>高风险</td>
+<td>本项目未见独立调度框架，不要写；调度方式如实描述即可</td>
+</tr>
+<tr>
+<td>忽略与在线业务的隔离</td>
+<td>漏考点</td>
+<td>读写分离是本项目真实亮点，务必写</td>
+</tr>
+<tr>
+<td>忘记写业务含义</td>
+<td>显得空洞</td>
+<td>每个作业都要说明它支撑什么业务（成本文件、邮件、ToDo…）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>技术真实性提醒</strong>：
+本项目<strong>未见</strong> Spring Batch 的分区（Partitioning）或多线程 Step 的证据，
+也<strong>未见</strong> XXL-Job / Quartz 等外部调度框架。
+论文中不要编造「我们使用了分片并行处理」。
+真实的性能手段是：<strong>读写分离、游标控制、事务隔离级别、
+元数据驱动查询</strong>——这四点已经足够撑起「性能优化」这一段。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>03-数据架构与混合存储.md</code> · <code>04-高并发与高可用架构.md</code> · <code>02-云原生与FaaS架构.md</code></em></p></div><div class="chapter"><h1>论文模板 09 · 架构演化与遗留系统改造</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。
+<strong>本主题竞争压力小、容易出彩</strong>，因为大多数考生没有真实的架构演进经历。
+BASE HOME 的「AWS SDK v1/v2 渐进共存」「契约驱动三语言」都是极佳素材。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（架构演化）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统架构的演化过程，包括演化的驱动力、
+演化策略以及演化过程中如何控制风险。</p>
+</blockquote>
+<p><strong>变体 B（遗留系统改造）</strong></p>
+<blockquote>
+<p>请论述你如何对遗留系统进行改造，如何在不中断业务的前提下完成架构升级。</p>
+</blockquote>
+<p><strong>变体 C（架构风格）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统采用的架构风格，说明选择依据及该风格的优缺点。</p>
+</blockquote>
+<p><strong>变体 D（可维护性/复用）</strong></p>
+<blockquote>
+<p>请论述你如何通过架构设计提升系统的可维护性与可复用性。</p>
+<p><strong>判断</strong>：变体 A/B 用「SDK v1/v2 渐进共存 + 契约统一」；
+变体 C 用「分层 + 事件驱动 + 服务化」的风格组合；
+变体 D 用「契约单一来源 + 版本统一治理 + 模块化」。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的架构演化过程。
+该平台由早期单体应用逐步演进为多模块、多部署单元的架构，
+期间需同时支撑 Java、Go、PHP 三类调用方，
+并兼容大量基于旧版 AWS SDK 的既有代码。
+本人担任架构师，负责演化路径规划、技术债治理与风险控制。
+针对【新旧技术栈长期并存】、【接口契约在多语言环境下漂移】、
+【演化过程不能中断业务】三大挑战，
+本文遵循【渐进式演进】、【契约先行】、【依赖显式化】三个原则，
+通过能力边界划分实现 AWS SDK v1/v2 的有序共存，
+通过 protobuf 契约单一来源统一三端接口定义，
+通过统一版本管理插件把隐式依赖转为显式契约。
+系统在演化期间保持连续可用，【🔶 填效果】，验证了策略的有效性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与演化驱动力（约 400 字）</h3>
+<p><strong>演化类论文的核心是「驱动力」</strong>——为什么必须变？</p>
+<blockquote>
+<p>BASE HOME 的架构演化并非为了技术而技术，而是由三类真实驱动因素推动：</p>
+<p><strong>驱动一：调用方技术栈扩张</strong>
+系统最初仅服务 Java 侧的 Web 应用，随着集团平台化推进，
+周边 Go 平台与既有 PHP 系统也需接入。
+若为每种语言各写一份接口定义，字段口径必然漂移。
+这迫使我们在接口层做出根本性改变。</p>
+<p><strong>驱动二：数据形态复杂化</strong>
+旅游业务的文档、亲权同意书、消息线程等数据字段演进频繁，
+关系型模型的 DDL 变更成本越来越高，
+促使我们引入 NoSQL 与对象存储，形成混合存储架构。</p>
+<p><strong>驱动三：云平台能力演进</strong>
+AWS SDK v2 提供了 v1 所没有的 DynamoDB 增强客户端（<code>DynamoDbEnhancedClient</code>），
+而既有代码大量基于 v1。全量重写风险过高，必须寻找演进路径。</p>
+<p>这三类驱动力共同决定：<strong>架构必须演化，但不能推倒重来</strong>。</p>
+</blockquote>
+<h3>第 2 段 · 演化策略与过程（约 800 字，本文核心）</h3>
+<p><strong>第一原则：渐进式演进，拒绝大爆炸式重写</strong></p>
+<blockquote>
+<p>面对 AWS SDK v1 到 v2 的迁移，我们评估了两条路径：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一次性全量迁移到 v2</td>
+<td>技术栈彻底统一</td>
+<td>涉及大量既有代码，回归范围不可控；业务不能停</td>
+</tr>
+<tr>
+<td><strong>v1/v2 按能力边界共存</strong>（采纳）</td>
+<td>风险可控，新能力不受阻</td>
+<td>双版本长期共存，依赖体积与维护成本上升</td>
+</tr>
+</tbody>
+</table>
+<p>我们采纳了共存方案，并确立清晰的<strong>能力边界划分规则</strong>：
+- <strong>新增能力一律走 v2</strong>——DynamoDB 增强访问、STS AssumeRole 临时凭证
+- <strong>既有能力暂留 v1</strong>——已稳定运行的 S3/STS 调用不做无谓改动
+- <strong>客户端构建集中收口</strong>——在 <code>DynamoDbConfig</code>、<code>AwsConfig</code> 中统一构建，
+  业务代码不直接创建客户端</p>
+<p>这条规则的价值在于：它把「迁移」从一个需要排期的项目，
+变成了一个<strong>随新增功能自然发生的渐进过程</strong>。
+每新增一个功能，技术债就减少一点，而不需要专门立项。</p>
+<p><strong>这是我在本项目最重要的架构判断：技术债的偿还方式，
+不一定是集中偿还，也可以是"增量稀释"。</strong></p>
+</blockquote>
+<p><strong>第二原则：契约先行，用单一来源约束多方</strong></p>
+<blockquote>
+<p>面对多语言调用方的接口漂移问题，我在 <code>base-home-spec</code> 模块中
+确立 protobuf 为<strong>唯一契约源</strong>，通过构建流水线
+（<code>build.sh</code>：build-java → build-go → build-php → generate-all）
+生成 Java、Go、PHP 三语言产物及 OpenAPI 文档。</p>
+<p><strong>演化视角的价值</strong>：契约先行不仅解决了当下的接口一致性问题，
+更重要的它是<strong>可演化性的基础</strong>——
+因为契约集中，接口的版本演进、废弃标记、兼容性检查
+都只需要在一个地方进行。分散的接口定义无法演化，只能重写。</p>
+</blockquote>
+<p><strong>第三原则：依赖显式化，把隐式契约变成可控状态</strong></p>
+<blockquote>
+<p>项目初期各模块独立声明依赖版本，部分采用动态区间
+（<code>protobufVersion = '[3,4)'</code>、<code>grpcVersion = 'latest.release'</code>）。
+这带来一个隐蔽的风险：<strong>构建产物不可复现</strong>——
+同一份代码在不同时间、不同机器上可能解析到不同版本。</p>
+<p>我引入了独立的 <code>base-home-versions</code> Gradle 插件作为统一版本源，
+各模块通过 <code>apply plugin: 'base-home.versions'</code> 接入，
+并使用 <code>resolutionStrategy { force ... }</code> 锁定关键组件。</p>
+<p>这不是一次预防性的重构——<strong>风险已经真实发生</strong>：
+<code>proto-google-common-protos</code> 被解析到 2.64.0-rc1 后，
+gRPC 服务启动直接失败。这次故障印证了
+「隐式版本契约」是架构层面的缺陷，而非偶发问题。</p>
+</blockquote>
+<h3>第 3 段 · 演化过程中的具体改造（约 700 字）</h3>
+<p><strong>改造一：数据存储的演化</strong></p>
+<blockquote>
+<p>从单一关系库演进为混合存储：
+Aurora MySQL 承载强一致交易（79 张表）、
+DynamoDB 承载高弹性半结构化数据（5 张表）、
+S3 承载文件实体。</p>
+<p><strong>演化策略</strong>：新数据类型直接落在新存储，既有数据不做迁移。
+例如文档与亲权同意书这类新增业务，直接以
+<code>document</code> / <code>parental</code> 表落 DynamoDB，
+而既有交易数据保持在 MySQL。
+这样避免了大规模数据迁移的风险，同时让架构逐步具备弹性能力。</p>
+<p><strong>代价与应对</strong>：跨存储的一致性通过事件驱动链路达成最终一致——
+DynamoDB Stream / SQS 触发的 14 个 Lambda 函数负责将数据同步回 MySQL。
+这条链路本身就是「演化」的产物：它使新旧存储可以并存而不失一致。</p>
+</blockquote>
+<p><strong>改造二：在线与离线处理的分离</strong></p>
+<blockquote>
+<p>批量作业从与在线业务共享数据库，演进为双数据源读写分离
+（<code>spring.datasource.reader</code> / <code>writer</code>，按包路径隔离 Mapper）。
+这一改造的直接动因是：批处理峰值会推高在线接口延迟。
+改造后读写的物理隔离使两者互不干扰。</p>
+</blockquote>
+<p><strong>改造三：服务能力的沉淀与复用</strong></p>
+<blockquote>
+<p>随着 RPC 数量增长（当前 17 个），跨业务域的重复逻辑被识别并下沉：
+文档、消息线程、亲权同意书、序列号、旅行信息 5 类能力
+沉淀到 <code>service/shared/</code>，文件能力归入 <code>service/filesystem/</code>。
+服务端也从「每个 RPC 一个类」重构为
+「单一入口 <code>BaseHomeService</code> + <code>execute()</code> 统一分发」——
+横切关注点（日志、异常转换、上下文校验）得以集中处理。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>架构演化主题最佳组合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点</th>
+<th>适配理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td>③ AWS SDK v1/v2 并存</td>
+<td>直接对应「遗留系统改造」</td>
+</tr>
+<tr>
+<td>次选</td>
+<td>① 一份 proto 契约驱动三语言</td>
+<td>直接对应「架构复用与可演化性」</td>
+</tr>
+<tr>
+<td>三选</td>
+<td>② protobuf 版本冲突（风险真实发生）</td>
+<td>直接对应「演化风险控制」</td>
+</tr>
+<tr>
+<td>加分</td>
+<td>⑤ 混合存储的形成过程</td>
+<td>直接对应「数据架构演化」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（③，三段式）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：DynamoDB 增强客户端只在 AWS SDK v2 提供，
+而既有代码大量基于 v1。全量迁移涉及面广、回归风险不可控，
+且业务不能停机等待。</p>
+<p><strong>方案</strong>：我判断这里的核心矛盾不是「技术选型」，
+而是「<strong>如何在不停机、不失控的前提下完成技术栈演进</strong>」。
+因此我没有选择一次性重写，而是按能力边界划分：
+新增能力走 v2，既有能力暂留 v1，
+客户端构建统一收口在配置类中，业务代码不直接创建客户端。
+这样做的深层价值是——<strong>收口点就是未来的迁移点</strong>。
+当某天要彻底移除 v1 时，只需改动配置类，
+而不需要遍历所有业务代码。</p>
+<p><strong>效果</strong>：🔶 新功能开发不再受 SDK 版本阻塞；
+🔶 凭证获取统一收口后，凭证类故障下降。
+更重要的是，技术债从「需要专门立项偿还」
+变成了「随新增功能自然稀释」。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>整个演化过程历时【🔶 时间】，期间系统保持连续可用，
+未发生因演进导致的业务中断。
+不足之处有两点：
+一是 AWS SDK v1 与 v2 的并存状态尚未终结，
+长期维护成本仍然存在；
+二是跨语言契约的破坏性变更尚未实现自动化的兼容性检测，
+目前依赖人工评审。
+后续计划完成 SDK 版本的最终收敛，并引入契约兼容性校验。
+通过本项目，我对架构演化形成了三点认识：
+① 演化必须由业务驱动力推动，而非技术偏好；
+② 渐进式演进的成本看似更高，但风险可控，
+   而大爆炸式重写的风险往往是不可承受的；
+③ 把隐式契约显式化，是让架构「可演化」的前提。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>演化主线</td>
+<td>单体 → 多模块多部署单元；单一关系库 → 混合存储；单语言 → 三语言</td>
+</tr>
+<tr>
+<td>技术债 1</td>
+<td>AWS SDK v1（S3/STS）与 v2（DynamoDB Enhanced）并存</td>
+</tr>
+<tr>
+<td>技术债 2</td>
+<td>动态版本区间 → 统一版本源 + <code>resolutionStrategy force</code></td>
+</tr>
+<tr>
+<td>技术债 3</td>
+<td>分散接口定义 → protobuf 契约单一来源</td>
+</tr>
+<tr>
+<td>渐进策略</td>
+<td>新增走新版、既有留旧版、客户端构建集中收口</td>
+</tr>
+<tr>
+<td>数据演进</td>
+<td>新增业务直接落 DynamoDB/S3，不做大规模数据迁移</td>
+</tr>
+<tr>
+<td>一致性保障</td>
+<td>DynamoDB Stream / SQS → 14 个 Lambda → MySQL（最终一致）</td>
+</tr>
+<tr>
+<td>在线离线分离</td>
+<td>双数据源 reader/writer + 包路径隔离 Mapper</td>
+</tr>
+<tr>
+<td>服务重构</td>
+<td>单入口 <code>BaseHomeService</code> + <code>execute()</code> 分发；<code>service/shared/</code> 沉淀复用</td>
+</tr>
+<tr>
+<td>契约演进</td>
+<td>约 90 个 proto 分 request/response/enums/type 四层，<code>type/</code> 约 42 个可复用消息</td>
+</tr>
+<tr>
+<td>版本治理</td>
+<td><code>base-home-versions</code> Gradle 插件（<code>base-home.versions.gradle</code>）</td>
+</tr>
+<tr>
+<td>版本对齐</td>
+<td><code>his-common-spec</code> 2.6.0 在 Java/Go/PHP 三侧对齐</td>
+</tr>
+<tr>
+<td>构建产物</td>
+<td>Java → Maven；Go → module zip；PHP → Composer；文档 → MkDocs</td>
+</tr>
+<tr>
+<td>环境治理</td>
+<td>DynamoDB 表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+<tr>
+<td>模块依赖方向</td>
+<td>web/service → common + spec；batch → common + mdm-spec</td>
+</tr>
+<tr>
+<td>本地研发演进</td>
+<td>TestContainers（MySQL）+ LocalStack（<code>:4566</code>）+ moto（Python）</td>
+</tr>
+<tr>
+<td>测试支撑</td>
+<td><code>NoopJob</code> / <code>NoopService</code> 便于集成测试与逐步替换</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>「NoopJob / NoopService」是个隐藏的演化论据</strong>：
+项目中存在专门用于测试的空实现作业与服务，
+这说明架构在设计时就考虑了<strong>可替换性</strong>——
+写「可演化性」「可测试性」时可以用作佐证。</p>
+</blockquote>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>③ AWS SDK v1/v2 并存</strong> ⭐⭐⭐ —— 本主题首选</li>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐⭐ —— 可演化性与复用</li>
+<li><strong>② protobuf 版本冲突（风险已发生）</strong> ⭐⭐⭐ —— 演化风险控制</li>
+<li><strong>⑤ 混合存储的形成过程</strong> ⭐⭐⭐ —— 数据架构演化</li>
+<li><strong>④ 读写分离改造</strong> ⭐⭐ —— 在线/离线分离演化</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编造「从单体拆成微服务」的戏剧性故事</td>
+<td>高风险</td>
+<td>本项目是<strong>模块化多仓库</strong>结构，如实写「多模块 + 独立部署单元」</td>
+</tr>
+<tr>
+<td>只讲技术不讲驱动力</td>
+<td>空洞</td>
+<td>演化必须有业务/技术驱动力支撑</td>
+</tr>
+<tr>
+<td>只讲结果不讲过程</td>
+<td>漏考点</td>
+<td>必须写<strong>路径选择与权衡</strong>（为什么不大爆炸式重写）</td>
+</tr>
+<tr>
+<td>不提遗留系统的风险</td>
+<td>漏考点</td>
+<td>遗留改造论文必须写「风险控制」——业务不中断怎么保证</td>
+</tr>
+<tr>
+<td>编造容器化改造 / K8s 迁移</td>
+<td>高风险</td>
+<td>本项目未见 K8s 证据</td>
+</tr>
+<tr>
+<td>忘记写演化代价</td>
+<td>缺乏架构思维</td>
+<td>必须写并存状态的维护成本、双版本依赖体积等代价</td>
+</tr>
+<tr>
+<td>编造数据迁移规模</td>
+<td>高风险</td>
+<td>本项目是「新增业务落新存储」，不是「海量数据迁移」，如实写更稳</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>本主题的最大优势</strong>：
+「渐进式演进」这个论点本身，就是软考官方教材强调的核心理念。
+你有一个<strong>真实发生过</strong>的版本冲突故障（难点 ②）
+来佐证「隐式契约是架构缺陷」这一判断，
+这种「预判风险 → 风险发生 → 已备预案」的完整叙事，
+在论文中非常有说服力，绝大多数考生写不出来。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code> · <code>06-系统集成与gRPC.md</code> · <code>07-架构评估与质量属性.md</code></em></p></div>
+</body>
+</html>

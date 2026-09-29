@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>05-系统安全架构</title>
+<style>
+@page { size: A4; margin: 15mm 13mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+               "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.72;
+  color: #24292f;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, h4, h5 { line-height: 1.35; font-weight: 700; }
+
+h1 {
+  font-size: 19pt;
+  color: #14417a;
+  border-bottom: 3px solid #14417a;
+  padding-bottom: 7px;
+  margin: 0 0 16px;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+h1:first-of-type { page-break-before: avoid; }
+
+h2 {
+  font-size: 13.5pt;
+  color: #14417a;
+  border-left: 5px solid #14417a;
+  padding-left: 10px;
+  margin: 20px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #2c3e50;
+  margin: 15px 0 7px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #4a5568;
+  margin: 12px 0 6px;
+  page-break-after: avoid;
+}
+
+p { margin: 7px 0; }
+
+/* 表格：允许跨页，但表头重复、单行不拆 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 14px;
+  font-size: 9.3pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+
+th {
+  background: #14417a;
+  color: #ffffff;
+  padding: 6px 8px;
+  border: 1px solid #a9b8cc;
+  text-align: left;
+  font-weight: 700;
+}
+td {
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) td { background: #f6f8fa; }
+
+/* 行内代码 */
+code {
+  background: #f0f2f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 9.3pt;
+  color: #b5305a;
+  word-break: break-word;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 5px;
+  padding: 10px 13px;
+  margin: 10px 0;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: #24292f;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid #e0a800;
+  background: #fffbf0;
+  margin: 11px 0;
+  padding: 9px 15px;
+  color: #5a4a1a;
+  page-break-inside: avoid;
+}
+blockquote p { margin: 4px 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 18px 0;
+}
+
+ul, ol { padding-left: 23px; margin: 7px 0; }
+li { margin: 3px 0; }
+
+a { color: #14417a; text-decoration: none; }
+
+strong { color: #16191d; font-weight: 700; }
+
+img { max-width: 100%; }
+
+/* 封面（仅全本使用） */
+.cover {
+  height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+.cover .c-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #14417a;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.cover .c-sub {
+  font-size: 14pt;
+  color: #4a5568;
+  margin-bottom: 42px;
+}
+.cover .c-line {
+  width: 130px;
+  height: 4px;
+  background: #14417a;
+  margin-bottom: 42px;
+}
+.cover .c-meta {
+  font-size: 11.5pt;
+  color: #4a5568;
+  line-height: 2.1;
+}
+</style>
+</head>
+<body>
+<h1>论文模板 05 · 系统安全架构设计</h1>
+<blockquote>
+<p>配套素材见 <code>00-项目素材库.md</code>。本主题<strong>稳定出现</strong>，且与你的项目契合度高。</p>
+</blockquote>
+<hr />
+<h2>一、真题常见问法</h2>
+<p><strong>变体 A（安全体系整体）</strong></p>
+<blockquote>
+<p>请论述你参与的某系统的安全架构设计，包括身份认证、访问控制、
+数据安全与安全审计等方面。</p>
+</blockquote>
+<p><strong>变体 B（认证授权）</strong></p>
+<blockquote>
+<p>请论述你如何设计系统的统一身份认证与授权体系，并说明如何实现细粒度权限控制。</p>
+</blockquote>
+<p><strong>变体 C（数据安全）</strong></p>
+<blockquote>
+<p>请论述你如何保障系统敏感数据的机密性、完整性与可用性。</p>
+<p><strong>判断</strong>：BASE HOME 的最强项是<strong>变体 A 与变体 B</strong>——
+项目真实使用了 OAuth2/OIDC、Spring Security、
+细粒度 scope 权限、Redis Session、STS 临时凭证、TLS 传输。</p>
+</blockquote>
+<hr />
+<h2>二、摘要模板（约 300 字）</h2>
+<pre><code>本文论述了本人参与的 H.I.S. BASE HOME 旅游业务平台的安全架构设计与实现。
+该平台承载旅行者的护照信息、亲权同意书（親権同意書）、
+紧急联系人等敏感个人数据，且需与集团多个外部系统交互，
+安全要求高、合规约束严。
+本人担任架构师，负责身份认证体系设计、权限模型设计与凭证管理方案。
+针对【多角色细粒度权限控制】、【跨系统凭证泄露风险】、
+【敏感数据传输与存储安全】三大挑战，
+本文从【统一身份认证】、【基于 scope 的细粒度授权】、
+【临时凭证与加密传输】三个维度进行设计：
+基于 Spring Security 集成 OAuth2/OIDC 实现统一登录，
+以权限 scope 列表驱动接口级授权，
+以 STS AssumeRole 临时凭证替代长期密钥并与 TLS 结合保障传输安全。
+系统上线后【🔶 填效果】，验证了方案的可行性。
+</code></pre>
+<hr />
+<h2>三、正文五段框架</h2>
+<h3>第 1 段 · 项目背景与安全需求（约 400 字）</h3>
+<p><strong>安全论文的开头必须写「保护什么」</strong>，否则后面所有措施都失去依据。</p>
+<blockquote>
+<p>BASE HOME 处理的数据具有高度敏感性，我将其分级为三类：
+① <strong>个人身份信息</strong>——旅行者护照信息、姓名、出生日期；
+② <strong>特殊敏感数据</strong>——未成年人亲权同意书（親権同意書）、紧急联系人信息；
+③ <strong>业务敏感数据</strong>——预约成本、客户消息内容。
+此外，系统需与集团 MDM 主数据平台、外部预约系统、邮件网关、
+消息推送服务等多方交互，每个交互面都是潜在的攻击入口。
+合规方面，系统需满足日本个人信息保护法的相关要求。</p>
+</blockquote>
+<h3>第 2 段 · 架构设计（约 800 字）</h3>
+<p><strong>按安全架构的经典四层组织：身份认证 → 访问控制 → 数据安全 → 安全审计</strong></p>
+<p><strong>第一层：身份认证（Authentication）</strong></p>
+<blockquote>
+<p>系统采用 <strong>OAuth2/OIDC</strong> 协议实现统一身份认证，
+Web 层通过 <code>spring-boot-starter-oauth2-client</code> 接入集团统一认证服务，
+以授权码模式完成登录，令牌校验使用 <code>spring-security-oauth2-jose</code>（JOSE/JWT）。
+用户身份属性通过 <code>user-name-attribute</code> 配置从令牌中提取，
+避免依赖本地用户表——这使账号生命周期由集团统一治理。</p>
+<p>同时通过 <code>thymeleaf-extras-springsecurity6</code> 把安全上下文暴露到视图层，
+使页面元素的显隐可以直接由权限决定，而不是靠前端 JavaScript 隐藏
+（后者只是「看不见」，后者才能做到「点不到」）。</p>
+<p><strong>权衡说明</strong>：OIDC 引入了对外部认证服务的依赖，
+我们通过将用户信息缓存于会话中，使认证服务短暂不可用时
+已登录用户仍可继续操作，避免认证服务成为可用性单点。</p>
+</blockquote>
+<p><strong>第二层：访问控制（Authorization）</strong></p>
+<blockquote>
+<p>授权模型我采用 <strong>RBAC + 接口级 scope 校验</strong>的组合。
+角色维度划分为管理员（admin）、操作员（operator）、
+主管（chief）、VIP 等，各角色持有不同的权限 scope 列表。
+权限校验下沉到接口层（<code>/api/v1/**</code> 由 Spring Security 统一拦截），
+而非散落在各 Controller 的业务代码中——
+这样新增接口时权限是「默认拒绝」而非「默认放行」，
+从架构上避免了「忘记加权限注解」这类遗漏风险。</p>
+</blockquote>
+<p><strong>第三层：数据安全（Data Security）</strong></p>
+<blockquote>
+<p><strong>传输安全</strong>：内部服务间 gRPC 调用使用 TLS
+（endpoint 采用 <code>tls://</code> 前缀），对外 Web 访问全站 HTTPS。
+<strong>凭证安全</strong>：这是我重点处理的部分。
+系统不使用长期固定的 AWS 密钥，而是通过
+<strong>STS AssumeRole 获取临时凭证</strong>，配合 <code>DefaultCredentialsProvider</code> 兜底，
+凭证自动轮换，即使泄露其有效期也极短。
+<strong>配置安全</strong>：FaaS 侧所有配置（数据库连接、外部端点）
+统一从 SSM Parameter Store 读取，代码仓库中不落任何明文凭证。
+<strong>存储安全</strong>：文件实体统一存放 S3，数据库仅保存文件引用；
+数据库账号按 reader/writer 职责分离，批处理读账号无写权限。</p>
+</blockquote>
+<p><strong>第四层：安全审计（Audit）</strong></p>
+<blockquote>
+<p>系统在 Web 层设置独立的审计能力：
+画面操作日志由 <code>system</code> 域的控制器统一记录，
+关键业务操作（预约变更、消息发送、主数据修改）
+均留存操作者、操作时间与操作内容。
+审计日志与业务数据分离存储，避免业务回滚时日志同时丢失。</p>
+</blockquote>
+<h3>第 3 段 · 关键技术实现（约 700 字）</h3>
+<p><strong>要素一：会话安全</strong></p>
+<blockquote>
+<p>会话由 <strong>Spring Session Data Redis</strong> 统一管理，
+存储于 <strong>Redis Cluster（6 节点）</strong>，超时时间 3600 秒。
+相比本地会话，集中式会话带来两个安全收益：
+一是会话数据不落在应用服务器磁盘上，降低主机被入侵后的会话窃取风险；
+二是可在服务端强制失效任意会话，实现「管理员踢出用户」
+与「用户改密后全端下线」这类安全能力。</p>
+</blockquote>
+<p><strong>要素二：凭证与密钥的集中治理</strong></p>
+<blockquote>
+<p>我把凭证获取统一收口到配置类（<code>DynamoDbConfig</code>、
+<code>AwsConfig</code>、<code>SsmClient</code>），业务代码不直接接触凭证。
+这样做的价值在于：凭证轮换、加密算法升级、
+权限范围调整都只需在单一位置修改，不会遗漏调用点。
+环境隔离同样重要——DynamoDB 表名统一带环境前缀，
+实现「1 账户 1 集群」，防止测试环境误连生产数据。</p>
+</blockquote>
+<p><strong>要素三：接口契约中的安全边界</strong></p>
+<blockquote>
+<p>由于系统通过 protobuf 向 Java/Go/PHP 三端提供接口，
+契约本身也承担安全职责：
+每个 RPC 均声明 HTTP 映射（<code>google.api.http</code>），
+统一走 <code>/v1/&lt;RpcName&gt;</code> 路径，便于在网关层集中做鉴权与限流；
+错误信息通过统一的 <code>Error{code,message}</code> 结构返回，
+对外只暴露错误码与友好提示，<strong>不泄漏堆栈与内部实现细节</strong>。</p>
+</blockquote>
+<p><strong>要素四：输入校验与注入防护</strong></p>
+<blockquote>
+<p>Web 层启用 <code>spring-boot-starter-validation</code> 做参数校验，
+数据库访问全部通过 MyBatis 参数绑定，杜绝字符串拼接 SQL。
+涉及 HTML 内容处理的场景使用 Jsoup 做净化，
+防止存储型 XSS——这在客户消息场景尤其重要，
+因为消息内容会在 MyPage 页面回显给其他用户。</p>
+</blockquote>
+<h3>第 4 段 · 难点与解决（约 700 字）</h3>
+<p><strong>安全主题最佳组合</strong>（安全主题的难点需要自行组织，素材库难点适配度中等）：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>难点方向</th>
+<th>素材来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首选</td>
+<td><strong>多角色细粒度权限的默认拒绝设计</strong></td>
+<td>由项目 scope 权限模型推导</td>
+</tr>
+<tr>
+<td>次选</td>
+<td><strong>三语言契约下的安全边界统一</strong></td>
+<td>素材库 ①</td>
+</tr>
+<tr>
+<td>三选</td>
+<td><strong>跨国多时区与数据合规</strong></td>
+<td>素材库 ⑧</td>
+</tr>
+<tr>
+<td>加分</td>
+<td><strong>凭证长期化风险治理</strong></td>
+<td>素材库 ③（v1/v2 SDK 并存背景下的凭证统一）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>难点示例（权限默认拒绝）</strong>：</p>
+<blockquote>
+<p><strong>问题</strong>：系统角色众多（管理员、操作员、主管、VIP 等），
+且不同角色可见的业务域差异极大。项目初期采用在 Controller 方法上
+逐个添加权限注解的方式，随着接口数量增长（REST 接口按业务域
+分布在 8 个包下），出现了「新增接口忘记加注解」的遗漏风险——
+这类漏洞不会在测试期暴露，只在被利用时才显现。</p>
+<p><strong>方案</strong>：我把授权策略从「逐个放行」改为「默认拒绝」。
+在 Spring Security 配置中统一拦截 <code>/api/v1/**</code>，
+未显式声明的路径一律拒绝；权限以 scope 列表的形式
+随令牌下发，接口层按 scope 校验而非按角色硬编码判断。
+这样角色与权限的关系可以在配置侧调整，
+无需修改业务代码——新增角色只需分配 scope 组合。</p>
+<p><strong>效果</strong>：🔶 消除新增接口的权限遗漏风险；
+角色调整从「改代码」变为「改配置」，🔶 权限变更耗时从 X 降到 Y。</p>
+</blockquote>
+<h3>第 5 段 · 总结与不足（约 200 字）</h3>
+<pre><code>目前该安全架构已稳定支撑【🔶 用户规模】，未发生【🔶 安全事件情况】。
+不足之处：
+一是权限模型目前以角色为单位的 scope 组合为主，
+尚未实现对单条数据级（行级）的细粒度控制；
+二是跨语言契约的破坏性变更尚未引入自动化安全影响评估。
+后续计划引入数据级授权与契约变更审计。
+通过本项目我认识到，安全架构的核心不是堆砌安全产品，
+而是建立&quot;默认拒绝&quot;的基线，并让凭证、权限、审计都收口到可治理的位置。
+</code></pre>
+<hr />
+<h2>四、本项目填充点速查</h2>
+<table>
+<thead>
+<tr>
+<th>论文要素</th>
+<th>直接可写的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>认证协议</td>
+<td>OAuth2 / OIDC 授权码模式</td>
+</tr>
+<tr>
+<td>认证实现</td>
+<td><code>spring-boot-starter-oauth2-client</code> + <code>spring-security-oauth2-jose</code></td>
+</tr>
+<tr>
+<td>身份来源</td>
+<td>令牌中的 <code>user-name-attribute</code>，账号由集团统一治理</td>
+</tr>
+<tr>
+<td>视图层安全</td>
+<td><code>thymeleaf-extras-springsecurity6</code>（页面元素按权限显隐）</td>
+</tr>
+<tr>
+<td>授权模型</td>
+<td>角色 + scope 权限列表；接口层统一拦截 <code>/api/v1/**</code></td>
+</tr>
+<tr>
+<td>角色划分</td>
+<td>admin / operator1~4 / chief / vip</td>
+</tr>
+<tr>
+<td>会话管理</td>
+<td>Spring Session Data Redis + Redis Cluster（6 节点）+ Jedis，3600s</td>
+</tr>
+<tr>
+<td>传输安全</td>
+<td>gRPC 使用 <code>tls://</code> endpoint；对外 HTTPS</td>
+</tr>
+<tr>
+<td>凭证管理</td>
+<td>STS AssumeRole 临时凭证 + <code>DefaultCredentialsProvider</code></td>
+</tr>
+<tr>
+<td>配置安全</td>
+<td>SSM Parameter Store（FaaS）；凭证集中在 <code>DynamoDbConfig</code> / <code>AwsConfig</code></td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>DynamoDB 表名带环境前缀，「1 账户 1 集群」</td>
+</tr>
+<tr>
+<td>数据库权限</td>
+<td>reader / writer 双数据源职责分离</td>
+</tr>
+<tr>
+<td>审计</td>
+<td><code>system</code> 域画面操作日志（操作者/时间/内容）</td>
+</tr>
+<tr>
+<td>输入校验</td>
+<td><code>spring-boot-starter-validation</code>；MyBatis 参数绑定防注入</td>
+</tr>
+<tr>
+<td>内容净化</td>
+<td>Jsoup（1.22.1）处理 HTML 内容，防存储型 XSS</td>
+</tr>
+<tr>
+<td>错误信息</td>
+<td>统一 <code>Error{code,message}</code>，不泄漏内部细节</td>
+</tr>
+<tr>
+<td>消息规范</td>
+<td>消息 ID 前缀区分类型（E=错误、F=字段标签）</td>
+</tr>
+<tr>
+<td>接口文档</td>
+<td>SpringDoc OpenAPI <code>/api-docs</code>，仅匹配 <code>/api/v1/**</code></td>
+</tr>
+<tr>
+<td>日志脱敏</td>
+<td>properties 自动生成消息常量，避免硬编码敏感文案</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>「消息 ID 体系」是一个容易被忽略的亮点</strong>：
+系统通过 properties 文件自动生成消息常量类
+（<code>ApiMessageId</code>、<code>WebMessageId</code>、<code>FileItem</code>，均标注「自动生成、修正不可」），
+并以 ID 首字符区分消息类型。这既是代码规范，
+也是<strong>安全审计与国际化</strong>的双重基础设施——写安全或可维护性时都可以用。</p>
+</blockquote>
+<hr />
+<h2>五、可用难点素材（按适配度排序）</h2>
+<ol>
+<li><strong>权限模型的「默认拒绝」重构</strong> ⭐⭐⭐ —— 本主题首选（需自行组织，参考上文示例）</li>
+<li><strong>① 一份 proto 契约驱动三语言</strong> ⭐⭐ —— 契约级安全边界统一</li>
+<li><strong>③ AWS SDK v1/v2 并存下的凭证统一</strong> ⭐⭐ —— 凭证治理</li>
+<li><strong>⑧ 跨国多时区一致性</strong> ⭐⭐ —— 数据合规维度</li>
+<li><strong>⑨ 分布式会话 Redis Cluster</strong> ⭐⭐ —— 会话安全</li>
+</ol>
+<hr />
+<h2>六、踩坑提醒</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>后果</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>罗列安全产品</td>
+<td>空洞</td>
+<td>按「保护什么 → 威胁是什么 → 措施是什么」组织</td>
+</tr>
+<tr>
+<td>编造等保/ISO 认证</td>
+<td>高风险</td>
+<td>未确认的合规资质不要写；写「参照日本个人信息保护法要求」更稳妥</td>
+</tr>
+<tr>
+<td>编造加密算法细节</td>
+<td>高风险</td>
+<td>只写「TLS 传输加密」「STS 临时凭证」，不编 AES-256/国密等具体算法</td>
+</tr>
+<tr>
+<td>编造 WAF/堡垒机/IDS</td>
+<td>高风险</td>
+<td>本项目未见此类证据，不要写</td>
+</tr>
+<tr>
+<td>忽略审计</td>
+<td>漏考点</td>
+<td>安全架构四要素「认证/授权/加密/审计」缺一不可</td>
+</tr>
+<tr>
+<td>只说技术不说管理</td>
+<td>片面</td>
+<td>补上凭证轮换、环境隔离、权限变更流程等治理手段</td>
+</tr>
+<tr>
+<td>忘记「默认拒绝」原则</td>
+<td>关键失分</td>
+<td>这是安全架构最重要的设计原则，务必体现</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>技术真实性提醒</strong>：
+本项目有 <strong>OAuth2/OIDC + Spring Security + TLS + STS 临时凭证 + Jsoup 净化</strong>，
+但<strong>未见</strong> WAF、IDS/IPS、堡垒机、加密机、国密算法等企业级安全设备的使用证据。
+论文中不要为了「显得安全」而堆砌未使用的产品。
+相反，把「默认拒绝的授权设计」「凭证集中治理」这两个<strong>真实的架构决策</strong>写透，
+比列十个安全产品更有说服力。</p>
+</blockquote>
+<hr />
+<p><em>配套：<code>01-微服务架构设计.md</code> · <code>06-系统集成与gRPC.md</code>（契约安全部分）</em></p>
+</body>
+</html>
